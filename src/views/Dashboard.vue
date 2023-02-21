@@ -171,7 +171,10 @@
             }
       },
       mounted() {
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/dashboard_vue', {username: this.StateUsername()}).then(response => {
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/dashboard_vue',{username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {
             this.bigdata = response.data
             console.log(this.bigdata.error)}); 
         this.user.name = this.StateUsername() 

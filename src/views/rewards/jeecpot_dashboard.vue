@@ -212,13 +212,16 @@
 
         async mounted(){
             this.role = this.getRole()
-            await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/jeecpot-rewardss").then(response=>{this.responsedata = response.data});
+            await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/jeecpot-rewardss",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{this.responsedata = response.data});
         },
 
         methods:{
             ...mapGetters(["getRole"]),
             updateReward(){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot-rewards/update", {jeecpot_external_id: this.responsedata.jeecpot_external_id,
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot-rewards/update",{jeecpot_external_id: this.responsedata.jeecpot_external_id,
                     first_student_reward_id: this.responsedata.jeecpot_rewards.first_student_reward_id,
                     second_student_reward_id: this.responsedata.jeecpot_rewards.second_student_reward_id,
                     third_student_reward_id: this.responsedata.jeecpot_rewards.third_student_reward_id,
@@ -230,7 +233,10 @@
                     king_hacking_reward_id: this.responsedata.jeecpot_rewards.king_hacking_reward_id,
                     king_networking_reward_id: this.responsedata.jeecpot_rewards.king_networking_reward_id,
                     cv_platform_raffle_reward_id: this.responsedata.jeecpot_rewards.cv_platform_raffle_reward_id,
-                }).then(response=>this.error = response.data);
+                },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response=>this.error = response.data);
             },
         }
     }

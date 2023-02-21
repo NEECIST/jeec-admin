@@ -178,11 +178,18 @@ data(){
   };
 },
 async mounted(){
-  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/info', {external_id: this.$route.params.company_external_id}).then(response=> this.responsedata = response.data)
+  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/info',{external_id: this.$route.params.company_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> this.responsedata = response.data)
   if(this.responsedata.company.image){
     axios({
           url: 'getimagecompany',
           method: 'POST',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY,
+          },
           responseType: 'arraybuffer',
           data: {
             external_id: this.$route.params.company_external_id,
@@ -205,7 +212,10 @@ methods:{
     deleteCompany(e){
       e.preventDefault()
       if(confirm('Are you sure you want to delete this company?')){
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/delete',{external_id: this.$route.params.company_external_id}).then(response=>{
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/delete',{external_id: this.$route.params.company_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
           if(response.data==''){
             this.$router.push("/companies")
           }
@@ -231,7 +241,10 @@ methods:{
           new_company.append('cvs_access', this.responsedata.company.cvs_access)
           new_company.append('external_id', this.$route.params.company_external_id)
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/update', new_company).then(response => {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/update',new_company,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {
             this.error = response.data
             if(this.error==""){
                 this.$router.push("/companies")

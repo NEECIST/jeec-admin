@@ -94,7 +94,10 @@
       search(e){
         e.preventDefault()
         this.search_bool=true
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/student_rewards',{search: this.search_str}).then(response=>this.BigData=response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/student_rewards',{search: this.search_str},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.BigData=response.data)
         // for(var i=0;i<this.BigData.rewards.length;i++){
         //   if(this.BigData.rewards[i].name.includes(this.search_str)){
         //     this.rewards.push(this.BigData.rewards[i])
@@ -108,7 +111,10 @@
       },
       ChangeState(ext_id){
         console.log(ext_id)
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/student_rewards/update',{external_id: ext_id}).then(response=>this.BigData=response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/student_rewards/update',{external_id: ext_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.BigData=response.data)
       }
     }
     }

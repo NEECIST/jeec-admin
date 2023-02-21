@@ -80,7 +80,10 @@
         },
       },
       mounted() {
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + '/_vue', {username: this.StateUsername()}).then(response => {const data = response.data; this.bigdata = data; this.show = data.show 
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + '/_vue',{username: this.StateUsername()}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.bigdata = data; this.show = data.show 
           if (this.bigdata.show != '') {
             this.$router.push({name: 'dashboard-main'})
           }

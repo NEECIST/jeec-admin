@@ -228,7 +228,10 @@
           fd.append('website_url', this.website_url)
           fd.append('spotlight', this.spotlight)          
           
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/speaker_external_id', fd).then(response => this.bigdata2 = response.data)
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/speaker_external_id' ,fd,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata2 = response.data)
           this.$router.push("/speakers")
 
          },
@@ -253,19 +256,32 @@
         },
         mounted() {
           this.role = this.getRole()
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/getspeaker', {external_id: this.$route.params.external_id}).then(response => {const data = response.data; 
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/getspeaker', {external_id: this.$route.params.external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; 
           this.bigdata = data; this.speaker = data.speaker; this.name = data.speaker.name; 
           this.company = data.speaker.company; this.company_link = data.speaker.company_link; this.position = data.speaker.position;
           this.country = data.speaker.country; this.bio = data.speaker.bio; this.linkedin_url = data.speaker.linkedin_url; 
           this.youtube_url = data.speaker.youtube_url; this.website_url = data.speaker.website_url, this.spotlight = data.speaker.spotlight })
         
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speakers/create_url_error_speaker', {external_id: this.$route.params.external_id }).then(response => {const data = response.data; this.create_url = data.error })
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speakers/create_url_error_company', {external_id: this.$route.params.external_id }).then(response => {const data = response.data; this.create_url2 = data.error })
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speakers/create_url_error_speaker' ,{external_id: this.$route.params.external_id },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.create_url = data.error })
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speakers/create_url_error_company' ,{external_id: this.$route.params.external_id },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.create_url2 = data.error })
 
         axios({
           url: 'getimagespeakerrrr',
           method: 'POST',
           responseType: 'arraybuffer',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        },
           data: {
             external_id: this.$route.params.external_id,
           }
@@ -275,6 +291,10 @@
           url: 'getimagescompany',
           method: 'POST',
           responseType: 'arraybuffer',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        },
           data: {
             external_id: this.$route.params.external_id,
           }

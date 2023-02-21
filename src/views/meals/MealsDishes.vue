@@ -94,7 +94,10 @@ data(){
 },
 mounted(){
   this.role = this.getRole()
-  axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/dishes",{meal_external_id:this.$route.params.meal_external_id}).then(response=> this.responsedata = response.data)
+  axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/dishes",{meal_external_id:this.$route.params.meal_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> this.responsedata = response.data)
 },
 methods:{
   ...mapGetters(["getRole"]),

@@ -114,7 +114,10 @@
                 new_reward.append('link', this.link)
                 new_reward.append('quantity', this.quantity)
 
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/new-rewardd", new_reward).then(response=>this.error = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/new-rewardd", new_reward,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.error = response.data);
                 
                 if (this.error == ""){
                     this.$router.push('/rewards')

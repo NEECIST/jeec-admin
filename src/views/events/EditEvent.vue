@@ -451,7 +451,10 @@ data(){
 },
 async mounted(){
   this.role = this.getRole()
-  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/event/info', {external_id: this.$route.params.event_external_id}).then(response=> this.responsedata = response.data)
+  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/event/info',{external_id: this.$route.params.event_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> this.responsedata = response.data)
   if(this.responsedata.event.image1){
     axios({
           url: 'getimageevent1',
@@ -586,7 +589,10 @@ methods:{
         new_event.append('event_blueprint', this.fileToUpload4)
         
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/update-event-vue', new_event).then(response => {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/update-event-vue',new_event,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {
             this.responsedata.error = response.data
             if(this.responsedata.error==""){
                 this.$router.push("/events")

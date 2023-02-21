@@ -164,7 +164,11 @@ data(){
 },
   mounted(){
     this.role = this.getRole()
-    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/meals_vue").then(response=>{
+    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/meals_vue",
+    {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
       this.response_data = response.data
       this.meals_list = response.data.meals_list
     })

@@ -28,7 +28,10 @@ async LogIn({commit},bad_form) {
   let password = ""
   let role = ""
   
-  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + '/login', {username : form.username}).then(response=> {
+  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + '/login',{username : form.username}, {auth: {
+    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+  }}).then(response=> {
     password = response.data.password
     role = response.data.role
     

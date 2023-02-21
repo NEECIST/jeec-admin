@@ -142,7 +142,10 @@
                 new_reward.append('link', this.link)
                 new_reward.append('quantity', this.quantity)
 
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/reward/update", new_reward).then(response=>this.error = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/reward/update", new_reward,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.error = response.data);
                 
                 if (this.error == ''){
                     this.$router.push('/rewards')
@@ -156,7 +159,10 @@
             },
 
             deleteReward() {
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/reward/delete", {external_id: this.$route.params.external_id}).then(response=>this.error = response.data)
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/reward/delete",{external_id: this.$route.params.external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.error = response.data)
 
                 if (this.error == ''){
                     this.$router.push('/rewards')
@@ -168,7 +174,10 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/reward/update/get', {external_id: this.$route.params.external_id}).then(response=>{
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/reward/update/get', {external_id: this.$route.params.external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
                 const data = response.data;
                 this.name = data.name;
                 this.description = data.description;
@@ -176,12 +185,19 @@
                 this.quantity = data.quantity;
             })
 
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/reward/update/create_url', {reward_external_id: this.$route.params.external_id}).then(response=> {const data = response.data; this.create_url = data.error})
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/reward/update/create_url', {reward_external_id: this.$route.params.external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> {const data = response.data; this.create_url = data.error})
 
             axios({
                 url: '/reward/update/get/image',
                 method: 'POST',
                 responseType: 'arraybuffer',
+                auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                },
                 data: {reward_external_id: this.$route.params.external_id,}
             }).then(response=> {
                 if (this.create_url != 'erro') {

@@ -156,7 +156,11 @@
     };
     },
     mounted(){
-      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/companies_vue").then(response=>{
+      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/companies_vue",
+      {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
         this.responsedata = response.data
         this.companies = this.responsedata.companies
         this.role = this.getRole()

@@ -80,13 +80,19 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/banned-studentss").then(response=>this.responsedata = response.data);
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/banned-studentss",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
         },
 
         methods: {
             ...mapGetters(["getRole"]),
             unban(external_id){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/unban", {unbanstudent: external_id}).then(response=>this.responsedata = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/unban", {unbanstudent: external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
             }
         },
     }

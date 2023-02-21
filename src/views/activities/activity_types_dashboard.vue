@@ -118,7 +118,10 @@
         }
       },
       mounted() {
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types-get_vue', {event_id: this.Event_id(), username: this.StateUsername()}).then(response => this.bigdata = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types-get_vue',{event_id: this.Event_id(), username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata = response.data)
         this.role = this.getRole()
       }
     }

@@ -108,7 +108,10 @@
         fd.append('email', this.email)
         fd.append('linkedin_url', this.linkedin_url)
 
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/new-member', fd ).then(response => this.bigdata2 = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/new-member',fd,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response => this.bigdata2 = response.data)
 
         this.$router.push({  name: 'teamdashboard-main', params: { externalid : this.$route.params.externalid } })
 

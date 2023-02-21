@@ -462,7 +462,10 @@ methods: {
         new_event.append('event_schedule', this.event_schedule)
         new_event.append('event_blueprint', this.event_blueprint)
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-event-vue', new_event).then(response => {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-event-vue',new_event,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response => {
             this.error = response.data
             if(this.error==""){
                 this.$router.push("/events")

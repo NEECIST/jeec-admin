@@ -151,9 +151,12 @@
             this.bigdata.error = 'Missing "Closing Time"!'
             return
           }
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions_vue', {name: this.bigdata.auction.name, description: this.bigdata.auction.description, 
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions_vue',{name: this.bigdata.auction.name, description: this.bigdata.auction.description, 
               minimum_value: this.bigdata.auction.minimum_value, starting_date: this.bigdata.auction.starting_date, starting_time: this.bigdata.auction.starting_time,
-              closing_date: this.bigdata.auction.closing_date, closing_time: this.bigdata.auction.closing_time, auction_external_id: this.bigdata.auction.external_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+              closing_date: this.bigdata.auction.closing_date, closing_time: this.bigdata.auction.closing_time, auction_external_id: this.bigdata.auction.external_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
           if (this.bigdata.error == '') {
             this.$router.push({name: 'auctions-dashboard'})
           }
@@ -163,7 +166,10 @@
         },
         deleteAuction(e) {
           e.preventDefault()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/delete_vue', {auction_external_id: this.auction_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/delete_vue',{auction_external_id: this.auction_id, username: this.StateUsername()}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
 
           if (this.bigdata.error == '') {
             this.$router.push({name: 'auctions-dashboard'})
@@ -181,7 +187,10 @@
       },
       mounted() {
         this.role = this.getRole()
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/get_vue', {auction_external_id: this.auction_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/get_vue',{auction_external_id: this.auction_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response => {this.bigdata = response.data
         if (this.bigdata.error != '') {
           this.$router.push({name: 'auctions-dashboard'})
         }})

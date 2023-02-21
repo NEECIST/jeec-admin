@@ -154,7 +154,11 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/levelss").then(response=>{
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/levelss",
+            {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
                 this.responsedata = response.data;
                 let points = 0;
                 for(var i = 0; i < this.responsedata.levels.length; i++){
@@ -170,7 +174,10 @@
                 if(!confirm('Are you sure that you want to delete this level?')){
                     return
                 }
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/delete", {level_value: value}).then(response=>this.responsedata = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/delete",{level_value: value}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
             },
 
             createLevel(reward_id, level_value, level_points){
@@ -180,12 +187,18 @@
                 if(this.responsedata.levels.length>=1){
                     level_points+=this.responsedata.levels[this.responsedata.levels.length - 1].ending_points + 1
                 }
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/create", {reward_id: reward_id, level_value: level_value, level_points: level_points}).then(response=>this.error = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/create",{reward_id: reward_id, level_value: level_value, level_points: level_points},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response=>this.error = response.data);
                 this.$router.go();
             },
 
             changeReward(level){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/update", {level_external_id: level.external_id, change_reward_id: level.reward.external_id}).then(response=>this.error = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/update", {level_external_id: level.external_id, change_reward_id: level.reward.external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.error = response.data);
             }
         }
     }

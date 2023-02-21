@@ -106,7 +106,10 @@ export default {
     ...mapGetters(["CompanyImage"]),
     createCompanyUser(e){
     e.preventDefault();
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/user/addcompanyuser",{user:this.user}).then(response=>{
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/user/addcompanyuser",{user:this.user},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
         this.response_data.error=response.data
         if(response.data == ''){
           this.$router.push('/usersdashboard')
@@ -119,7 +122,10 @@ export default {
     this.current_user = this.StateUsername()
     this.role = this.getRole()
 
-    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/user/addcompanyuser').then((response)=>{
+    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/user/addcompanyuser',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then((response)=>{
         this.response_data=response.data;
       })
     let password = Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)

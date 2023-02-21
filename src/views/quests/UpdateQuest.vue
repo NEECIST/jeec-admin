@@ -154,7 +154,10 @@
                     new_quest.append('activity_type', '')
                 }
                 
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/update", new_quest).then(response=>this.error = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/update",new_quest,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.error = response.data);
                 
                 if (this.error == ""){
                     this.$router.push('/quests')
@@ -173,7 +176,10 @@
         },
         mounted(){
             this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/info",{external_id: this.$route.params.quest_external_id}).then(response=>{
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/info",{external_id: this.$route.params.quest_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
                 this.error = response.data.error,
                 this.all_activities = response.data.activities,
                 this.activity_types = response.data.activity_types,

@@ -181,7 +181,10 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/studentss").then(response=>this.responsedata = response.data);
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/studentss",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
         },
 
         computed: {
@@ -199,7 +202,10 @@
             },
 
             banstudent(student_id){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/studentban", {banstudent: student_id}).then(response=>this.responsedata = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/studentban",{banstudent: student_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
             },
         },
     }
