@@ -119,14 +119,20 @@
           },
           eraseMembers(e) {
             e.preventDefault()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/erase', {external_id: this.external_id}).then(response => this.bigdata = response.data)
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/erase',{external_id: this.external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata = response.data)
             this.$router.push("/teams/teamsdashboard")
           },
           
         },
         mounted() {
             this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members', {external_id : this.$route.params.externalid  }).then(response => {const data = response.data; this.team = data.team; this.members = data.members})
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members',{external_id : this.$route.params.externalid  },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.team = data.team; this.members = data.members})
 
         },
         computed:{

@@ -135,7 +135,10 @@ export default {
       this.turnCameraOff()
       this.activity_external_idistid= this.$route.params.activity_external_id + content
 
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_idistid:  this.activity_external_idistid}).then(response =>{ this.SmallData = response.data} )
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_idistid:  this.activity_external_idistid},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response =>{ this.SmallData = response.data} )
   
       await this.timeout(3000)
       if (this.SmallData.errorQR != ""){
@@ -165,7 +168,10 @@ export default {
     }
   },
   mounted() {
-    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/qrcode',{user: this.StateUsername(), activity_external_id: this.$route.params.activity_external_id}).then(response => {this.BigData = response.data
+    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/qrcode',{user: this.StateUsername(), activity_external_id: this.$route.params.activity_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.BigData = response.data
     if (this.BigData.error != '') {
         this.$router.push({name: 'activities-dashboard'})
     }})

@@ -83,20 +83,29 @@
         },
         updateTeam(e) {
           e.preventDefault()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/updateteam', {external_id: this.$route.params.externalid , name: this.name,
-            description: this.description, website_priority: this.priority, event_id: this.eventID}).then(response => {const data = response.data; this.error = data.error})
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/updateteam',{external_id: this.$route.params.externalid , name: this.name,
+            description: this.description, website_priority: this.priority, event_id: this.eventID},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.error = data.error})
           this.$router.push("/teams")
         },
         deleteTeam(e) {
           e.preventDefault()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/delete', {external_id: this.$route.params.externalid }).then(response => {const data = response.data; this.error = data.error})
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/delete',{external_id: this.$route.params.externalid },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.error = data.error})
           this.$router.push("/teams")
         },
          
       },
       mounted() {
         this.role = this.getRole()
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/getteamup', {external_id : this.$route.params.externalid  }).then((response) => 
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/getteamup',{external_id : this.$route.params.externalid  },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then((response) => 
         {const data = response.data; this.name = data.team.name; this.description = data.team.description; 
         this.priority = data.team.website_priority; this.events = data.events; this.eventID = data.team.event_id})
       }

@@ -68,7 +68,10 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/tagss").then(response=>this.responsedata = response.data);
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/tagss",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
         },
 
         methods:{
@@ -78,12 +81,18 @@
                 if(this.name == ''){
                     return
                 }
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/new-tagg", {tagname: this.name}).then(response=>this.responsedata = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/new-tagg",{tagname: this.name},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
                 this.name = '';
             },
 
             deletetag(tag){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/tagsdelete", {tagname: tag}).then(response=>this.responsedata = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/tagsdelete",{tagname: tag},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
             }
         }
     }

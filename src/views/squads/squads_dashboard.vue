@@ -121,13 +121,19 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/squadss").then(response=>this.responsedata = response.data);
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/squadss",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
         },
 
         methods: {
             ...mapGetters(["getRole"]),
             bansquads(name){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/bansquad", {bansquad: name}).then(response=>this.responsedata = response.data);
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/bansquad", {bansquad: name},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>this.responsedata = response.data);
             }
         },
     }

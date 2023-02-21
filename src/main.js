@@ -9,13 +9,8 @@ import Head from './components/Head'
 import SectionTitle from './components/SectionTitle'
 import Multiselect from 'vue-multiselect'
 import store from './store';
-import axios from 'axios';
 import VueCryptojs from 'vue-cryptojs'
 import fullscreen from 'vue-fullscreen'
-
-
-
-axios.defaults.withCredentials = false
 
 Vue.use(VueCryptojs)
 Vue.use(fullscreen)

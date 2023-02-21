@@ -190,7 +190,10 @@
         fd.append('website_url', this.website_url)
         fd.append('spotlight', this.spotlight)
 
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-speaker-vue', fd ).then(response => this.bigdata2 = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-speaker-vue',fd,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response => this.bigdata2 = response.data)
         this.$router.push("/speakers")
         
       }

@@ -239,11 +239,16 @@
             this.setEvent_id(external_id)
         },
         deleteActivity(external_id) {
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/delete_vue',{
-              activity_external_id: external_id}).then(response => 
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/delete_vue',{activity_external_id: external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => 
               {this.bigdata.error = response.data
             if (this.bigdata.error == '') {
-              axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities_vue', {event_id: this.Event_id(), username: this.StateUsername()}).then(response => {this.bigdata = response.data
+              axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities_vue',{event_id: this.Event_id(), username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response => {this.bigdata = response.data
               this.selected_event_id = this.bigdata.event.external_id})
             }})
         },
@@ -260,12 +265,18 @@
         },
         deleteCode(activity_ext_id) {
             //e.preventDefault()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/codes-delete_vue', {activity_external_id: activity_ext_id, username: this.StateUsername()}).then(response => {this.sucess = response.data
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/codes-delete_vue',{activity_external_id: activity_ext_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.sucess = response.data
               if (this.sucess != 'Success') {
                 this.$router.push({ name: 'activities-dashboard'})
               }
             })
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/code/delete_vue', {code: this.code, username: this.StateUsername()}).then(response => {this.bigdata1 = response.data
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/code/delete_vue',{code: this.code, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata1 = response.data
             if (this.bigdata1.sucess_bool == 'true') {
               this.$router.push({ name: 'activities-dashboard'})
             }})
@@ -298,7 +309,10 @@
         }
       },
       mounted() {
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities_vue', {event_id: this.Event_id(), username: this.StateUsername()}).then(response => {this.bigdata = response.data
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities_vue',{event_id: this.Event_id(), username: this.StateUsername()}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
         this.selected_event_id = this.bigdata.event.external_id})
       }
       

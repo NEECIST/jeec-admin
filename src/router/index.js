@@ -313,7 +313,8 @@ const routes = [
     path: '/quests/update:quest_external_id',
     name: 'update-quest',
     component: UpdateQuest
-   }
+   },
+   { path: "*", component: AdminLogin },
 ]
 
 const router = new VueRouter({

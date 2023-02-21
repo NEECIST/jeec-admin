@@ -169,7 +169,10 @@ data(){
 },
 mounted(){
   this.role = this.getRole()
-  axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/update-meal",{meal_external_id:this.$route.params.meal_external_id}).then(response=> this.responsedata = response.data)
+  axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/update-meal",{meal_external_id:this.$route.params.meal_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> this.responsedata = response.data)
 },
 methods:{
   ...mapGetters(["getRole"]),
@@ -203,12 +206,18 @@ methods:{
     axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/update-meal/submission",{meal_external_id:this.$route.params.meal_external_id,meal_type:this.responsedata.meal.type,
         meal_location:this.responsedata.meal.location, meal_day:this.responsedata.meal.day, meal_time:this.responsedata.meal.time,
         meal_registration_day:this.responsedata.meal.registration_day, meal_registration_time:this.responsedata.meal.registration_time,
-        meal_companies:this.responsedata.companies_in_meal, dishes:this.responsedata.dishes}).then(response=> {
+        meal_companies:this.responsedata.companies_in_meal, dishes:this.responsedata.dishes},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> {
             this.responsedata.error = response.data
             this.$router.push("/meals");})
   },
   deleteMeal(){
-    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/update-meal/delete",{meal_external_id:this.$route.params.meal_external_id}).then(response=> this.responsedata.error = response.data)
+    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/update-meal/delete",{meal_external_id:this.$route.params.meal_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=> this.responsedata.error = response.data)
   }
 }
 }

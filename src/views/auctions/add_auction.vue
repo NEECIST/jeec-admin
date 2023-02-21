@@ -144,7 +144,10 @@
           }
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/post-new-auction_vue', {name: this.name, description: this.description, minimum_value: this.minimum_value, 
                   starting_date: this.starting_date, starting_time: this.starting_time, closing_date: this.closing_date, 
-                  closing_time: this.closing_time, username: this.StateUsername()}).then(response => {this.error = response.data
+                  closing_time: this.closing_time, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.error = response.data
           if (this.error == '') {
             this.$router.push("/auctions")
           }

@@ -191,7 +191,10 @@ methods: {
           new_company.append('partnership_tier', this.partnership_tier)
         new_company.append('cvs_access', this.cvs_access)
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-company-vue', new_company).then(response => {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-company-vue', {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }},new_company).then(response => {
             this.error = response.data
             if(this.error==""){
                 this.$router.push("/companies")

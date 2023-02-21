@@ -185,7 +185,10 @@ export default {
     ...mapGetters(["CompanyImage"]),
     searchUsers(e){
       e.preventDefault();
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss',{name:this.input}).then((response)=>{
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss',{name:this.input},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then((response)=>{
         this.response_data=response.data;
         this.count = response.data.users.length + response.data.company_users.length
         for(var i=0;i<this.response_data.users.length;i++){
@@ -199,7 +202,10 @@ export default {
     },
     undoSearch(e){
       e.preventDefault();
-      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss').then((response)=>{
+      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then((response)=>{
         this.response_data=response.data;
         this.count = response.data.users.length + response.data.company_users.length
         for(var i=0;i<this.response_data.users.length;i++){
@@ -213,8 +219,14 @@ export default {
       this.input = ''
     },
     deleteUser(external_id){
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss/delete',{external_id:external_id}).then(response => this.response_data.error = response.data);
-      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss').then((response)=>{
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss/delete',{external_id:external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.response_data.error = response.data);
+      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then((response)=>{
         this.response_data=response.data;
         this.count = response.data.users.length + response.data.company_users.length
         for(var i=0;i<this.response_data.users.length;i++){
@@ -231,7 +243,10 @@ export default {
   mounted() {
     this.current_user.name = this.StateUsername()
     this.current_user.role = this.getRole()
-    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss').then((response)=>{
+    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then((response)=>{
         this.response_data=response.data;
         this.count = response.data.users.length + response.data.company_users.length
         for(var i=0;i<this.response_data.users.length;i++){

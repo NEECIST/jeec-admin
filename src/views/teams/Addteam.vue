@@ -82,13 +82,19 @@
       },
       addingTeam(e) {
           e.preventDefault()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-team-vue', {name: this.name, description: this.description, website_priority: this.priority, event_id: this.eventID}).then(response => this.bigdata2 = response.data)
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-team-vue', {name: this.name, description: this.description, website_priority: this.priority, event_id: this.eventID},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata2 = response.data)
           this.$router.push("/teams")
       },
     },
     mounted() {
       this.role = this.getRole()
-      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/new-team-vue').then(response => this.bigdata = response.data)
+      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/new-team-vue',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata = response.data)
     }
 }
 </script>

@@ -170,7 +170,10 @@
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types/update_vue', {activity_type_external_id: this.bigdata.activity_type.external_id, 
             name: this.bigdata.activity_type.name, description: this.bigdata.activity_type.description, price: this.bigdata.activity_type.price, 
               show_in_home: this.bigdata.activity_type.show_in_home, show_in_schedule: this.bigdata.activity_type.show_in_schedule, 
-              show_in_app: this.bigdata.activity_type.show_in_app, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+              show_in_app: this.bigdata.activity_type.show_in_app, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
 
           if (this.bigdata.error == '') {
               this.$router.push({name: 'activity-types-dashboard'})
@@ -181,7 +184,10 @@
         },
         deleteActivityType(e) {
           e.preventDefault()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types/delete_vue', {activity_type_external_id: this.activity_type_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types/delete_vue',{activity_type_external_id: this.activity_type_id, username: this.StateUsername()}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
 
           if (this.bigdata.error == '') {
             this.$router.push({name: 'activity-types-dashboard'})
@@ -192,7 +198,10 @@
         }
       },
       mounted() {
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types/get_activity_type_vue', {activity_type_external_id: this.activity_type_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities/types/get_activity_type_vue', {activity_type_external_id: this.activity_type_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
           if (this.bigdata.error != '') {
             this.$router.push({name: 'activity-types-dashboard'})
           }})

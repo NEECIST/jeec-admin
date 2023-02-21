@@ -257,7 +257,10 @@
         this.role = this.getRole()
         this.search = '';
         this.event = '';
-        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/teams-vue').then(response => {const data = response.data; this.bigdata = data; this.teams = data.teams;
+        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/teams-vue',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.bigdata = data; this.teams = data.teams;
         this.countMembers();})
         
       }

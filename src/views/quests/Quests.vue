@@ -80,15 +80,24 @@
       },
       mounted() {
         this.role = this.getRole()
-        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/quests').then(response => {
+        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/quests',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {
           console.log(response.data)
           this.quests = response.data.quests})
       },
       methods:{
         ...mapGetters(["getRole"]),
         async deletequest(external_id){
-            await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/delete",{external_id:external_id})
-            await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/quests').then(response => {
+            await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/delete",{external_id:external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }})
+            await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/quests',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {
               this.quests = response.data.quests})
             }
       }

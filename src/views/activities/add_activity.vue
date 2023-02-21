@@ -311,14 +311,17 @@
             //     return
             // }
 
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity_vue', {event_id: this.bigdata.event.external_id, name: this.name, description: this.description, location: this.location, day: this.day,
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity_vue',{event_id: this.bigdata.event.external_id, name: this.name, description: this.description, location: this.location, day: this.day,
                         time: this.time, end_time: this.end_time, registration_link: this.registration_link,
                         registration_open: this.registration_open, points: this.points, quest: this.quest, chat: this.chat,
                         zoom_link: this.zoom_link, reward_external_id: this.reward_external_id,
                         code_workflow_external_id: this.code_workflow_external_id, activity_type_external_id: this.activity_type_external_id,
                         code_per_company: this.code_per_company, username: this.StateUsername(), companies_external_id: this.companies_external_id,
                         speakers_external_id: this.speakers_external_id, moderator_external_id: this.moderator_external_id, 
-                        tags_external_id: this.tags_external_id}).then(response => {this.bigdata = response.data
+                        tags_external_id: this.tags_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
 
             if (this.bigdata.error == '') {
                 this.$router.push({ name: 'activities-dashboard' })
@@ -336,7 +339,10 @@
         
       },
       mounted() {
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity-get_vue', {event_id: this.Event_id(), username: this.StateUsername()}).then(response => {this.bigdata = response.data
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity-get_vue',{event_id: this.Event_id(), username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
           if (this.bigdata.error != '') {
             this.$router.push({ name: 'activities-dashboard' })
           }})

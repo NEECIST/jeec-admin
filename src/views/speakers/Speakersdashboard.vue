@@ -143,8 +143,14 @@
         },
         async deleteSpeaker(external_id) {
 
-        await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/delete', {external_id: external_id}).then(response => this.error = response.data.error)
-        await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss').then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers })
+        await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/delete', {external_id: external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.error = response.data.error)
+        await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers })
 
         },
       },
@@ -161,7 +167,10 @@
         }
       },  
       mounted() {
-        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss').then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers }),
+        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers }),
         this.role = this.getRole()
       }
   }

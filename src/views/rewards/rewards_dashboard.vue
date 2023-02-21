@@ -142,7 +142,10 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/rewardss").then(response=>{this.responsedata = response.data});
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/rewardss",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{this.responsedata = response.data});
             
         },
 

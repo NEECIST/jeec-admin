@@ -136,7 +136,10 @@
                 }
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity-type_vue', {name: this.name, description: this.description, price: this.price, 
                     show_in_home: this.show_in_home, show_in_schedule: this.show_in_schedule, show_in_app: this.show_in_app,
-                    event_id: this.bigdata.event.external_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+                    event_id: this.bigdata.event.external_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
 
                 if (this.bigdata.error == '') {
                     this.$router.push({name: 'activity-types-dashboard'})
@@ -147,7 +150,10 @@
             },
         },
         mounted() {
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity-type-dashboard_vue', {event_id: this.Event_id(), username: this.StateUsername()}).then(response => {this.bigdata = response.data
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity-type-dashboard_vue', {event_id: this.Event_id(), username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
             if (this.bigdata.error != '') {
                 this.$router.push({name: 'activity-types-dashboard'})
             }})

@@ -70,9 +70,15 @@
         postParticipant(e) {
             e.preventDefault()
 
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/add-participant_vue', {auction_external_id: this.bigdata.auction.external_id, company_external_id: this.company.external_id, username: this.StateUsername()}).then(response => {this.bigdata1 = response.data
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/add-participant_vue',{auction_external_id: this.bigdata.auction.external_id, company_external_id: this.company.external_id, username: this.StateUsername()}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata1 = response.data
             this.error = this.bigdata1.error})
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/participants_vue', {auction_external_id: this.bigdata.auction.external_id, username: this.StateUsername()}).then(response => this.bigdata = response.data)
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/participants_vue', {auction_external_id: this.bigdata.auction.external_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata = response.data)
             //this.bigdata.auction.external_id = this.bigdata1.auction_external_id
         },
       },
@@ -95,7 +101,10 @@
       },
       mounted() {
         this.role = this.getRole()
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/participants_vue', {auction_external_id: this.auction_id, username: this.StateUsername()}).then(response => this.bigdata = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/participants_vue',{auction_external_id: this.auction_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata = response.data)
         }
     }
 

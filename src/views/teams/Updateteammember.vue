@@ -129,14 +129,20 @@
           fd.append('linkedin_url', this.linkedin_url)
           fd.append('member_external_id', this.$route.params.member_id)
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/update_team_member', fd ).then(response => this.bigdata2 = response.data)
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/update_team_member',fd,{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }} ).then(response => this.bigdata2 = response.data)
 
           this.$router.push({  name: 'teamdashboard-main', params: { externalid : this.$route.params.externalid } })
         },
         deletingTeamMember(e) {
           e.preventDefault()
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/delete_team_member', {external_id : this.$route.params.externalid, member_external_id: this.$route.params.member_id }).then(response => {const data = response.data; this.bigdata3 = data; })
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/delete_team_member',{external_id : this.$route.params.externalid, member_external_id: this.$route.params.member_id }, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.bigdata3 = data; })
 
           this.$router.push({  name: 'teamdashboard-main', params: { externalid : this.$route.params.externalid } })
         },
@@ -152,12 +158,22 @@
        },
        mounted() {
         this.role = this.getRole()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members/get_team_member', {external_id : this.$route.params.externalid, member_external_id: this.$route.params.member_id }).then(response => {const data = response.data; this.name = data.member.name; this.ist_id = data.member.ist_id; this.linkedin_url = data.member.linkedin_url; this.email = data.member.email })
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members/create_url_error', {member_external_id: this.$route.params.member_id }).then(response => {const data = response.data; this.create_url = data.error })
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members/get_team_member', {external_id : this.$route.params.externalid, member_external_id: this.$route.params.member_id },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.name = data.member.name; this.ist_id = data.member.ist_id; this.linkedin_url = data.member.linkedin_url; this.email = data.member.email })
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members/create_url_error', {member_external_id: this.$route.params.member_id },{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {const data = response.data; this.create_url = data.error })
           axios({
             url: 'getimagespeaker',
             method: 'POST',
             responseType: 'arraybuffer',
+            auth: {
+              username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+              password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+            },
             data: {
               member_external_id: this.$route.params.member_id,
             }

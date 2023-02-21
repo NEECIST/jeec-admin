@@ -123,10 +123,22 @@
       },
       mounted() {
         this.role = this.getRole()
-        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/auctions/get-name-auctions-dashboard_vue').then(response => this.auctions_management = response.data)
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/post-description-auctions-dashboard_vue', {descriptionn: 'Add or edit auctions', username: this.StateUsername()}).then(response => this.description_auctions = response.data)
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/get-current_user.role.name_vue', {username: this.StateUsername()}).then(response => this.current_user.role.name = response.data)
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/get-auctions_vue', {username: this.StateUsername()}).then(response => this.bigdata = response.data)
+        axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/auctions/get-name-auctions-dashboard_vue',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.auctions_management = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/post-description-auctions-dashboard_vue',{descriptionn: 'Add or edit auctions', username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.description_auctions = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/get-current_user.role.name_vue',{username: this.StateUsername()}, {auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.current_user.role.name = response.data)
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/auctions/get-auctions_vue',{username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.bigdata = response.data)
       }
     }
 

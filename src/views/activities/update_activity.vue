@@ -337,7 +337,7 @@
             //     this.bigdata.error = 'Missing "Speaker(s)"!'
             //     return
             // }
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/update_vue', {name: this.bigdata.activity.name, description: this.bigdata.activity.description, 
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/update_vue' ,{name: this.bigdata.activity.name, description: this.bigdata.activity.description, 
               location: this.bigdata.activity.location, day: this.bigdata.activity.day, time: this.bigdata.activity.time, 
               end_time: this.bigdata.activity.end_time, registration_link: this.bigdata.activity.registration_link, 
               registration_open: this.bigdata.activity.registration_open, 
@@ -348,7 +348,10 @@
               username: this.StateUsername(), 
               companies_external_id: this.bigdata.companies_external_id, speakers_external_id: this.bigdata.speakers_external_id, 
               moderator_external_id: this.bigdata.moderator_external_id, tags_external_id: this.bigdata.tags_external_id, 
-              activity_type_external_id: this.bigdata.activity_type_external_id}).then(response => {this.bigdata = response.data
+              activity_type_external_id: this.bigdata.activity_type_external_id},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
 
               if (this.bigdata.error == '') {
                 this.$router.push({name: 'activities-dashboard'})
@@ -365,7 +368,10 @@
         },
       },
       mounted() {
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity_vue', {activity_external_id: this.activity_id, username: this.StateUsername()}).then(response => {this.bigdata = response.data
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity_vue', {activity_external_id: this.activity_id, username: this.StateUsername()},{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => {this.bigdata = response.data
           if (this.bigdata.error != '') {
             this.$router.push({name: 'activities-dashboard'})
           }})

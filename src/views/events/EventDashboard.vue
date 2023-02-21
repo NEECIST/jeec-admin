@@ -190,7 +190,11 @@ data(){
 },
 mounted(){
   this.role = this.getRole()
-  axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/events/vue").then(response=>{
+  axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/events/vue",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}
+        ).then(response=>{
     this.responsedata=response.data
     this.events = this.responsedata.events
   })
