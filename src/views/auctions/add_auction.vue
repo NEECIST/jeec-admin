@@ -1,12 +1,12 @@
 <template>
-    <div class="add-auction" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+    <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
       <head-component/>
         
         <navbar-component logo="brain.png"/>
 
         <section-header-component name="Auctions Management" description="Add a new auction" back_page="/auctions"/>
 
-        <br>
+      
 
         <div class="create-form">
             <blockquote v-if="error != ''" class="create-error">
@@ -77,6 +77,7 @@
             </router-link>
           </form>
         </div>
+ 
     </div>
 </template>
 
