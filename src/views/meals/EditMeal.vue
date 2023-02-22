@@ -3,7 +3,7 @@
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
     <TopBar/>
 
-    <SectionHeader name="Lunch" description="Edit information" back_page="/meals"/>
+    <SectionHeader :name="responsedata.meal.type" description="Edit information" back_page="/meals"/>
 
 <br>
 
