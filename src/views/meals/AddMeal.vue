@@ -177,7 +177,10 @@ data(){
   };
 },
 mounted(){
-  axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/new-meal_vue").then(response=>{
+  axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/new-meal_vue",{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response=>{
     this.response_data = response.data
     console.log(this.response_data.meal_types)
     this.role = this.getRole()

@@ -287,13 +287,10 @@
       data(){
         return{
             bigdata: {
-              events:[{name:"JEEC23", activity_types:[{name:'15/15', description:'description1', price:1.1, show_in_home: true, show_in_schedule: true, show_in_app: true, external_id: ''}]}, ],
+              events:[],
               event: {activity_types: []},
               error: '',
-              activities:[{id:1, name:"Talk1", activity_type:{name:"15/15"}, description:'Descrição', day:'11 Set 2022', 
-                          time:'14h', end_time:'15h', location:'Lisboa', points:2, quest:true, registration_open:true,
-                          code_work_flow:{value:'Admin generates code, multiple students use it, admin deletes it'}, external_id: ''},
-                        ],
+              activities:[],
               role: '',
               bigdata1: {sucess: false},
               today: ''

@@ -8,7 +8,7 @@
 
 
 
-<router-link to="/admin/companies/add-event">
+<router-link to="/companies/add-event">
 <button class="waves-effect blue lighten-2 btn add-btn right"><i class="material-icons left">add</i>Event</button>
 </router-link>
 
