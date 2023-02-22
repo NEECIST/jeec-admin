@@ -51,7 +51,7 @@
           <div class="row">
             <div class="input-field col s12 box" :class="{boxname:detectext(country)}">
               <input class="col s4" id="country" name="country" type="text" v-model="country">
-              <label for="country">Origin</label>
+              <label for="country">Country</label>
             </div>
           </div>
 

@@ -16,40 +16,7 @@
       
       <form class="col s12">
 
-          <div v-if="this.create_url != 'erro'">
-            <img class="centered-image speaker-img" :src="this.url_image" >
-          </div>
-
-         <div v-else>
-             <blockquote style="text-align: left;" class="create-error">
-                 Speaker image missing! Please, upload one
-             </blockquote> 
-         </div>
-                
-          <div class="file-field input-field" style="width:500px;">
-            <div class="btn">
-              <i class="material-icons left">add_a_photo</i>
-              <div v-if="this.create_url != 'erro'">
-                <span> change image </span>
-              </div>
-              <div v-else>
-                <span> add image </span>
-              </div>
-
-              <input type="file" name="file" @change="onFileSelected">
-            </div>
-            <div class="file-path-wrapper">
-              <div v-if="image != null">
-                <input class="file-path validate" type="text" :placeholder="image">
-              </div>
-              <div v-else-if="fileSelected != null">
-                <input class="file-path validate" type="text" :placeholder="fileSelected">
-              </div>
-              <div v-else>
-                <input class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
-              </div>
-            </div>
-          </div>
+          
 
           <br>
 
@@ -89,33 +56,7 @@
               <label for="company_link">Company Website</label>
             </div>
           </div>
-          {{this.create_url2}}
-          <div v-if="this.create_url2 != 'erro'">
-              <img class="company-logo" :src="this.url_image2">
-          </div>
-          <div v-else>
-            <blockquote style="text-align: left;" class="create-error">
-              Company logo missing! Please, upload one
-            </blockquote> 
-         </div>
- 
-          <div class="file-field input-field" style="width:500px;">
-            <div class="btn">
-              <i class="material-icons left">add_a_photo</i>
-              <span v-if="this.create_url2 != 'erro'">change company logo</span>
-              <span v-else>add company logo</span>
-              <input type="file" name="company_logo" @change="onFileSelected2">
-            </div>
-            <div v-if="company_logo != null">
-              <input class="file-path validate" type="text" :placeholder="company_logo">
-            </div>
-            <div v-else-if="fileSelected2 != null">
-              <input class="file-path validate" type="text" :placeholder="fileSelected2">
-            </div>
-            <div v-else>
-              <input class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
-            </div>
-          </div>
+          
 
           <div class="row">
             <div class="input-field col s4 box" :class="{boxname:detectext(country)}">
@@ -145,6 +86,67 @@
             <div class="input-field col s3 box" :class="{boxname:detectext(website_url)}">
               <input id="website_url" name="website_url" type="text" v-model="website_url">
               <label for="website_url">Website url</label>
+            </div>
+          </div>
+          <div v-if="this.create_url != 'erro'">
+            <img class="centered-image speaker-img" :src="this.url_image" >
+          </div>
+
+         <div v-else>
+             <blockquote style="text-align: left;" class="create-error">
+                 Speaker image missing! Please, upload one
+             </blockquote> 
+         </div>
+                
+          <div class="file-field input-field" style="width:500px;">
+            <div class="btn">
+              <i class="material-icons left">add_a_photo</i>
+              <div v-if="this.create_url != 'erro'">
+                <span> change image </span>
+              </div>
+              <div v-else>
+                <span> add image </span>
+              </div>
+
+              <input type="file" name="file" @change="onFileSelected">
+            </div>
+            <div class="file-path-wrapper">
+              <div v-if="image != null">
+                <input class="file-path validate" type="text" :placeholder="image">
+              </div>
+              <div v-else-if="fileSelected != null">
+                <input class="file-path validate" type="text" :placeholder="fileSelected">
+              </div>
+              <div v-else>
+                <input class="file-path validate" type="text" placeholder="use a round .png with <200kB">
+              </div>
+            </div>
+          </div>
+
+          <div v-if="this.create_url2 != 'erro'">
+              <img class="company-logo" :src="this.url_image2">
+          </div>
+          <div v-else>
+            <blockquote style="text-align: left;" class="create-error">
+              Company logo missing! Please, upload one
+            </blockquote> 
+         </div>
+ 
+          <div class="file-field input-field" style="width:500px;">
+            <div class="btn">
+              <i class="material-icons left">add_a_photo</i>
+              <span v-if="this.create_url2 != 'erro'">change company logo</span>
+              <span v-else>add company logo</span>
+              <input type="file" name="company_logo" @change="onFileSelected2">
+            </div>
+            <div v-if="company_logo != null">
+              <input class="file-path validate" type="text" :placeholder="company_logo">
+            </div>
+            <div v-else-if="fileSelected2 != null">
+              <input class="file-path validate" type="text" :placeholder="fileSelected2">
+            </div>
+            <div v-else>
+              <input class="file-path validate" type="text" placeholder="use a round .png with <200kB">
             </div>
           </div>
 
@@ -275,7 +277,7 @@
         }}).then(response => {const data = response.data; this.create_url2 = data.error })
 
         axios({
-          url: 'getimagespeakerrrr',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagespeakerrrr',
           method: 'POST',
           responseType: 'arraybuffer',
           auth: {
@@ -288,7 +290,7 @@
         }).then(response=>this.forceFileDownload(response, 'img_jeec_speaker'))
 
         axios({
-          url: 'getimagescompany',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagescompany',
           method: 'POST',
           responseType: 'arraybuffer',
           auth: {

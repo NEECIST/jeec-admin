@@ -3,7 +3,7 @@
   <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
     <TopBar/>
 
-    <SectionHeader name="Accenture" description="Edit Company information" back_page="/companies"/>
+    <SectionHeader :name="responsedata.company.name" description="Edit Company information" back_page="/companies"/>
 
 
     
@@ -184,7 +184,7 @@ async mounted(){
         }}).then(response=> this.responsedata = response.data)
   if(this.responsedata.company.image){
     axios({
-          url: 'getimagecompany',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagecompany',
           method: 'POST',
           auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
