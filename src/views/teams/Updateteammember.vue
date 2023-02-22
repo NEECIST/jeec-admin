@@ -65,7 +65,7 @@
                  <input class="file-path validate" type="text" :placeholder="fileSelected">
                </div>
                <div v-else>
-                 <input class="file-path validate" type="text" placeholder="use a round .png with <200kB">
+                 <input class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
                </div>
              </div>
            </div>

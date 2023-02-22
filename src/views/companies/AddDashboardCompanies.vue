@@ -68,18 +68,21 @@
                           {{ company.business_area }}
     
                       </td>
+                      <td v-else></td>
   
                       <td v-if="company.email">
                         
                           {{ company.email }}
             
                       </td>
+                      <td v-else></td>
                       
                       <td v-if="company.link">
       
                           <a :href="company.link">visit website</a>
                   
                       </td>
+                      <td v-else></td>
   
                       <td>
                         

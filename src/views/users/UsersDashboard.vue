@@ -87,6 +87,7 @@
           <td v-if="current_user.role=='admin'">
             {{ user.password }}
           </td>
+          <td v-else></td>
 
           <td></td>
 
@@ -125,6 +126,7 @@
           <td v-if="current_user.role=='admin'">
             {{ company_user.password }}
           </td>
+          <td v-else></td>
 
           <td>
             <i class="material-icons icon-green" v-if="company_user.food_manager">check</i>
