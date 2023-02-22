@@ -29,11 +29,11 @@
             <div class="col" style="margin-left:30px;margin-top:20px;">
             Main Speaker:
               <label style="margin-right: 20px;margin-left:10px;">
-                <input class="with-gap" name="spotlight" type="radio" :value="true" v-model="spotlight" checked/>
+                <input class="with-gap" name="spotlight" type="radio" value="True" v-model="spotlight" checked/>
                 <span>Yes</span>
               </label>
               <label>
-                  <input class="with-gap" name="spotlight" type="radio" :value="false" v-model="spotlight" checked/>
+                  <input class="with-gap" name="spotlight" type="radio" value="False" v-model="spotlight" checked/>
                   <span>No</span>
               </label>
             </div>
@@ -265,7 +265,14 @@
           this.bigdata = data; this.speaker = data.speaker; this.name = data.speaker.name; 
           this.company = data.speaker.company; this.company_link = data.speaker.company_link; this.position = data.speaker.position;
           this.country = data.speaker.country; this.bio = data.speaker.bio; this.linkedin_url = data.speaker.linkedin_url; 
-          this.youtube_url = data.speaker.youtube_url; this.website_url = data.speaker.website_url, this.spotlight = data.speaker.spotlight })
+          this.youtube_url = data.speaker.youtube_url; this.website_url = data.speaker.website_url
+          if(data.speaker.spotlight){
+            this.spotlight="True"
+          }
+        else{
+          this.spotlight = "False"
+        } })
+         
         
         axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speakers/create_url_error_speaker' ,{external_id: this.$route.params.external_id },{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
