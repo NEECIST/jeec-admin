@@ -92,22 +92,27 @@
                     <td v-if="meal.day!=null">
                         {{ meal.day }}
                     </td>
+                    <td v-else></td>
 
                     <td v-if="meal.time!=null">
                         {{ meal.time }}
                     </td>
+                    <td v-else></td>
 
                     <td v-if="meal.location!=null">
                         {{ meal.location }}
                     </td>
+                    <td v-else></td>
                     
                     <td v-if="meal.registration_day!=null">
                         {{ meal.registration_day }}
                     </td>
+                    <td v-else></td>
 
                     <td v-if="meal.registration_time!=null">
                         {{ meal.registration_time }}
                     </td>
+                    <td v-else></td>
 
 
 

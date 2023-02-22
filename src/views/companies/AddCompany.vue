@@ -104,7 +104,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input v-if="fileToUpload != null" class="file-path validate" type="text" :placeholder="fileSelected">
-                        <input v-else class="file-path validate" type="text" placeholder="use .png with < 200kB">
+                        <input v-else class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
                     </div>
                 </div>
 
@@ -157,7 +157,7 @@ data(){
         business_area: '',
         partnership_tier: '',
         show_in_website: null,
-        fileToUpload: '',
+        fileToUpload: null,
         fileSelected:'',
         role:''
         
@@ -191,10 +191,10 @@ methods: {
           new_company.append('partnership_tier', this.partnership_tier)
         new_company.append('cvs_access', this.cvs_access)
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-company-vue', {auth: {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-company-vue',new_company,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }},new_company).then(response => {
+        }}).then(response => {
             this.error = response.data
             if(this.error==""){
                 this.$router.push("/companies")
