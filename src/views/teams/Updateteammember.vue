@@ -167,7 +167,7 @@
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {const data = response.data; this.create_url = data.error })
           axios({
-            url: 'getimagespeaker',
+            url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagespeaker',
             method: 'POST',
             responseType: 'arraybuffer',
             auth: {

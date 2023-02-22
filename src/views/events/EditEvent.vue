@@ -457,7 +457,7 @@ async mounted(){
         }}).then(response=> this.responsedata = response.data)
   if(this.responsedata.event.image1){
     axios({
-          url: 'getimageevent1',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent1',
           method: 'POST',
           responseType: 'arraybuffer',
           data: {
@@ -471,7 +471,7 @@ async mounted(){
   }
   if(this.responsedata.event.image2){
     axios({
-          url: 'getimageevent2',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent2',
           method: 'POST',
           responseType: 'arraybuffer',
           data: {
@@ -485,7 +485,7 @@ async mounted(){
   }
   if(this.responsedata.event.image3){
     axios({
-          url: 'getimageevent3',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent3',
           method: 'POST',
           responseType: 'arraybuffer',
           data: {
@@ -499,7 +499,7 @@ async mounted(){
   }
   if(this.responsedata.event.image4){
     axios({
-          url: 'getimageevent4',
+          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent4',
           method: 'POST',
           responseType: 'arraybuffer',
           data: {
