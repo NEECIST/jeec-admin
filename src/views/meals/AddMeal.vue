@@ -29,7 +29,7 @@
 
 
         <div class="input-field col s3">
-          <input id="location" name="location" type="text" class="validate" v-model="form.location" placeholder="Location">
+          <input id="location" name="location" type="text" class="validate" v-model="form.location" placeholder="Location" maxlength="100">
         </div>
       </div>
 
@@ -94,11 +94,11 @@
         <div class="row" v-for="dish in form.dishes" :key="dish.index">
           <div class="input-field col s3">
             
-            <input id="dish_name" name="dish_name" type="text" class="validate" v-model="dish.dish_name" placeholder="Dish Name">
+            <input id="dish_name" name="dish_name" type="text" class="validate" v-model="dish.dish_name" placeholder="Dish Name" maxlength="100">
           </div>
 
           <div class="input-field col s3">
-            <input id="dish_description" name="dish_description" type="text" class="validate" v-model="dish.dish_description" placeholder="Dish Description">
+            <input id="dish_description" name="dish_description" type="text" class="validate" v-model="dish.dish_description" placeholder="Dish Description" maxlength="300">
           </div>
 
           <div class="input-field col s3" id="dish_type_select">

@@ -16,7 +16,7 @@
           <form class="col s12" action="/admin/auctions/new-auction" method="post">
             <div class="row boxname">
               <div class="input-field col s4">
-                <input id="name" v-model="name" type="text" class="validate"/>
+                <input id="name" v-model="name" type="text" class="validate" maxlength="100"/>
                 <label for="name">Name</label>
               </div>
 
@@ -29,7 +29,7 @@
             </div>
 
             <div class="row">
-              <div class="input-field col s8 box" :class="{boxname:detectext(description)}">
+              <div class="input-field col s8 box" :class="{boxname:detectext(description)} ">
                 <textarea v-model="description" id="bio" class="materialize-textarea" maxlength="300"></textarea>
                 <label for="description">Description</label>
               </div>

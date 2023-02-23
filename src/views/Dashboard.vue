@@ -46,7 +46,7 @@
                     </form>
                 </router-link>
 
-                 <router-link router-link to="/checkrewards">
+                 <router-link router-link to="/checkrewards" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'business' || user.role == 'coordination' || user.role == 'admin'||user.role=='marketing'">
         
                     <button class="waves-effect blue lighten-2 btn-large dashboard-btn" ><i
                         class="large material-icons left">emoji_events</i>Claim Prizes</button>
@@ -97,9 +97,9 @@
                     </form>
                 </router-link>
 
-                <router-link router-link to="/students-app" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
+                <router-link router-link to="/students-app" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'||user.role=='marketing'">
                     <form method="get">
-                    <button v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                    <button v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn" ><i
                         class="large material-icons left">settings_cell</i>Students App</button>
                     </form>
                 </router-link>

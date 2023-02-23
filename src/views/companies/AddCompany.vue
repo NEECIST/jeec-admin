@@ -21,7 +21,7 @@
         enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s4">
-                <input class="col s12 validate" id="name" name="name" type="text" required v-model="name" placeholder="Name">
+                <input class="col s12 validate" id="name" name="name" type="text" required v-model="name" maxlength="100" placeholder="Name">
 
             </div>
 
@@ -58,7 +58,7 @@
 
         <div class="row">
             <div class="input-field col s6">
-                <input id="business_area" name="business_area" type="text" class="validate" v-model="business_area" placeholder="Business area">               
+                <input id="business_area" name="business_area" type="text" class="validate" v-model="business_area" maxlength="100" placeholder="Business area">               
             </div>
         </div>
 

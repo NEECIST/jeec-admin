@@ -22,7 +22,7 @@
 
           <div class="row s12">
             <div class="input-field col s4 boxname">
-              <input id="name" name="name" type="text" class="validate" value="speaker.name" v-model="name" required>
+              <input id="name" name="name" type="text" class="validate" value="speaker.name" v-model="name" required maxlength="100">
               <label for="name">Name</label>
             </div>
             
@@ -41,18 +41,18 @@
 
           <div class="row">
             <div class="input-field col s2 box" :class="{boxname:detectext(company)}">
-              <input id="company" name="company" type="text" value="speaker.company" v-model="company">
+              <input id="company" name="company" type="text" value="speaker.company" v-model="company" maxlength="100">
               <label for="company">Company</label>
             </div>
   
           
             <div class="input-field col s2 box" :class="{boxname:detectext(position)}">
-              <input id="position" name="position" type="text" value="speaker.position" v-model="position">
+              <input id="position" name="position" type="text" value="speaker.position" v-model="position" maxlength="100">
               <label for="position">Position</label>
             </div>
 
             <div class="input-field col s3 box" :class="{boxname:detectext(company_link)}">
-              <input id="company_link" name="company_link" type="text" value="speaker.company_link" v-model="company_link">
+              <input id="company_link" name="company_link" type="text" value="speaker.company_link" v-model="company_link" maxlength="100">
               <label for="company_link">Company Website</label>
             </div>
           </div>
@@ -60,7 +60,7 @@
 
           <div class="row">
             <div class="input-field col s4 box" :class="{boxname:detectext(country)}">
-              <input id="country" name="country" type="text" value="country" v-model="country">
+              <input id="country" name="country" type="text" value="country" v-model="country" maxlength="100">
               <label for="country">Country</label>
             </div>
           </div>
@@ -74,17 +74,17 @@
 
           <div class="row s12">
             <div class="input-field col s3 box" :class="{boxname:detectext(linkedin_url)}">
-              <input id="linkedin_url" name="linkedin_url" type="text" value="linkedin_url" v-model="linkedin_url">
+              <input id="linkedin_url" name="linkedin_url" type="text" value="linkedin_url" v-model="linkedin_url" maxlength="100">
               <label for="linkedin_url">LinkedIn</label>
             </div>
 
             <div class="input-field col s3 box" :class="{boxname:detectext(youtube_url)}">
-              <input id="youtube_url" name="youtube_url" type="text" v-model="youtube_url">
+              <input id="youtube_url" name="youtube_url" type="text" v-model="youtube_url" maxlength="100">
               <label for="youtube_url">Youtube url</label>
             </div>
 
             <div class="input-field col s3 box" :class="{boxname:detectext(website_url)}">
-              <input id="website_url" name="website_url" type="text" v-model="website_url">
+              <input id="website_url" name="website_url" type="text" v-model="website_url" maxlength="100">
               <label for="website_url">Website url</label>
             </div>
           </div>

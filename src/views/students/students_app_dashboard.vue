@@ -1,5 +1,5 @@
 <template>
-    <div class="students-app-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+    <div class="students-app-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'||role=='marketing'">
 
         <head-component/>
 
@@ -8,14 +8,14 @@
         <section-header-component name="Student App Management" description="Manage the JEEC Student App" back_page="/dashboard/"/>
 
         <div class="flexbox-btns" style="margin-top: 100px;">
-            <router-link router-link to="/levels">
+            <router-link router-link to="/levels" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
             
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">bar_chart</i>Levels</button>
             
             </router-link>
 
-            <router-link router-link to="/quests">
+            <router-link router-link to="/quests" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
             
             <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                     class="large material-icons left">bar_chart</i>Quests</button>
@@ -27,19 +27,19 @@
                         class="large material-icons left">emoji_events</i>Rewards</button>
             </router-link>
 
-            <router-link router-link to="/squads">
+            <router-link router-link to="/squads" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
             
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">groups</i>Squads</button>
             
             </router-link>
 
-            <router-link router-link to="/students">
+            <router-link router-link to="/students" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">account_circle</i>Students</button>
             </router-link>
 
-            <router-link router-link to="/tags">
+            <router-link router-link to="/tags" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">local_offer</i>Tags</button>
             </router-link>

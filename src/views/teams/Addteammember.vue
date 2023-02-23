@@ -19,24 +19,24 @@
       <form class="col s12" enctype="multipart/form-data">
         <div class="row">
           <div class="input-field col s5 boxname">
-            <input id="name" name="name" type="text" v-model="name" class="validate" required>
+            <input id="name" name="name" type="text" v-model="name" class="validate" required maxlength="100">
             <label for="name">Name</label>
           </div>
 
           <div class="input-field col s1 box" :class="{boxname:detectext(ist_id)}">
-            <input id="ist_id" name="ist_id" v-model="ist_id" type="text">
+            <input id="ist_id" name="ist_id" v-model="ist_id" type="text" maxlength="10">
             <label for="ist_id">IST_id</label>
           </div>
         </div>
 
         <div class="row">
           <div class="input-field col s3 box" :class="{boxname:detectext(email)}">
-            <input id="email" name="email" type="text" v-model="email" class="validate">
+            <input id="email" name="email" type="text" v-model="email" class="validate" maxlength="100">
             <label for="email">Email</label>
           </div>
 
           <div class="input-field col s3 box" :class="{boxname:detectext(linkedin_url)}">
-            <input id="linkedin_url" name="linkedin_url" v-model="linkedin_url" type="text">
+            <input id="linkedin_url" name="linkedin_url" v-model="linkedin_url" type="text" maxlength="150">
             <label for="linkedin_url">LinkedIn</label>
           </div>
         </div>

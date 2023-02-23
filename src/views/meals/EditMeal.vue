@@ -28,7 +28,7 @@
 
                 <div class="input-field col s3 validate">
                     <p>Location</p>
-                <input id="location" name="location" type="text" v-model="responsedata.meal.location" placeholder="Location">
+                <input id="location" name="location" type="text" v-model="responsedata.meal.location" maxlength="100" placeholder="Location">
                 </div>
             </div>
 
@@ -91,11 +91,11 @@
         <div class="row" v-for="dish in responsedata.dishes" :key="dish.index">
           <div class="input-field col s3">
             
-            <input id="dish_name" name="dish_name" type="text" class="validate" v-model="dish.name" placeholder="Dish Name">
+            <input id="dish_name" name="dish_name" type="text" class="validate" v-model="dish.name" placeholder="Dish Name" maxlength="100">
           </div>
 
           <div class="input-field col s3">
-            <input id="dish_description" name="dish_description" type="text" class="validate" v-model="dish.description" placeholder="Dish Description">
+            <input id="dish_description" name="dish_description" type="text" class="validate" v-model="dish.description" placeholder="Dish Description" maxlength="300">
           </div>
 
           <div class="input-field col s3" id="dish_type_select">
