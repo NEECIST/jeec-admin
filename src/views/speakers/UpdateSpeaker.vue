@@ -98,14 +98,14 @@
              </blockquote> 
          </div>
                 
-          <div class="file-field input-field" style="width:500px;">
-            <div class="btn">
+          <div class="file-field input-field">
+            <div class="btn" style="width:300px;position:relative">
               <i class="material-icons left">add_a_photo</i>
               <div v-if="this.create_url != 'erro'">
-                <span> change image </span>
+                <span> change speaker image </span>
               </div>
               <div v-else>
-                <span> add image </span>
+                <span> add speaker image </span>
               </div>
 
               <input type="file" name="file" @change="onFileSelected">
