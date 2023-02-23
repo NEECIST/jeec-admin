@@ -42,8 +42,6 @@
       </select>
     </form>
   </div>
-
-  {{this.event}}
  
   <div class="list">
     <blockquote v-if="error != null" class="create-error" style="margin-top: 150px;">

@@ -192,14 +192,12 @@ export default {
       this.users=[]
       for(let i=0;i<this.response_data.users.length;i++){
         if(this.response_data.users[i].name.includes(this.input)){
-          console.log("team user")
           this.users.push(this.response_data.users[i])
         }
       }
       this.company_users=[]
       for(let i=0;i<this.response_data.company_users.length;i++){
         if(this.response_data.company_users[i].name.includes(this.input)){
-          console.log("company user")
           this.company_users.push(this.response_data.company_users[i])
         }
       }
