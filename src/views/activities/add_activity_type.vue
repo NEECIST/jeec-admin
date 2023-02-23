@@ -1,5 +1,5 @@
 <template>
-    <div class="add-activity-type" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
+    <div class="add-activity-type" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'|| role =='partnerships'">
         <head-component/>
         
       <body>
@@ -25,7 +25,7 @@
 
                 <div class="row">
                     <div class="input-field col s8 box" :class="{boxname:detectext(description)}">
-                    <input v-model="description" id="description" class="materialize-textarea" maxlength="300">
+                    <input v-model="description" name="description" class="materialize-textarea" maxlength="300">
                     <label for="description">Description</label>
                     </div>
                 </div>

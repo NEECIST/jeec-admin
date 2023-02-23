@@ -1,5 +1,5 @@
 <template>
-    <div v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'business' || user.role == 'coordination' || user.role == 'admin'||user.role=='marketing'">
+    <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'||role=='marketing'|| role == 'partnerships'">
 
         <head-component/>
 
@@ -83,14 +83,16 @@
                 },
                 search_str:"",
                 search_bool:false,
+                role:''
             };
           },
     mounted(){
-     
+      this.role =  this.getRole()
     },
     methods:{
       ...mapGetters(["isAuthenticated"]),
       ...mapGetters(["StateUsername"]),
+      ...mapGetters(["getRole"]),
       search(e){
         e.preventDefault()
         this.search_bool=true

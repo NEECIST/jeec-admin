@@ -7,9 +7,9 @@
 
     <!-- <form action="{{ url_for('companies_api.company_logout') }}" method="get"> -->
     <router-link router-link to="/">
-      <form method="get">
-      <button class="waves-effect red lighten-2 btn-small right logout-btn" ><i class="material-icons left">lock</i>Log
-        out</button>
+      <form >
+        <button v-on:click="logout" class="waves-effect red lighten-2 btn-small right logout-btn"><i
+                            class="material-icons left">lock</i>Log out</button>
     </form>
     </router-link>
 
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: 'TopBar',
   props: {
@@ -31,6 +32,26 @@ export default {
     return{
       brain:require("../assets/brain.png"),
     };
+  },
+  methods:{
+    ...mapActions(["LogOut"]),
+    async logout(e) {
+      e.preventDefault()
+      try {
+          await this.LogOut()
+          if (!this.isAuthenticated()){
+              console.log("LogOut success")
+              this.$router.push("/")
+          }
+          else{
+              console.log("LogOut failed")
+          }
+          
+      } catch (error) {
+          console.log("LogOut failed")
+      }
+
+    },
   }
 }
 </script>

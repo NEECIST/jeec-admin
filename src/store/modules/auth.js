@@ -21,6 +21,7 @@ const getters = {
 
 const actions = {
 async LogIn({commit},bad_form) {
+  // console.log(CryptoJS.DES.encrypt('madlad26', process.env.VUE_APP_API_KEY).toString())
   const form = {
     username: bad_form.username,
     password: bad_form.password
@@ -38,7 +39,7 @@ async LogIn({commit},bad_form) {
   if (password != ""){
     password = CryptoJS.DES.decrypt(password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
     
-    //console.log(CryptoJS.DES.encrypt('FiZIwnPZHgoZxPYh', process.env.VUE_APP_API_KEY).toString())
+    
     // console.log(CryptoJS.DES.decrypt('U2FsdGVkX1/9mDtULMm8MIi6b3igsMB4L9Xsc+izObuyKlkhy4bFOg==', process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8))
     if (password.normalize() === form.password.normalize()){
       commit('setUser',form.username)

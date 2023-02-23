@@ -17,7 +17,7 @@
         </div>
         <br>
 
-        <form v-if="bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination'" method="get">
+        <form v-if="bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination'|| bigdata.role == 'partnerships'" method="get">
           <input hidden name="event" :value="bigdata.event.external_id" type="text">
           <router-link router-link :to="{ name: 'activity-types-dashboard' }">
             <button class="waves-effect blue lighten-2 btn add-btn right"><i class="material-icons left">edit</i>Activity
@@ -68,7 +68,7 @@
           <a v-if="search"  class="clear-search" :href="url_for_admin_api_activities_dashboard">clear search results</a>
         </div>
 
-        <form v-if="bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination'" method="get">
+        <form v-if="bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships'" method="get">
           <input hidden name="event" :value="bigdata.event.external_id" type="text">
           <router-link router-link :to="{ name: 'add-activity' }">
             <button class="waves-effect blue lighten-2 btn add-btn right"><i
@@ -180,7 +180,7 @@
 
                 <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
                          ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
-                         (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination')">
+                         (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
                   <form method="get" style="margin: 0;">
                     <router-link router-link :to="{ name: 'update-activity', params: { activity_id: activity.external_id }}">
                       <button title="Edit activity" class="waves-effect waves-light btn-floating"><i
@@ -188,7 +188,9 @@
                     </router-link>
                   </form>
                 </td>
-                <td>
+                <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                         ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
+                         (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
                   <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteActivity(activity.external_id)">
                     <i class="material-icons left">close</i>Delete Activity</button>
                 </td>
