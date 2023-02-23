@@ -134,47 +134,51 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="input-field col s3">
+            <div class="flex-container">
+              <div class="input-field flex-object">
                 <p>Choose companies</p>
-                <select v-model="companies_external_id" multiple name="company" id="companies" style="height:75px; width: 250px; display: block;">
+                <select v-model="companies_external_id" multiple name="company" id="companies" style="height:75px; display: block;">
                   <option value="" disabled></option>
                   <option v-for="company in bigdata.companies" :key="company.key" :value="company.external_id">{{ company.name }}</option>
                 </select>
               </div>
 
-              <div class="input-field col s3">
+              <div class="input-field flex-object">
                 <p>Choose speakers</p>
-                <select v-model="speakers_external_id" multiple name="speaker" id="speakers" style="height:75px; width: 250px; display: block;">
+                <select v-model="speakers_external_id" multiple name="speaker" id="speakers" style="height:75px; display: block;">
                   <option value="" disabled></option>
                   <option v-for="speaker in bigdata.speakers" :key="speaker.id" :value="speaker.external_id">{{ speaker.name }}</option>
                 </select>
                 
               </div>
 
-              <div class="input-field col s3">
+              <div class="input-field flex-object">
                 <p>Choose Moderator</p>
-                <select v-model="moderator_external_id" name="moderator" id="moderator" style="width: 250px; display: block;">
+                <select v-model="moderator_external_id" name="moderator" id="moderator" style="display: block;">
                   <option value="" disabled></option>
                   <option v-for="moderator in bigdata.speakers" :key="moderator.id" :value="moderator.external_id">{{ moderator.name }}</option>
                 </select>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s3">
+            
+              <div class="input-field flex-object">
                 <p>Choose tags</p>
-                <select v-model="tags_external_id" multiple name="tag" style="height:75px; width: 250px; display: block;">
+                <select v-model="tags_external_id" multiple name="tag" style="height:75px; display: block;">
                   <option value="" disabled></option>
                   <option v-for="tag in bigdata.tags" :key="tag.id" :value="tag.external_id">{{ tag.name }}</option>
                 </select>
               </div>
 
-              <div class="input-field col s3">
+              <div class="input-field flex-object">
                 <p>Choose Reward</p>
-                <select v-model="reward_external_id" name="reward" style="width: 250px; display: block;" required>
+                <select v-model="reward_external_id" name="reward" style="display: block;" required>
                   <option value=""></option>
                   <option v-for="reward in bigdata.rewards" :key="reward.id" :value="reward.external_id">{{ reward.name }}</option>
+                </select>
+              </div>
+              <div class="input-field flex-object" v-if="role == 'admin'">
+                <p>Choose Volunteers to monitor this activity</p>
+                <select multiple v-model="volunteers" name="volunteers" style="display: block; height:75px;">
+                  <option v-for="volunteer in bigdata.volunteers" :key="volunteer.name" :value="volunteer.id">{{ volunteer.name }}</option>
                 </select>
               </div>
             </div>
@@ -257,7 +261,8 @@
             tags_external_id: [],
             reward_external_id: '',
             code_workflow_external_id: '',
-            role:''
+            role:'',
+            volunteers:[]
         }
       },
       methods: {
@@ -318,7 +323,7 @@
                         code_workflow_external_id: this.code_workflow_external_id, activity_type_external_id: this.activity_type_external_id,
                         code_per_company: this.code_per_company, username: this.StateUsername(), companies_external_id: this.companies_external_id,
                         speakers_external_id: this.speakers_external_id, moderator_external_id: this.moderator_external_id, 
-                        tags_external_id: this.tags_external_id},{auth: {
+                        tags_external_id: this.tags_external_id, volunteers: this.volunteers},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {this.bigdata = response.data
@@ -386,5 +391,15 @@
     top: -20px;
     left: 10px;
     font-size: 12px;
+  }
+  .flex-container{
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .flex-object{
+    min-width:100px;
+    max-width:200px;
+    margin-left:30px;
+    margin-right:30px;
   }
 </style>

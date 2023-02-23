@@ -6,7 +6,8 @@ const state = {
   activity_id: '',
   activity_type_id: '',
   auction_id: '',
-  role:''
+  role:'',
+  id:-1,
 };
 
 const getters = {
@@ -16,7 +17,8 @@ const getters = {
     Activity_id: state => state.activity_id,
     ActivityType_id: state => state.activitytype_id,
     Auction_id: state => state.auction_id,
-    getRole: state => state.role
+    getRole: state => state.role,
+    getId: state => state.id
 };
 
 const actions = {
@@ -28,6 +30,7 @@ async LogIn({commit},bad_form) {
   }
   let password = ""
   let role = ""
+  let id = -1
   
   await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + '/login',{username : form.username}, {auth: {
     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
@@ -35,7 +38,7 @@ async LogIn({commit},bad_form) {
   }}).then(response=> {
     password = response.data.password
     role = response.data.role
-    
+    id = response.data.id
   if (password != ""){
     password = CryptoJS.DES.decrypt(password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
     
@@ -44,6 +47,7 @@ async LogIn({commit},bad_form) {
     if (password.normalize() === form.password.normalize()){
       commit('setUser',form.username)
       commit('setRole',role)
+      commit('setId',id)
       console.log("Updated authentication - success")
     }
     else{
@@ -86,6 +90,9 @@ const mutations = {
     setAuction_id(state, auction_id) {
       state.auction_id = auction_id
     },
+    setId(state, id){
+      state.id = id
+    }
     
 };
 
