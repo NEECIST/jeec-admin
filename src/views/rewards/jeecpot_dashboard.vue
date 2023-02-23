@@ -1,5 +1,5 @@
 <template>
-    <div class="jeecpot-rewards-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'|| role == 'marketing'">
+    <div class="jeecpot-rewards-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
         <navbar-component logo="brain.png"/>

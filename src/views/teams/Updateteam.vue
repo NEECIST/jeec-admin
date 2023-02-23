@@ -28,7 +28,7 @@
   
         <div class="row">
           <div class="input-field col s8 box" :class="{boxname:detectext(description)}">
-            <textarea name="description" id="description" v-model="description" class="materialize-textarea" maxlength="300"></textarea>
+            <textarea name="description" v-model="description" class="materialize-textarea" maxlength="300"></textarea>
             <label for="description">Description</label>
           </div>
         </div>

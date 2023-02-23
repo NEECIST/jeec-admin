@@ -1,5 +1,5 @@
 <template>
-    <div class="students-app-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'||role=='marketing'">
+    <div class="students-app-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
 
         <head-component/>
 
@@ -22,7 +22,7 @@
         
             </router-link>
 
-            <router-link router-link to="/rewards">
+            <router-link router-link to="/rewards" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">emoji_events</i>Rewards</button>
             </router-link>

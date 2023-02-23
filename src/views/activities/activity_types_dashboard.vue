@@ -1,5 +1,5 @@
 <template>
-    <div class="activity-types-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
+    <div class="activity-types-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin' || role == 'partnerships'">
       <head-component/>
       
       <body>

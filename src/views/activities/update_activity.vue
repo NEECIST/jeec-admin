@@ -1,5 +1,5 @@
 <template>
-    <div class="update-activity" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
+    <div class="update-activity" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'||role == 'partnerships'">
       <head-component/>
         
       <body>
@@ -34,7 +34,7 @@
 
             <div class="row">
               <div class="input-field col s8 box" :class="{boxname:detectext(bigdata.activity.description)}">
-                <textarea name="description" id="description" class="materialize-textarea" maxlength="300"
+                <textarea name="description" class="materialize-textarea" maxlength="300"
                   v-model="bigdata.activity.description"></textarea>
                 <label for="description">Description</label>
               </div>
