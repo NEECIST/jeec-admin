@@ -169,9 +169,8 @@
                 </td>
 
                 <td v-if="((a_type==activity.activity_type.name || a_type=='') &&
-                         ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))) && activity.day == bigdata.today"> <!--&& 
-                          (activity.code_work_flow.value == 'Admin generates code, student uses it and its deleted' ||  
-                          activity.code_work_flow.value == 'Admin generates code, multiple students use it, admin deletes it')-->
+                         ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))) && activity.day == bigdata.today && 
+                         (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships'|| bigdata.role == 'marketing'|| (bigdata.role == 'team' && valid_id(activity.volunteers)))"> 
                   <button v-on:click="readCode(activity.external_id)" title="Read QR Code" data-target="modal1" :data-name= activity.external_id 
                     class="waves-effect waves-light green btn-floating modal-trigger code-btn"><i
                       class="material-icons left">qr_code</i>Read Code</button>
@@ -234,6 +233,7 @@
           
       },
       methods: {
+        ...mapGetters(["getId"]),
         ...mapGetters(["StateUsername"]),
         ...mapGetters(["Event_id"]),
         ...mapMutations(["setEvent_id"]),
@@ -253,6 +253,14 @@
         }} ).then(response => {this.bigdata = response.data
               this.selected_event_id = this.bigdata.event.external_id})
             }})
+        },
+        valid_id(volunteers){
+          for(let i=0;i<volunteers.length;i++){
+            if(this.id == volunteers[i]){
+              return true
+            }
+            return false
+          }
         },
 
         changeActivityType: function (activity) {
@@ -304,7 +312,8 @@
             a_type: '',
             name_search:'',
             number: '', code: '', activities_codes: '', 
-            sucess: '', activity_external_id: '', selected_event_id: ''
+            sucess: '', activity_external_id: '', selected_event_id: '',
+            id:-1
         }
       },
       mounted() {
@@ -313,6 +322,7 @@
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {this.bigdata = response.data
         this.selected_event_id = this.bigdata.event.external_id})
+        this.id = this.getId()
       }
       
     }

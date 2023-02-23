@@ -149,8 +149,8 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="input-field col s3">
+            <div class="flex-container">
+              <div class="input-field flex-object">
                 <p>Choose companies</p>
                 <select v-model="bigdata.companies_external_id" multiple style="height:75px; width: 250px; display: block;">
                   <option value="" disabled></option>
@@ -158,7 +158,7 @@
                 </select>
               </div>
 
-              <div class="input-field col s3">
+              <div class="input-field flex-object">
                 <p>Choose speakers</p>
                 <select v-model="bigdata.speakers_external_id" multiple style="height:75px; width: 250px; display: block;">
                   <option value="" disabled></option>
@@ -167,17 +167,15 @@
                 </select>
               </div>
 
-              <div class="input-field col s3">
+              <div class="input-field flex-object">
                 <p>Choose Moderator</p>
                 <select v-model="bigdata.moderator_external_id" style="width: 250px; display: block;">
                   <option value="" disabled></option>
                   <option v-for="moderator in bigdata.speakers" :key="moderator.id" name="moderator" :value="moderator.external_id" selected="selected">{{ moderator.name }}</option>
                 </select>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s3">
+            
+              <div class="input-field flex-object">
                 <p>Choose tags</p>
                 <select v-model="bigdata.tags_external_id" multiple style="height:75px; width: 250px; display: block;">
                   <option value="" disabled></option>
@@ -186,12 +184,19 @@
                 </select>
               </div>
 
-              <div class="input-field col s3">
+              <div class="input-field flex-object">
                 <p>Choose Reward</p>
                 <select v-model="bigdata.reward_external_id" style="width: 250px; display: block;" required>
                   <option value="" disabled></option>
                   <option v-for="reward in bigdata.rewards" :key="reward.id" name="reward" :value="reward.external_id" selected="selected">{{ reward.name
                     }}</option>
+                </select>
+              </div>
+
+              <div class="input-field flex-object" v-if="role == 'admin'">
+                <p>Choose Volunteers to monitor this activity</p>
+                <select multiple v-model="bigdata.activity.volunteers" name="volunteers" style="display: block; height:75px;">
+                  <option v-for="volunteer in bigdata.volunteers" :key="volunteer.name" :value="volunteer.id">{{ volunteer.name }}</option>
                 </select>
               </div>
             </div>
@@ -252,13 +257,13 @@
         return{
             bigdata: {
               error:"",
-              activity_types:[{name:'tipo1', description:'description1'}, {name:'tipo2', description:'description2'}],
+              activity_types:[],
               activity: {},
               //code_workflows:[{value: 1}],
-              companies:[{name:"Empresa1"}, {name:"Empresa2"}],
-              speakers:[{name:"Speaker1"}, {name:"Speaker2"}],
-              rewards:[{name:"Reward1"}, {name:"Reward2"}],
-              tags:[{name:"Tag1"}, {name:"Tag2"}],
+              companies:[],
+              speakers:[],
+              rewards:[],
+              tags:[],
               //company_activities: [{name:'Nome Atividade', description:'Descrição atividade', location:'Lisboa', 
               //                    day:'1 Setembro 2022', time:'14h', end_time:'15h', activity_types:[{name:'tipo1', 
               //                    description:'description1'}], chat_type:{name: null}, quest: true, code_per_company: true, registration_open: true}],
@@ -273,6 +278,7 @@
               speakers_external_id: [],
               moderator_external_id: '',
               reward_external_id: '',
+              volunteers:[]
             },
             
             points: '1', quest: false, registration_open: false, zoom_link:'LinkZOOM',
@@ -317,10 +323,10 @@
                 this.bigdata.error = 'Missing "Activity Type"!'
                 return
             }
-            if (this.bigdata.reward_external_id == '') {
-                this.bigdata.error = 'Missing "Reward"!'
-                return
-            }
+            // if (this.bigdata.reward_external_id == '') {
+            //     this.bigdata.error = 'Missing "Reward"!'
+            //     return
+            // }
             // if (this.bigdata.moderator_external_id == '') {
             //     this.bigdata.error = 'Missing "Moderator"!'
             //     return
@@ -348,7 +354,7 @@
               username: this.StateUsername(), 
               companies_external_id: this.bigdata.companies_external_id, speakers_external_id: this.bigdata.speakers_external_id, 
               moderator_external_id: this.bigdata.moderator_external_id, tags_external_id: this.bigdata.tags_external_id, 
-              activity_type_external_id: this.bigdata.activity_type_external_id},{auth: {
+              activity_type_external_id: this.bigdata.activity_type_external_id, volunteers: this.bigdata.activity.volunteers},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {this.bigdata = response.data
