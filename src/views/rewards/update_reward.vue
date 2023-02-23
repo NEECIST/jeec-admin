@@ -1,5 +1,5 @@
 <template>
-    <div class="update-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+    <div class="update-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'|| role == 'marketing'">
         <head-component/>
 
         <navbar-component logo="brain.png"/>
@@ -28,7 +28,7 @@
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s5 left">
-                        <input id="name" name="name" type="text" class="validate" v-model="name" required>               <!--shit missing in value-->
+                        <input id="name" name="name" type="text" class="validate" v-model="name" required maxlength="100">               <!--shit missing in value-->
 
                         <label for="name" v-if="name == ''">
                             Name

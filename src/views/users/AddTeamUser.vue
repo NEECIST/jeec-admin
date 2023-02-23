@@ -17,7 +17,7 @@
     <form class="col s12" @submit="createTeamUser">
       <div class="row">
         <div class="input-field col s12" style="margin-left: 30px;">
-          <input class="col s4 validate" id="name" name="name" type="text" v-model="user.name" placeholder="Name" required>
+          <input class="col s4 validate" id="name" name="name" type="text" v-model="user.name" placeholder="Name" maxlength="100" required>
         </div>
       </div>
 
@@ -62,7 +62,7 @@ export default {
             role:'member',
             password:'',
         },
-        roles:['webdev','webdev_tl','business','coordination','partnerships','team','admin'],
+        roles:['webdev','webdev_tl','business','coordination','partnerships','team','admin','marketing'],
         error:'',
         current_user: "regular admin user",
         siren:require("../../assets/siren.png"),

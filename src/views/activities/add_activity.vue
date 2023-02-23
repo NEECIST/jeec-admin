@@ -17,7 +17,7 @@
           <form class="col s12" action="/admin/activities/new-activity" method="post" id="form">
             <div class="row boxname">
               <div class="input-field col s5">
-                <input id="name" v-model="name" type="text" class="validate" required>
+                <input id="name" v-model="name" type="text" class="validate" required maxlength="100">
                 <label for="name">Name</label>
               </div>
 
@@ -38,7 +38,7 @@
 
             <div class="row s7">
               <div class="input-field col s3 box" :class="{boxname:detectext(location)}">
-                <input id="location" v-model="location" type="text" class="validate">
+                <input id="location" v-model="location" type="text" class="validate" maxlength="100">
                 <label for="location">Location</label>
               </div>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="rewards-dasboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+    <div class="rewards-dasboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'|| role == 'marketing'">
         <div>
         <head-component/>
 

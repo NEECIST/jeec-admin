@@ -18,7 +18,7 @@
                 <input hidden style="color: white;" name="event_id" :value="bigdata.event.external_id" type="text">
                 <div class="row boxname">
                     <div class="input-field col s5">
-                    <input id="name" v-model="name" type="text" class="validate" required>
+                    <input id="name" v-model="name" type="text" class="validate" maxlength="100" required>
                     <label for="name">Name</label>
                     </div>
                 </div>

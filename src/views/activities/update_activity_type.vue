@@ -17,7 +17,7 @@
           <form class="col s12" method="post" enctype="multipart/form-data">
             <div class="row">
               <div class="input-field col s5 boxname">
-                <input id="name" name="name" type="text" class="validate" v-model="bigdata.activity_type.name" required>
+                <input id="name" name="name" type="text" class="validate" v-model="bigdata.activity_type.name" maxlength="100" required>
                 <label for="name">Name</label>
               </div>
             </div>

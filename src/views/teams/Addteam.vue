@@ -15,7 +15,7 @@
     <form class="col s12">
       <div class="row">
         <div class="input-field col s5 boxname">
-          <input id="name" name="name" type="text" class="validate" v-model="name" required>
+          <input id="name" name="name" type="text" class="validate" v-model="name" required maxlength="100">
           <label for="name">Name</label>
         </div>
 

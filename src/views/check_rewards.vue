@@ -1,5 +1,5 @@
 <template>
-    <div class="banned-students-dashboard">
+    <div v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'business' || user.role == 'coordination' || user.role == 'admin'||user.role=='marketing'">
 
         <head-component/>
 

@@ -20,7 +20,7 @@
           <form class="col s12 boxname" method="post">
             <div class="row">
               <div class="input-field col s4">
-                <input id="name" name="name" type="text" class="validate" v-model="bigdata.auction.name" required>
+                <input id="name" name="name" type="text" class="validate" v-model="bigdata.auction.name" maxlength="100" required>
                 <label for="name">Name</label>
               </div>
 

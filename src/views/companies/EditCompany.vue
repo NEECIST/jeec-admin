@@ -35,7 +35,7 @@
             
             <div class="input-field col s4">
               Name
-              <input class="col s12 validate" v-model="responsedata.company.name" type="text">
+              <input class="col s12 validate" v-model="responsedata.company.name" type="text" maxlength="100">
             </div>
 
             <div class="col">
@@ -71,7 +71,7 @@
           <div class="row">
             <div class="input-field col s6">
               Business area
-              <input v-model="responsedata.company.business_area" type="text">
+              <input v-model="responsedata.company.business_area" type="text" maxlength="100">
             </div>
           </div>
 

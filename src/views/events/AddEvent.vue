@@ -19,7 +19,7 @@
 
       <div class="row">
         <div class="input-field col s12">
-          <input class="col s5 validate" id="name" name="name" type="text" required placeholder="Name" v-model="name">
+          <input class="col s5 validate" id="name" name="name" type="text" required placeholder="Name" v-model="name" maxlength="100">
         </div>
 
         
@@ -73,11 +73,11 @@
 
       <div class="row">
         <div class="input-field col s5">
-          <input class="col s12 validate" id="location" name="location" type="text" placeholder="Location" v-model="location">
+          <input class="col s12 validate" id="location" name="location" type="text" placeholder="Location" v-model="location" maxlength="100">
         </div>
 
         <div class="input-field col s3">
-          <input id="email" name="email" type="email" class="validate" placeholder="Contact email" v-model="email">
+          <input id="email" name="email" type="email" class="validate" placeholder="Contact email" v-model="email" maxlength="100">
           <span class="helper-text" data-error="wrong format" data-success="right"></span>
         </div>
       </div>
@@ -86,22 +86,22 @@
       <div class="row">
         <div class="input-field col s2">
           <i class="material-icons left">contacts</i>Facebook
-          <input id="facebook_link" name="facebook_link" type="url" class="validate" v-model="facebook_link">
+          <input id="facebook_link" name="facebook_link" type="url" class="validate" v-model="facebook_link" maxlength="100">
         </div>
 
         <div class="input-field col s2">
           <i class="material-icons left">event</i>Facebook event
-          <input id="facebook_event_link" name="facebook_event_link" type="url" class="validate" v-model="facebook_event_link">
+          <input id="facebook_event_link" name="facebook_event_link" type="url" class="validate" v-model="facebook_event_link" maxlength="100">
         </div>
 
         <div class="input-field col s2">
           <i class="material-icons left">movie</i>Youtube
-          <input id="youtube_link" name="youtube_link" type="url" class="validate" v-model="youtube_link">
+          <input id="youtube_link" name="youtube_link" type="url" class="validate" v-model="youtube_link" maxlength="100">
         </div>
 
         <div class="input-field col s2">
           <i class="material-icons left">camera</i>Instagram
-          <input id="instagram_link" name="instagram_link" type="url" class="validate" v-model="instagram_link">
+          <input id="instagram_link" name="instagram_link" type="url" class="validate" v-model="instagram_link" maxlength="100">
         </div>
       </div>
 
