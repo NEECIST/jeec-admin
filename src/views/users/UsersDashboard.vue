@@ -59,7 +59,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in response_data.users" :key="user.name">
+        <tr v-for="user in users" :key="user.name">
           <td>
             <b>
               {{ user.username }}
@@ -96,7 +96,7 @@
                   class="material-icons left">delete</i>Delete</button>
           </td>
         </tr>
-        <tr v-for="company_user in response_data.company_users" :key="company_user.name">
+        <tr v-for="company_user in company_users" :key="company_user.name">
           <td>
             <b>
               {{ company_user.username }}
@@ -171,6 +171,8 @@ export default {
         company_users:[],
         error:'',
       },
+      users:[],
+      company_users:[],
       input:'',
       search: false,
       // current_user:this.StateUsername(),
@@ -187,38 +189,45 @@ export default {
     ...mapGetters(["CompanyImage"]),
     searchUsers(e){
       e.preventDefault();
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss',{name:this.input},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then((response)=>{
-        this.response_data=response.data;
-        this.count = response.data.users.length + response.data.company_users.length
-        for(var i=0;i<this.response_data.users.length;i++){
-          this.response_data.users[i].password = CryptoJS.DES.decrypt(this.response_data.users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+      this.users=[]
+      for(let i=0;i<this.response_data.users.length;i++){
+        if(this.response_data.users[i].name.includes(this.input)){
+          console.log("team user")
+          this.users.push(this.response_data.users[i])
         }
-        for(i=0;i<this.response_data.company_users.length;i++){
-          this.response_data.company_users[i].password = CryptoJS.DES.decrypt(this.response_data.company_users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+      }
+      this.company_users=[]
+      for(let i=0;i<this.response_data.company_users.length;i++){
+        if(this.response_data.company_users[i].name.includes(this.input)){
+          console.log("company user")
+          this.company_users.push(this.response_data.company_users[i])
         }
-      })
+      }
+      this.count = this.company_users.length + this.users.length
+      
+      // axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss',{name:this.input},{auth: {
+      //     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+      //     password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+      //   }}).then((response)=>{
+      //   this.response_data=response.data;
+      //   this.count = response.data.users.length + response.data.company_users.length
+      //   for(var i=0;i<this.response_data.users.length;i++){
+      //     this.response_data.users[i].password = CryptoJS.DES.decrypt(this.response_data.users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+      //   }
+      //   for(i=0;i<this.response_data.company_users.length;i++){
+      //     this.response_data.company_users[i].password = CryptoJS.DES.decrypt(this.response_data.company_users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
+      //   }
+      // })
+
       this.search=true
     },
     undoSearch(e){
       e.preventDefault();
-      axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/userss',{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then((response)=>{
-        this.response_data=response.data;
-        this.count = response.data.users.length + response.data.company_users.length
-        for(var i=0;i<this.response_data.users.length;i++){
-          this.response_data.users[i].password = CryptoJS.DES.decrypt(this.response_data.users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
-        }
-        for(i=0;i<this.response_data.company_users.length;i++){
-          this.response_data.company_users[i].password = CryptoJS.DES.decrypt(this.response_data.company_users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
-        }
-      })
+      this.users = this.response_data.users
+      this.company_users = this.response_data.company_users
       this.search=false
       this.input = ''
+      this.count = this.company_users.length + this.users.length
     },
     deleteUser(external_id){
       axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/userss/delete',{external_id:external_id},{auth: {
@@ -257,10 +266,14 @@ export default {
         for(i=0;i<this.response_data.company_users.length;i++){
           this.response_data.company_users[i].password = CryptoJS.DES.decrypt(this.response_data.company_users[i].password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
         }
+        this.users = this.response_data.users
+        this.company_users = this.response_data.company_users
+
         // const password = Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)
         // const hashed = CryptoJS.AES.encrypt(password, process.env.VUE_APP_API_KEY).toString(CryptoJS.enc.Utf8);
         // console.log(hashed)
       })
+    
   },
 }
 
