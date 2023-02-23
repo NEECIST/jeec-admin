@@ -62,7 +62,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input v-if="fileToUpload != null" class="file-path validate" type="text" :placeholder="fileSelected">
-                        <input v-else class="file-path validate" type="text" placeholder="use .png with < 200kB">
+                        <input v-else class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
                     </div>
                 </div>
 

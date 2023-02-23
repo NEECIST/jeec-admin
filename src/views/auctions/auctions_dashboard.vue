@@ -103,13 +103,9 @@
         return{
             bigdata: {
               error:"",
-              auctions:[{name: "auction1", minimum_value: 1, description:'descrição auction', 
-                  starting_date: '1/9/2022', closing_date: '2/9/2022',
-                  starting_time: '14h', closing_time: '15h', highest_bid:'1', participants: [], external_id: ''
-                },
-              ],
+              auctions:[],
             },
-            current_user:{role:{name:'admin'}},
+            current_user:{},
             auctions_management: '',
             description_auctions: '',
             username: '',

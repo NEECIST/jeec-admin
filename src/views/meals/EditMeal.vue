@@ -16,7 +16,7 @@
         </blockquote>
    
 
-        <form class="col s12" @submit="updateMeal">
+        <form class="col s12" >
 
                 <div class="row">
                 <div class="input-field col s2">
@@ -111,9 +111,9 @@
 
     <button id="add" type="button" title="add_dish" @click="addDish" class="waves-effect green lighten-2 btn add-btn left"><i class="material-icons left">add</i>Add dish</button>
 
-      <button type="submit" class="waves-effect blue lighten-2 btn add-btn"><i class="material-icons left">save</i>Save Meal</button>
+      <button type="submit" class="waves-effect blue lighten-2 btn add-btn" @click="updateMeal"><i class="material-icons left">save</i>Save Meal</button>
 
-      <button class="waves-effect red darken-2 btn add-btn right"><i class="material-icons left" @click="deleteMeal">clear</i>Delete Meal</button>
+      <button class="waves-effect red darken-2 btn add-btn right" @click="deleteMeal"><i class="material-icons left">clear</i>Delete Meal</button>
      
     </form>
         
@@ -213,11 +213,16 @@ methods:{
             this.responsedata.error = response.data
             this.$router.push("/meals");})
   },
-  deleteMeal(){
+  deleteMeal(e){
+    e.preventDefault();
     axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/update-meal/delete",{meal_external_id:this.$route.params.meal_external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=> this.responsedata.error = response.data)
+        }}).then(response=> {
+          this.responsedata.error = response.data
+          this.$router.push("/meals")
+            
+        })
   }
 }
 }
