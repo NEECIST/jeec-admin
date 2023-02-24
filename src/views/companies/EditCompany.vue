@@ -13,7 +13,7 @@
     <div class="create-form">
         
         <blockquote v-if="responsedata.error!=''" class="create-error">
-          {{ error }}
+          {{ responsedata.error }}
         </blockquote>
       
 
@@ -245,8 +245,8 @@ methods:{
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {
-            this.error = response.data
-            if(this.error==""){
+            this.responsedata.error = response.data
+            if(this.responsedata.error==""){
                 this.$router.push("/companies")
             }
         })
