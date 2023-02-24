@@ -233,9 +233,13 @@
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/speaker_external_id' ,fd,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => this.bigdata2 = response.data)
-          this.$router.push("/speakers")
-
+        }}).then(response => {
+          this.error = response.data.error
+          if(this.error == ''){
+            this.$router.push("/speakers")
+          }
+          
+        })
          },
          
          forceFileDownload(response, title) {

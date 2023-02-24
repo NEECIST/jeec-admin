@@ -193,8 +193,12 @@
         axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-speaker-vue',fd,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }} ).then(response => this.bigdata2 = response.data)
-        this.$router.push("/speakers")
+        }} ).then(response => {
+          this.error = response.data.error
+          if(this.error==''){
+            this.$router.push("/speakers")
+          }
+        })
         
       }
 
