@@ -455,11 +455,17 @@ async mounted(){
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response=> this.responsedata = response.data)
+        console.log("Vamos ver as imagens")
   if(this.responsedata.event.image1){
+        console.log("A primeira existe")
     axios({
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent1',
           method: 'POST',
           responseType: 'arraybuffer',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        },
           data: {
             external_id: this.$route.params.event_external_id,
           }
@@ -474,6 +480,10 @@ async mounted(){
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent2',
           method: 'POST',
           responseType: 'arraybuffer',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        },
           data: {
             external_id: this.$route.params.event_external_id,
           }
@@ -488,6 +498,10 @@ async mounted(){
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent3',
           method: 'POST',
           responseType: 'arraybuffer',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        },
           data: {
             external_id: this.$route.params.event_external_id,
           }
@@ -502,6 +516,10 @@ async mounted(){
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimageevent4',
           method: 'POST',
           responseType: 'arraybuffer',
+          auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        },
           data: {
             external_id: this.$route.params.event_external_id,
           }
