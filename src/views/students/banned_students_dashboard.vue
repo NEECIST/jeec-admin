@@ -46,7 +46,7 @@
 
                             <td>
                                 <form onsubmit="return confirm('Are you sure you want to unban this student?');">
-                                    <button title="Ban student" class="waves-effect waves-light btn-floating right" @click="unban(student.external_id)">
+                                    <button title="Unban student" class="waves-effect waves-light btn-floating right" @click="unban(student.external_id)">
                                         <i class="material-icons red left">person_remove</i>Ban</button>
                                 </form>
                             </td>

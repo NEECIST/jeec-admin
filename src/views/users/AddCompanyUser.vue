@@ -32,7 +32,7 @@
 
       <div class="row">
         <div class="input-field col s9" style="margin-left: 30px;">
-          <input id="email" name="email" type="text" v-model="user.email" placeholder="Email" required maxlength="100">
+          <input id="email" name="email" type="text" v-model="user.email" placeholder="Email" maxlength="100">
         </div>
       </div>
 
