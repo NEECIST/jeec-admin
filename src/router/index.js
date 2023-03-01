@@ -31,6 +31,7 @@ import banned_students_dashboard from '../views/students/banned_students_dashboa
 import students_dashboard from '../views/students/students_dashboard.vue'
 import add_reward from '../views/rewards/add_reward.vue'
 import update_reward from '../views/rewards/update_reward.vue'
+import update_squad_reward from '../views/rewards/update_squad_reward.vue'
 import rewards_dashboard from '../views/rewards/rewards_dashboard.vue'
 import squad_rewards_dashboard from '../views/rewards/squad_rewards_dashboard.vue'
 import jeecpot_rewards_dashboard from '../views/rewards/jeecpot_dashboard.vue'
@@ -51,6 +52,8 @@ import UsersDashboard from '../views/users/UsersDashboard.vue'
 import Quests from '../views/quests/Quests.vue'
 import AddQuest from '../views/quests/AddQuest.vue'
 import UpdateQuest from '../views/quests/UpdateQuest.vue'
+import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
+import DistributeRewards from '../views/activities/distribute_rewards'
 
 Vue.use(VueRouter)
 
@@ -59,6 +62,11 @@ const routes = [
     path: '/companies/add-company',
     name: 'add-company',
     component: AddCompany
+   },
+   {
+    path: '/squad_rewards/add',
+    name: 'add-squad-reward',
+    component: AddSquadRewards
    },
    {
     path: '/companies/add-event',
@@ -141,6 +149,11 @@ const routes = [
     component: Addteammember
   },
   {
+    path: '/activities/distribute_rewards',
+    name: 'distribute-rewards',
+    component: DistributeRewards
+  },
+  {
     path: '/teams/',
     name: 'teamsdashboard-main',
     component: Teamsdashboard
@@ -206,6 +219,12 @@ const routes = [
     path: '/rewards/update/:external_id',
     name: 'update-reward',
     component: update_reward, 
+  },
+
+  {
+    path: '/rewards/squad/update/:external_id',
+    name: 'update-squad-reward',
+    component: update_squad_reward, 
   },
 
   {

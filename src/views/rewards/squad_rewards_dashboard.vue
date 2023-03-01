@@ -8,8 +8,15 @@
 
         <section-title-component section="List of Squad Rewards"/>
 
+        <div>
+            <router-link router-link to="/squad_rewards/add">
+                <button class="waves-effect blue lighten-2 btn add-btn right"><i
+                    class="material-icons left">add</i>Squad Reward</button>
+            </router-link>
+        </div>
+
         <div class="list">
-            <div v-if="error != null">
+            <div v-if="error != ''">
                 <blockquote class="create-error">
                     {{ error }}
                 </blockquote>
@@ -20,6 +27,8 @@
                         <tr>
                             <th>Date</th>
                             <th>Reward</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,11 +38,20 @@
                             </td>
 
                             <td>
-                                <form method="post" onsubmit="confirm('Are you sure you want to change the reward?');">
-                                    <select v-model="reward.id" class="form-control">
-                                        <option v-for="reward in rewards" :key="reward.id" :value="reward.name">{{ reward.name }}</option>
-                                    </select>
+                                <b>{{ squad_reward.name }}</b>
+                            </td>
+
+                            <td>
+                                <form method="get" style="margin: 0;">
+                                    <router-link router-link :to="{ name: 'update-squad-reward', params: { external_id: squad_reward.external_id }}">
+                                    <button title="Edit Squad Reward" class="waves-effect waves-light btn-floating"><i
+                                        class="material-icons left">edit</i>Edit</button>
+                                    </router-link>
                                 </form>
+                            </td>
+                            <td>
+                                <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteSquadReward(squad_reward.external_id)">
+                                <i class="material-icons left">close</i>Delete Squad Reward</button>
                             </td>
                         </tr>
                     </tbody>
@@ -45,6 +63,8 @@
 
 <script>
     import { mapGetters } from "vuex";
+    import axios from 'axios';
+
     export default {
         name: 'squad-rewards-dashboard',
         components: {
@@ -53,21 +73,46 @@
         
         data(){
             return{
-                error: null,
+                error: '',
                 squad_rewards: [{reward_id: '#', date: '27/11'}, {reward_id: '#2', date: '28/11'},],
                 reward: '',
                 rewards: [
                     {id: '#', name: 'something'},
                     {id: '#2', name: 'something2'},
                 ],
-                role:''
+                role:'',
+                errorr: ''
             }
         },
         methods:{
             ...mapGetters(["getRole"]),
+            async deleteSquadReward(external_id) {
+                await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/deletesquadreward_vue',{external_id: external_id},{auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response => 
+                {const data = response.data; // [{}, {}]
+                this.errorr = data.error;
+                if (this.errorr == '') {
+                    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/squadrewards_vue',{}, {auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                        }}).then(response => {
+                            const data = response.data; // [{}, {}]
+                            this.squad_rewards = data.squad_rewards;
+                            this.rewards = data.rewards})
+                }})
+            },
         },
         mounted(){
             this.role = this.getRole()
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/squadrewards_vue',{}, {auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response => {
+                    const data = response.data; // [{}, {}]
+                    this.squad_rewards = data.squad_rewards;
+                    this.rewards = data.rewards})
         },
     }
 </script>
