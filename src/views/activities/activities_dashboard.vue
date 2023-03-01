@@ -128,7 +128,7 @@
                 <td v-else-if="(a_type==activity.activity_type.name || a_type=='') &&
                          ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
                          activity.description.length >= 75">
-                    {{ activity.description(0,75) }} 
+                    {{ activity.description.substring(0,75) }} 
                 </td>
 
                 <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
