@@ -37,7 +37,7 @@
             </div>
 
             <div class="row s7">
-              <div class="input-field col s3 box" :class="{boxname:detectext(location)}">
+              <div class="input-field col s2 box" :class="{boxname:detectext(location)}">
                 <input id="location" v-model="location" type="text" class="validate" maxlength="100">
                 <label for="location">Location</label>
               </div>
@@ -65,54 +65,6 @@
               </div>
             </div>
 
-            <div class="row s8">
-              <div class="col s2" style="margin-right: 20px;">
-                <p>
-                  Create chat channel:
-                  <label style="margin-right: 20px;">
-                    <input v-model="chat" class="with-gap" name="chat" type="radio" value="general" />
-                    <span>General</span>
-                  </label>
-                  <label style="margin-right: 20px;">
-                    <input v-model="chat" class="with-gap" name="chat" type="radio" value="individual" />
-                    <span>Individual</span>
-                  </label>
-                  <label>
-                    <input v-model="chat" class="with-gap" name="chat" type="radio" value="none" checked />
-                    <span>No</span>
-                  </label>
-                </p>
-              </div>
-
-              <div class="col s2">
-                <p>
-                  Activity is a Quest in the App:
-                  <label style="margin-right: 20px;">
-                    <input v-model="quest" class="with-gap" name="quest" type="radio" value="true" />
-                    <span>Yes</span>
-                  </label>
-                  <label>
-                    <input v-model="quest" class="with-gap" name="quest" type="radio" value="false" checked />
-                    <span>No</span>
-                  </label>
-                </p>
-              </div>
-
-              <div class="input-field col s2 box" :class="{boxname:detectext(points)}">
-                <input id="points" v-model="points" type="number" min="0" class="validate">
-                <label for="points">Points</label>
-              </div>
-            </div>
-
-            <div class="row s10">
-              <div class="col s7">
-                <div class="input-field box" :class="{boxname:detectext(zoom_link)}">
-                  <input id="zoom_link" v-model="zoom_link" type="url" class="validate">
-                  <label for="zoom_link">ZOOM URL</label>
-                </div>
-              </div>
-            </div>
-            
             <div class="row s10">
               <p>Registration Open:</p>
               <p class="col s2">
@@ -134,12 +86,34 @@
               </div>
             </div>
 
+
             <div class="flex-container">
+              <div class="input-field flex-object" v-if="role == 'admin'">
+                <p>Choose Companies to add to activity</p>
+                <vue-multi-select
+                v-model="companies_external_id"
+                search
+                :btnLabel="btnLabel2"
+                :filters="filters"
+                :options="options2"
+                :selectOptions="bigdata.companies"/>
+              </div>
+              <div class="input-field flex-object" v-if="role == 'admin'">
+                <p>Choose Volunteers to monitor this activity</p>
+                <vue-multi-select
+                v-model="volunteers"
+                search
+                :btnLabel="btnLabel"
+                :filters="filters"
+                :options="options"
+                :selectOptions="bigdata.volunteers"/>
+              </div>
+
               <div class="input-field flex-object">
-                <p>Choose companies</p>
-                <select v-model="companies_external_id" multiple name="company" id="companies" style="height:75px; display: block;">
+                <p>Choose tags</p>
+                <select v-model="tags_external_id" multiple name="tag" style="height:75px; display: block;">
                   <option value="" disabled></option>
-                  <option v-for="company in bigdata.companies" :key="company.key" :value="company.external_id">{{ company.name }}</option>
+                  <option v-for="tag in bigdata.tags" :key="tag.id" :value="tag.external_id">{{ tag.name }}</option>
                 </select>
               </div>
 
@@ -159,14 +133,6 @@
                   <option v-for="moderator in bigdata.speakers" :key="moderator.id" :value="moderator.external_id">{{ moderator.name }}</option>
                 </select>
               </div>
-            
-              <div class="input-field flex-object">
-                <p>Choose tags</p>
-                <select v-model="tags_external_id" multiple name="tag" style="height:75px; display: block;">
-                  <option value="" disabled></option>
-                  <option v-for="tag in bigdata.tags" :key="tag.id" :value="tag.external_id">{{ tag.name }}</option>
-                </select>
-              </div>
 
               <div class="input-field flex-object">
                 <p>Choose Reward</p>
@@ -175,37 +141,9 @@
                   <option v-for="reward in bigdata.rewards" :key="reward.id" :value="reward.external_id">{{ reward.name }}</option>
                 </select>
               </div>
-              <div class="input-field flex-object" v-if="role == 'admin'">
-                <p>Choose Volunteers to monitor this activity</p>
-                <select multiple v-model="volunteers" name="volunteers" style="display: block; height:75px;">
-                  <option v-for="volunteer in bigdata.volunteers" :key="volunteer.name" :value="volunteer.id">{{ volunteer.name }}</option>
-                </select>
-              </div>
+
+              
             </div>
-
-            <!--<div class="row">
-              <div class="input-field col s5">
-                <p>Code workflow</p>
-                <select v-model="code_workflow_external_id" name="code_work_flow" class="form-control" style="width: 250px; display: block;" required>
-                  <option value="" disabled></option>
-                  <option v-for="flow in bigdata.code_workflows" :key="flow.id" :value="flow.external_id">{{ flow.value }}</option>
-                </select>
-              </div>
-
-              <div class="col">
-                <p>Code uniqueness:</p>
-                <p>
-                  <label style="margin-right: 20px;">
-                    <input class="with-gap" name="code_per_company" type="radio" value="true" v-model="code_per_company"/>
-                    <span>Code per company</span>
-                  </label>
-                  <label>
-                    <input class="with-gap" name="code_per_company" type="radio" value="false" v-model="code_per_company" checked />
-                    <span>Code per activity</span>
-                  </label>
-                </p>
-              </div>
-            </div>-->
             <router-link router-link :to="{ name: 'activities-dashboard' }">
               <button v-on:click="postActivity" type="submit" class="waves-effect blue lighten-2 btn add-btn right"><i
                   class="material-icons left">save</i>Save Activity</button>
@@ -225,10 +163,12 @@
     import fecha from 'fecha';
     import VueTimepicker from 'vue2-timepicker';
     import axios from "axios";
+    import vueMultiSelect from 'vue-multi-select';
+    import 'vue-multi-select/dist/lib/vue-multi-select.css';
     export default {
       name: 'add-activity',
       components: {
-        DatePick, VueTimepicker,
+        DatePick, VueTimepicker,vueMultiSelect
       },
       props:{
           
@@ -241,12 +181,10 @@
               rewards:[],
               tags:[],
               error:"",
-              code_workflows:[{value: 1}],
               minData:'', maxDate:'',
               event: {},
-            },            
+            },           
             registration_link:'',
-            zoom_link:'',
             points: '', 
             name:'', description:'', location:'', 
             day:'', time:'', end_time:'', registration_open: 'false', quest: 'false', chat: 'none',
@@ -260,9 +198,31 @@
             moderator_external_id: '',
             tags_external_id: [],
             reward_external_id: '',
-            code_workflow_external_id: '',
             role:'',
-            volunteers:[]
+            volunteers:[{"name":"", "id":""}], 
+
+            filters: [{
+            nameAll: 'Select all',
+            nameNotAll: 'Deselect all',
+            func() {
+              return true;
+            },
+          }],
+          options: {
+          multi: true,
+          groups: false,
+          labelList: 'volunteers.name',
+          cssSelected: option => (option.selected ? { 'background-color': '#00A36C' } : ''),
+          },
+          btnLabel: values => `Select Volunteers (${values.length})`,
+          options2: {
+          multi: true,
+          groups: false,
+          labelList: 'companies.name',
+          cssSelected: option => (option.selected ? { 'background-color': '#00A36C' } : ''),
+          },
+          btnLabel2: values => `Select Companies (${values.length})`
+
         }
       },
       methods: {
@@ -295,33 +255,12 @@
                 this.bigdata.error = 'Missing "Activity Type"!'
                 return
             }
-            // if (this.reward_external_id == '') {
-            //     this.bigdata.error = 'Missing "Reward"!'
-            //     return
-            // }
-            // if (this.moderator_external_id == '') {
-            //     this.bigdata.error = 'Missing "Moderator"!'
-            //     return
-            // }
-            // if (this.companies_external_id == []) {
-            //     this.bigdata.error = 'Missing "Companie(s)"!'
-            //     return
-            // }
-            // if (this.tags_external_id == []) {
-            //     this.bigdata.error = 'Missing "Tag(s)"!'
-            //     return
-            // }
-            // if (this.speakers_external_id == []) {
-            //     this.bigdata.error = 'Missing "Speaker(s)"!'
-            //     return
-            // }
 
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity_vue',{event_id: this.bigdata.event.external_id, name: this.name, description: this.description, location: this.location, day: this.day,
-                        time: this.time, end_time: this.end_time, registration_link: this.registration_link,
-                        registration_open: this.registration_open, points: this.points, quest: this.quest, chat: this.chat,
-                        zoom_link: this.zoom_link, reward_external_id: this.reward_external_id,
-                        code_workflow_external_id: this.code_workflow_external_id, activity_type_external_id: this.activity_type_external_id,
-                        code_per_company: this.code_per_company, username: this.StateUsername(), companies_external_id: this.companies_external_id,
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity_vue',{event_id: this.bigdata.event.external_id, name: this.name, 
+                        description: this.description, location: this.location, day: this.day,registration_link: this.registration_link,
+                        registration_open: this.registration_open, reward_external_id:this.reward_external_id,
+                        time: this.time, end_time: this.end_time,points: this.points, activity_type_external_id: this.activity_type_external_id,
+                        username: this.StateUsername(), companies_external_id: this.companies_external_id,
                         speakers_external_id: this.speakers_external_id, moderator_external_id: this.moderator_external_id, 
                         tags_external_id: this.tags_external_id, volunteers: this.volunteers},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
@@ -341,7 +280,7 @@
         formatDate(dateObj, format) {
             return fecha.format(dateObj, format);
         },
-        
+         
       },
       mounted() {
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity-get_vue',{event_id: this.Event_id(), username: this.StateUsername()},{auth: {
