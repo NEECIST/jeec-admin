@@ -70,59 +70,12 @@
             </div>
 
             <div class="row s7">
-              <div class="col s2" style="margin-right: 20px;">
-                <p>Create chat channel:</p>
-                <p>
-                  <label style="margin-right: 20px;">
-                    <input v-if="bigdata.activity.chat_type.name == 'general'" v-model="bigdata.activity.chat_type.name" class="with-gap" name="chat" type="radio" value="general" checked />
-                    <input v-else v-model="bigdata.activity.chat_type.name" class="with-gap" name="chat" type="radio" value="general" />
-                    <span>General</span>
-                  </label>
-                  <label style="margin-right: 20px;">
-                    <input v-if="bigdata.activity.chat_type.name == 'individual'" v-model="bigdata.activity.chat_type.name" class="with-gap" name="chat" type="radio" value="individual" checked/>
-                    <input v-else v-model="bigdata.activity.chat_type.name" class="with-gap" name="chat" type="radio" value="individual" />
-                    <span>Individual</span>
-                  </label>
-                  <label>
-                    <input v-if="bigdata.activity.chat_type.name == 'none'" v-model="bigdata.activity.chat_type.name" class="with-gap" name="chat" type="radio" value="none" checked/>
-                    <input v-else v-model="bigdata.activity.chat_type.name" class="with-gap" name="chat" type="radio" value="none" />
-                    <span>No</span>
-                  </label>
-                </p>
-              </div>
-
-              <div class="col s2">
-                
-                <p>Activity is a Quest in the App:</p>
-                <p>
-                  <label style="margin-right: 20px;">
-                    <input v-if="bigdata.activity.quest" v-model="bigdata.activity.quest" class="with-gap" name="quest" type="radio" value="true" checked/>
-                    <input v-else  v-model="bigdata.activity.quest" class="with-gap" name="quest" type="radio" value="true" />
-                    <span>Yes</span>
-                  </label>
-                  <label>
-                    <input v-if="bigdata.activity.quest == false" v-model="bigdata.activity.quest" class="with-gap" name="quest" type="radio" value="false" checked/>
-                    <input v-else  v-model="bigdata.activity.quest" class="with-gap" name="quest" type="radio" value="false" />
-                    <span>No</span>
-                  </label>
-                </p>
-              </div>
-
               <div class="input-field col s2 box" :class="{boxname:detectext(bigdata.activity.points)}">
                 <input id="points" name="points" type="number" min="0" class="validate" v-model="bigdata.activity.points">
                 <label for="points">Points</label>
               </div>
             </div>
 
-            <div class="row s10">
-              <div class="col s7">
-                <div class="input-field box" :class="{boxname:detectext(bigdata.activity.zoom_link)}">
-                  <input id="zoom_link" name="zoom_link" type="url" class="validate" v-model="bigdata.activity.zoom_link">
-                  <label for="zoom_link">ZOOM URL</label>
-                </div>
-              </div>
-            </div>
-            
             <div class="row s10">
               <div class="col s2">
                 <p>Registration Open:</p>
@@ -149,13 +102,31 @@
               </div>
             </div>
 
+            
+           
+
             <div class="flex-container">
-              <div class="input-field flex-object">
-                <p>Choose companies</p>
-                <select v-model="bigdata.companies_external_id" multiple style="height:75px; width: 250px; display: block;">
-                  <option value="" disabled></option>
-                  <option v-for="company in bigdata.companies" :key="company.id" name="company" :value="company.external_id" selected="selected">{{ company.name }}</option>
-                </select>
+              <div class="input-field flex-object" v-if="role == 'admin'">
+                <p>Choose Companies to add to activity </p>
+                <vue-multi-select
+                v-model="bigdata.activity.companies"
+                search
+                :key="loaded"
+                :btnLabel="btnLabel2"
+                :filters="filters"
+                :options="options2"
+                :selectOptions="bigdata.companies"/>
+              </div>
+              <div class="input-field flex-object" v-if="role == 'admin'">
+                <p>Choose Volunteers to monitor this activity </p>
+                <vue-multi-select
+                v-model="bigdata.activity.volunteers"
+                search
+                :key="loaded"
+                :btnLabel="btnLabel"
+                :filters="filters"
+                :options="options"
+                :selectOptions="bigdata.volunteers"/>
               </div>
 
               <div class="input-field flex-object">
@@ -193,39 +164,7 @@
                 </select>
               </div>
 
-              <div class="input-field flex-object" v-if="role == 'admin'">
-                <p>Choose Volunteers to monitor this activity</p>
-                <select multiple v-model="bigdata.activity.volunteers" name="volunteers" style="display: block; height:75px;">
-                  <option v-for="volunteer in bigdata.volunteers" :key="volunteer.name" :value="volunteer.id">{{ volunteer.name }}</option>
-                </select>
-              </div>
             </div>
-
-            <!--<div class="row">
-              <div class="input-field col s5">
-                <p>Code workflow</p>
-                <select v-model="code_workflow_external_id" style="width: 250px; display: block;" required>
-                  <option value="" disabled></option>
-                  <option v-for="flow in bigdata.code_workflows" :key="flow.id" name="code_workflow" class="form-control" :value="flow.external_id" >{{ flow.value }}</option>
-                </select>
-              </div>
-
-              <div class="col">
-                <p>Code uniqueness:</p>
-                <p>
-                  <label style="margin-right: 20px;">
-                    <input v-if="bigdata.activity.code_per_company" v-model="bigdata.activity.code_per_company" class="with-gap" name="code_per_company" type="radio" value="true" checked/>
-                    <input v-else v-model="bigdata.activity.code_per_company" class="with-gap" name="code_per_company" type="radio" value="true" />
-                    <span>Code per company</span>
-                  </label>
-                  <label>
-                    <input v-if="bigdata.activity.code_per_company == false" v-model="bigdata.activity.code_per_company" class="with-gap" name="code_per_company" type="radio" value="false" checked/>
-                    <input v-else v-model="bigdata.activity.code_per_company" class="with-gap" name="code_per_company" type="radio" value="false" />
-                    <span>Code per activity</span>
-                  </label>
-                </p>
-              </div>
-            </div>-->
             
             <router-link router-link :to="{ name: 'activities-dashboard' }">
               <button v-on:click="updateActivity" type="submit" class="waves-effect blue lighten-2 btn add-btn right"><i
@@ -244,11 +183,12 @@
     import VueTimepicker from 'vue2-timepicker';
     import axios from "axios";
     import { mapGetters } from "vuex";
-
+    import vueMultiSelect from 'vue-multi-select';
+    import 'vue-multi-select/dist/lib/vue-multi-select.css';
     export default {
       name: 'update-activity',
       components: {
-        DatePick, VueTimepicker,
+        DatePick, VueTimepicker,vueMultiSelect
       },
       props:{
           
@@ -258,18 +198,11 @@
             bigdata: {
               error:"",
               activity_types:[],
-              activity: {},
-              //code_workflows:[{value: 1}],
+              activity: { volunteers:[]},
               companies:[],
               speakers:[],
               rewards:[],
               tags:[],
-              //company_activities: [{name:'Nome Atividade', description:'Descrição atividade', location:'Lisboa', 
-              //                    day:'1 Setembro 2022', time:'14h', end_time:'15h', activity_types:[{name:'tipo1', 
-              //                    description:'description1'}], chat_type:{name: null}, quest: true, code_per_company: true, registration_open: true}],
-              //speaker_activities: [{name:'Nome Atividade', description:'Descrição atividade', location:'Lisboa', 
-              //                      day:'1 Setembro 2022', time:'14h', end_time:'15h', activity_types:[{name:'tipo1', 
-              //                      description:'description1'}], chat_type:{name: null}, quest: true, code_per_company: true, registration_open: true}],
               tags_external_id: [],
               minDate: '',
               maxDate: '',
@@ -278,20 +211,40 @@
               speakers_external_id: [],
               moderator_external_id: '',
               reward_external_id: '',
-              volunteers:[]
+              volunteers:[],
             },
-            
-            points: '1', quest: false, registration_open: false, zoom_link:'LinkZOOM',
-            registration_link:'LinkRegisto', code_per_company: false, code_work_flow:{value: 1},
-            
-            flows:[{value:"Flow1"}, {value:"Flow2"}],
-
+            registration_open: false,
+            registration_link:'',
+            points: '',
             format: 'DD MM YYYY, dddd',
             date: fecha.format(new Date(), 'DD MM YYYY, dddd'),   
             activity_id: this.$route.params.activity_id,   
-            
-            code_workflow_external_id: '', 
-            role:''
+            role:'',
+            loaded:false,
+            volunteers:[{"name":"", "id":""}], 
+
+            filters: [{
+              nameAll: 'Select all',
+              nameNotAll: 'Deselect all',
+              func() {
+                return true;
+              },
+            }],
+            options: {
+            multi: true,
+            groups: false,
+            labelList: "volunteers.",
+            cssSelected: option => (option.selected ? { 'background-color': '#00A36C' } : ''),
+            },
+            btnLabel: values => `Select Volunteers (${values.length})`,
+            options2: {
+            multi: true,
+            groups: false,
+            labelList: 'companies.name',
+            cssSelected: option => (option.selected ? { 'background-color': '#00A36C' } : ''),
+            },
+            btnLabel2: values => `Select Companies (${values.length})`
+
         }
       },
       methods: {
@@ -323,38 +276,17 @@
                 this.bigdata.error = 'Missing "Activity Type"!'
                 return
             }
-            // if (this.bigdata.reward_external_id == '') {
-            //     this.bigdata.error = 'Missing "Reward"!'
-            //     return
-            // }
-            // if (this.bigdata.moderator_external_id == '') {
-            //     this.bigdata.error = 'Missing "Moderator"!'
-            //     return
-            // }
-            // if (this.bigdata.companies_external_id == []) {
-            //     this.bigdata.error = 'Missing "Companie(s)"!'
-            //     return
-            // }
-            // if (this.bigdata.tags_external_id == []) {
-            //     this.bigdata.error = 'Missing "Tag(s)"!'
-            //     return
-            // }
-            // if (this.bigdata.speakers_external_id == []) {
-            //     this.bigdata.error = 'Missing "Speaker(s)"!'
-            //     return
-            // }
             axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/update_vue' ,{name: this.bigdata.activity.name, description: this.bigdata.activity.description, 
               location: this.bigdata.activity.location, day: this.bigdata.activity.day, time: this.bigdata.activity.time, 
-              end_time: this.bigdata.activity.end_time, registration_link: this.bigdata.activity.registration_link, 
-              registration_open: this.bigdata.activity.registration_open, 
-              points: this.bigdata.activity.points, quest: this.bigdata.activity.quest, chat: this.bigdata.activity.chat, 
-              zoom_link: this.bigdata.activity.zoom_link, 
+              end_time: this.bigdata.activity.end_time, registration_link: this.bigdata.activity.registration_link,  
+              points: this.bigdata.activity.points,registration_open: this.bigdata.activity.registration_open,
               reward_external_id: this.bigdata.reward_external_id,  
               activity_external_id: this.bigdata.activity.external_id, 
               username: this.StateUsername(), 
               companies_external_id: this.bigdata.companies_external_id, speakers_external_id: this.bigdata.speakers_external_id, 
               moderator_external_id: this.bigdata.moderator_external_id, tags_external_id: this.bigdata.tags_external_id, 
-              activity_type_external_id: this.bigdata.activity_type_external_id, volunteers: this.bigdata.activity.volunteers},{auth: {
+              activity_type_external_id: this.bigdata.activity_type_external_id, volunteers: this.bigdata.activity.volunteers,
+              },{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {this.bigdata = response.data
@@ -374,14 +306,21 @@
         },
       },
       mounted() {
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity_vue', {activity_external_id: this.activity_id, username: this.StateUsername()},{auth: {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity_vue', {activity_external_id: this.$route.params.activity_id, username: this.StateUsername()},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {this.bigdata = response.data
+        }}).then(response => {this.bigdata = response.data, this.loaded = true
+          console.log(this.bigdata.companies)
+          
           if (this.bigdata.error != '') {
             this.$router.push({name: 'activities-dashboard'})
           }})
+          
+         
+          // this.volunteers = []
+          // for(let i = 0; i <)
           this.role = this.getRole()
+        
       }
     }
 

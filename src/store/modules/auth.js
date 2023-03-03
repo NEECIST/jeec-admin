@@ -23,7 +23,7 @@ const getters = {
 
 const actions = {
 async LogIn({commit},bad_form) {
-  // console.log(CryptoJS.DES.encrypt('madlad26', process.env.VUE_APP_API_KEY).toString())
+  //console.log(CryptoJS.DES.encrypt('powerpuffgirls', process.env.VUE_APP_API_KEY).toString())
   const form = {
     username: bad_form.username,
     password: bad_form.password
