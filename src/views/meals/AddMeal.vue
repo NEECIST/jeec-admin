@@ -91,7 +91,7 @@
       </div>
 
       <div id="dishes">
-        <div class="row" v-for="dish in form.dishes" :key="dish.index">
+        <div class="row" v-for="dish in form.dishes" :key="dish.id">
           <div class="input-field col s3">
             
             <input id="dish_name" name="dish_name" type="text" class="validate" v-model="dish.dish_name" placeholder="Dish Name" maxlength="100">
