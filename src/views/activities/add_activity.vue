@@ -65,6 +65,11 @@
               </div>
             </div>
 
+            <div class="input-field col s2 box" :class="{boxname:detectext(points)}">
+                <input id="points" v-model="points" type="number" min="0" class="validate">
+                <label for="points">Points</label>
+              </div>
+
             <div class="row s10">
               <p>Registration Open:</p>
               <p class="col s2">
