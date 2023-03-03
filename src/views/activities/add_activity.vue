@@ -93,7 +93,7 @@
 
 
             <div class="flex-container">
-              <div class="input-field flex-object" v-if="role == 'admin'">
+              <div class="input-field flex-object">
                 <p>Choose Companies to add to activity</p>
                 <vue-multi-select
                 v-model="companies_external_id"
@@ -103,7 +103,7 @@
                 :options="options2"
                 :selectOptions="bigdata.companies"/>
               </div>
-              <div class="input-field flex-object" v-if="role == 'admin'">
+              <div class="input-field flex-object">
                 <p>Choose Volunteers to monitor this activity</p>
                 <vue-multi-select
                 v-model="volunteers"
