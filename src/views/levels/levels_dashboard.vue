@@ -79,7 +79,7 @@
                         <tr>
                             <td>
                                 <div v-if="responsedata.levels.length > 0">
-                                    <input type="number" :value="responsedata.levels[responsedata.levels.length - 1].value + 1" disabled>
+                                    <input type="number" :value="responsedata.levels[responsedata.levels.length - 1].value" disabled>
                                     <input name="value" type="number" value="" hidden>
                                 </div>
                                 <div v-else>
@@ -90,7 +90,7 @@
 
                             <td>
                                 <div v-if="responsedata.levels.length > 0">
-                                    <input id="starting_points" type="number" :value="responsedata.levels[responsedata.levels.length - 1].ending_points + 1" disabled>                    <!--retirei cenas do value-->
+                                    <input id="starting_points" type="number" :value="responsedata.levels[responsedata.levels.length - 1].ending_points" disabled>                    <!--retirei cenas do value-->
                                 </div>
                                 <div v-else>
                                     <input id="starting_points" type="number" value="0" disabled>
@@ -99,7 +99,7 @@
 
                             <td>
                                 <div v-if="responsedata.levels.length > 0">
-                                    <input id="ending_points" type="number" :value="responsedata.levels[responsedata.levels.length - 1].ending_points + level_points + 1" disabled>
+                                    <input id="ending_points" type="number" :value="responsedata.levels[responsedata.levels.length - 1].ending_points + level_points" disabled>
                                     <input name="points" id="_ending_points" type="number" min="" value="" hidden>
                                 </div>
                                 <div v-else>
@@ -164,7 +164,7 @@
                 for(var i = 0; i < this.responsedata.levels.length; i++){
                     this.responsedata.levels[i].starting_points = points;
                     this.responsedata.levels[i].points = this.responsedata.levels[i].ending_points - this.responsedata.levels[i].starting_points;
-                    points += this.responsedata.levels[i].points + 1;
+                    points += this.responsedata.levels[i].points;
                 }});
         },
 
@@ -185,7 +185,7 @@
                     return
                 }
                 if(this.responsedata.levels.length>=1){
-                    level_points+=this.responsedata.levels[this.responsedata.levels.length - 1].ending_points + 1
+                    level_points+=this.responsedata.levels[this.responsedata.levels.length - 1].ending_points
                 }
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/level/create",{reward_id: reward_id, level_value: level_value, level_points: level_points},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 

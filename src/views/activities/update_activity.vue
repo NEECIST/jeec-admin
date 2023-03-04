@@ -207,7 +207,6 @@
               minDate: '',
               maxDate: '',
               activity_type_external_id: '',
-              companies_external_id: [],
               speakers_external_id: [],
               moderator_external_id: '',
               reward_external_id: '',
@@ -276,6 +275,11 @@
                 this.bigdata.error = 'Missing "Activity Type"!'
                 return
             }
+            let companies_external_id=[]
+            for(let i=0;i<this.bigdata.activity.companies.length;i++){
+              companies_external_id.push(this.bigdata.activity.companies[i].external_id)
+            }
+            console.log(companies_external_id)
             axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/update_vue' ,{name: this.bigdata.activity.name, description: this.bigdata.activity.description, 
               location: this.bigdata.activity.location, day: this.bigdata.activity.day, time: this.bigdata.activity.time, 
               end_time: this.bigdata.activity.end_time, registration_link: this.bigdata.activity.registration_link,  
@@ -283,7 +287,7 @@
               reward_external_id: this.bigdata.reward_external_id,  
               activity_external_id: this.bigdata.activity.external_id, 
               username: this.StateUsername(), 
-              companies_external_id: this.bigdata.companies_external_id, speakers_external_id: this.bigdata.speakers_external_id, 
+              companies_external_id: companies_external_id, speakers_external_id: this.bigdata.speakers_external_id, 
               moderator_external_id: this.bigdata.moderator_external_id, tags_external_id: this.bigdata.tags_external_id, 
               activity_type_external_id: this.bigdata.activity_type_external_id, volunteers: this.bigdata.activity.volunteers,
               },{auth: {
