@@ -4,7 +4,7 @@
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
     <TopBar/>
 
-    <SectionHeader name="Meals Management" description="Dishes choosen by the companies" back_page="/meals"/>
+    <SectionHeader name="Meals Management" description="Dishes chosen by the companies" back_page="/meals"/>
 
 
 
@@ -13,7 +13,7 @@
 List of dishes per company
 </div>
 
-<blockquote v-if="responsedata.closed" class="create-error">
+<blockquote v-if="this.responsedata.closed" class="create-error">
     Meal Closed
   </blockquote>
 
@@ -26,7 +26,7 @@ List of dishes per company
       <th>Company</th>
 
       
-      <th v-for="dish in responsedata.dishes" :key="dish">{{ dish }}</th>
+      <th v-for="header in this.responsedata.header" :key="header.id">{{ header }}</th>
       
       
     </tr>
@@ -34,34 +34,26 @@ List of dishes per company
   <tbody>
     
     
-    <tr v-for="company in responsedata.companies" :key="company">
+    <tr v-for="element in this.responsedata.dishes_per_companies" :key="element.company">
       <td>
-        {{ company }}
+        {{ element.company }}
       </td>
-
-      <td v-for="dish in responsedata.dishes" :key="dish">
-        <div v-if="dish == responsedata.dishes_per_companies.company[0]">
-          {{ company_dish[1] }}
-        </div>
-        <div v-else>
-          0
-        </div>
-      
-    </td>
+      <td v-for="dish in element.dishes" :key="dish.id">
+        {{ dish.quantity }}
+      </td>
     
     </tr>
     
-    
-    <tr>
+    <!-- <tr>
       <td>
         <b>Total</b>
       </td>
     
-      <td v-for="total in responsedata.total_dishes" :key="total">
+      <td v-for="total in total_dishes" :key="total">
         <b>{{ total }}</b>
       </td>
     
-    </tr>
+    </tr> -->
   </tbody>
 </table>
 </div>
@@ -87,9 +79,15 @@ data(){
       SectionHeader:require("../../components/SectionHeader.vue"),
       TopBar: require( "../../components/TopBar.vue"),
       responsedata:{
-        closed:true,
+        closed: false,
+        dishes:[],
+        companies:[],
+        total_dishes:[],
+        dishes_per_companies:[],
+        header:[],
       },
-      role:''
+      role:'',
+      total_dishes:0,
   };
 },
 mounted(){
@@ -97,10 +95,18 @@ mounted(){
   axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/meal/dishes",{meal_external_id:this.$route.params.meal_external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=> this.responsedata = response.data)
+        }}).then(response=> {this.responsedata = response.data})
+
 },
 methods:{
   ...mapGetters(["getRole"]),
+  // get_total(){
+  //   for(let i=0; i< this.responsedata.dishes_per_companies.length; i++){
+  //     for(let j = 0 ; j < this.responsedata.dishes_per_companies[j]; j++){
+
+  //     }
+  //   }
+  // }
 }
 }
 
