@@ -261,6 +261,8 @@
                 return
             }
 
+            console.log(this.activity_type_external_id)
+
             axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-activity_vue',{event_id: this.bigdata.event.external_id, name: this.name, 
                         description: this.description, location: this.location, day: this.day,registration_link: this.registration_link,
                         registration_open: this.registration_open, reward_external_id:this.reward_external_id,
