@@ -12,6 +12,12 @@
                 class="material-icons right">arrow_forward</i>Banned Students</button>
    
         </router-link>
+        <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+            <button @click="BanAllStudents()" class="waves-effect waves-light btn back-btn red right" style="margin-right: 30px;"><i
+            class="material-icons right">arrow_forward</i>Ban All Students</button>
+        </div>
+       
+       
         <section-title-component section="List of Students"/>
 
         <div class="search-bar">
@@ -203,11 +209,20 @@
 
             banstudent(student_id){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/studentban",{banstudent: student_id},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.responsedata = response.data);
             },
+            BanAllStudents(){
+         
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL+"/order66",{auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.responsedata2 = response.data);
+                this.$router.go()
         },
+        },
+        
     }
 </script>
 
