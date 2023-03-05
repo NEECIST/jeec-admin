@@ -8,6 +8,11 @@
         <section-header-component name="Banned Students Management" description="Unban students" back_page="/students"/>
 
         <section-title-component section="List of Banned Students"/>
+
+        <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+            <button @click="UnbanAllStudents()" class="waves-effect waves-light btn back-btn green right" style="margin-right: 30px;"><i
+            class="material-icons right">arrow_forward</i>Unban All Students</button>
+        </div>
         
         <div class="list">
             <div v-if="responsedata.error">
@@ -93,8 +98,18 @@
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response=>this.responsedata = response.data);
-            }
+            },
+            UnbanAllStudents(){
+         
+         axios.get(process.env.VUE_APP_JEEC_BRAIN_URL+"/skywalker",{auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.responsedata2 = response.data);
+
+                this.$router.go()
+            },
         },
+        
     }
 </script>
 
