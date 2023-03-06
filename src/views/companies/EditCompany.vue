@@ -86,6 +86,7 @@
               <option value="bronze">Bronze</option>
               <option value="main_sponsor" >Main Sponsor</option>
               <option value="sponsor">Sponsor</option>
+              <option value="nucleo">Núcleo</option>
             </select>
           </p>
 
