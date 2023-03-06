@@ -123,7 +123,13 @@
         axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/update_attributed',{external_id: ext_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.BigData=response.data)
+        }}).then(response=>{
+          this.BigData.error=response.data
+          if(this.BigData.error==''){
+            this.$router.go()
+          }
+        }
+          )
       }
     }
     
