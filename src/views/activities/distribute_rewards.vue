@@ -124,7 +124,7 @@
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response=>{
-          this.BigData.error=response.data
+          this.BigData.error=response.data.error
           if(this.BigData.error==''){
             this.$router.go()
           }
