@@ -13,7 +13,7 @@
    
         </router-link>
         <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-            <button @click="BanAllStudents()" class="waves-effect waves-light btn back-btn red right" style="margin-right: 30px;"><i
+            <button disabled @click="BanAllStudents()" class="waves-effect waves-light btn back-btn red right" style="margin-right: 30px;"><i
             class="material-icons right">arrow_forward</i>Ban All Students</button>
         </div>
        
