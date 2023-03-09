@@ -66,6 +66,7 @@
                         <th>Total Points</th>
                         <th>Uploaded CV</th>
                         <th>Squad</th>
+                        <th>Remove points</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,6 +125,10 @@
                                 </div>
                             </td>
 
+                            
+                            <td>
+                                <input type="number" min="1" v-model="student.remove_points" style="width:50px"> <button @click="removePoints(student.id,student.remove_points)">Remove</button>
+                            </td>
                             <div>
                                 <td>
                                     <form onsubmit="return confirm('Are you sure you want to ban this student?');" style="margin: 0;">
@@ -180,7 +185,7 @@
             return{
                 search:'',
                 role:'',
-
+                remove_points:1,
                 responsedata: {error: '', students: []}
             }
         },
@@ -205,6 +210,19 @@
             ...mapGetters(["getRole"]),
             eraseSearch(){
                 this.search = '';
+            },
+            removePoints(id,points){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/remove_xp",{student_id:id,xp:points},{auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>{
+                    if(response.data==''){
+                        this.$router.go()
+                    }
+                    else{
+                        this.responsedata.error = response.data
+                    }
+                })
             },
 
             banstudent(student_id){
