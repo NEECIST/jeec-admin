@@ -54,6 +54,7 @@ import AddQuest from '../views/quests/AddQuest.vue'
 import UpdateQuest from '../views/quests/UpdateQuest.vue'
 import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
 import DistributeRewards from '../views/activities/distribute_rewards'
+import KingsDashboard from '../views/Kings.vue'
 
 Vue.use(VueRouter)
 
@@ -62,6 +63,11 @@ const routes = [
     path: '/companies/add-company',
     name: 'add-company',
     component: AddCompany
+   },
+   {
+    path: '/kings',
+    name: 'kings-dashboard',
+    component: KingsDashboard
    },
    {
     path: '/squad_rewards/add',
