@@ -43,7 +43,7 @@
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
             }}).then(response=>{
-                this.king_15 = response.data.king15
+                this.king_15 = response.data.king_15
                 this.king_job_fair = response.data.king_job_fair
                 this.king_inside_talks = response.data.king_inside_talks
                 this.king_palestras = response.data.king_palestras
