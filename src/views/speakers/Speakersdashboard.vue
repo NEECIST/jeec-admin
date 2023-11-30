@@ -169,9 +169,9 @@
           this.speakers = data.speakers_all;
           this.events = data.events;
           
-          for(i = length(this.events); i != 0; i--){
+          for(var i = length(this.events); i != 0; i--){
             if(this.events[i].default == true){
-              event_chooser = events[i];
+              event_chooser = this.events[i];
               break
             } 
           }
