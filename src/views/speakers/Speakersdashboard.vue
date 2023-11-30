@@ -145,7 +145,7 @@
               speakers: [],
               speak: {id: 'fhcruiedbn'},
               role:'',
-              event_choosen:'',
+              event_chooser:'',
           }
       },
       methods: {
