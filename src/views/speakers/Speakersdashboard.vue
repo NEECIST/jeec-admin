@@ -28,6 +28,15 @@
       </form>
       <!-- <button v-if="search != ''" class = "search-btn red btn-floating left" style="margin-top: -30px; margin-left: 250px;" @click = "eraseSearch"> <i class="material-icons">clear</i> </button> -->
     </div>
+
+    <div class="left" style="margin-left: 30px;">
+      <div class="sub_section-title">Events</div>
+      <form class="col s12" id="event_form">
+        <select v-model="event_chooser" class="form-control" style="height:60px; width: 100px; display: block;" required>
+          <option v-for="eventt in this.bigdata.events" :key="eventt.id" :value="eventt.name"  selected>{{ eventt.name }}</option>
+        </select>
+      </form>
+    </div>
  
       <div class="list">
         <div v-if="error != '' ">
@@ -45,6 +54,7 @@
           <table class="striped">
               <thead><tr>
                 <th>ID</th>
+                <th>Event</th>
                 <th>Name</th>
                 <th>Company</th>
                 <th>Position</th>
@@ -55,6 +65,8 @@
               <tbody>
                     <tr v-for="speaker in filteredSpeakers" v-bind:key="speaker.id" >
                       <td>{{ speaker.id }}</td>
+
+                      <td>{{ event_chooser.name }}</td>
 
                       <td><b>{{ speaker.name }}
                         <div v-if="speaker.spotlight">
@@ -150,15 +162,29 @@
         await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss',{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers })
+        }}).then(response => {
+          const data = response.data;
+          this.bigdata = data;
+          this.speakers = data.speakers_all;
+          this.events = data.events;
+          
+          for(i = length(this.events); i != 0; i--){
+            if(this.events[i].default == true){
+              event_chooser = events[i];
+              break
+            } 
+          }
+        })
 
         },
       },
       computed:{
         filteredSpeakers: function(){
-          if(this.searchspeaker){
-            return this.speakers.filter((speaker) => {
+          if(this.searchSpeaker){
+            return (this.speakers.filter((speaker) => {
             return speaker.name.toLowerCase().match(this.search.toLowerCase());
+            })).filter((speaker) => {
+            return speaker.event.toLowerCase().match(this.event_chooser.toLowerCase());
             });
           }
           else{
