@@ -176,7 +176,7 @@
         filteredSpeakers: function(){
           if(this.search){
             return (this.show_speakers.filter((speaker) => {
-            return speaker.name.toLowerCase().match(this.search.toLowerCase());
+            return speaker.name.match(this.search);
             })).filter((speaker) => {
             return speaker.event==this.event_chooser.id;
             });
@@ -204,6 +204,7 @@
               break
             } 
           }
+          console.log(this.show_speakers)
         }),
         this.role = this.getRole()
       }
