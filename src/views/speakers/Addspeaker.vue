@@ -223,10 +223,7 @@
       axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/all_events',{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {
-          this.events = response.data.events;
-          console.log(this.events)
-        }),
+        }}).then(response => this.events = response.data.events),
       this.role = this.getRole()
     }
     }
