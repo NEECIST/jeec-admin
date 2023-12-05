@@ -40,6 +40,22 @@
           <label for="website_priority">Priority in the website (bigger appears first)</label>
         </div>
       </div>
+
+      <div class="file-field input-field" style="width:500px;">
+        <div class="btn">
+          <i class="material-icons left">add_a_photo</i>
+          <span>team image</span>
+          <input type="file" name="speaker_image" @change="onFileSelected">
+        </div>
+        <div class="file-path-wrapper">
+          <div v-if="fileSelected != null">
+            <input class="file-path validate" type="text" :placeholder="fileSelected">
+          </div>
+          <div v-else>
+            <input class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
+          </div>
+        </div>
+      </div>
  
       <button type="submit" v-on:click="addingTeam" class="waves-effect blue lighten-2 btn add-btn right"><i
           class="material-icons left">save</i>Save Team</button>
@@ -64,15 +80,13 @@
         bigdata: [],
         bigdata2: [],
         eventID: '',
-        eventts: [
-                  { id: 'A', name: 'JEEC22'},
-                  { id: 'B', name: 'EVENT2'},
-                  { id: 'C', name: 'EVENT3'}
-                ],
+        eventts: [],
         description: '',
         name: '',
         priority: '',
-        role:''
+        role:'',
+        fileSelected:'',
+        fileToUpload:'',
       } 
     },
     methods: {
@@ -80,13 +94,25 @@
       detectext(stringvar){
         return stringvar!=''; 
       },
+      onFileSelected(event){
+       this.fileSelected = event.target.files[0].name;
+       this.fileToUpload = event.target.files[0];
+      },
       addingTeam(e) {
           e.preventDefault()
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-team-vue', {name: this.name, description: this.description, website_priority: this.priority, event_id: this.eventID},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => this.bigdata2 = response.data)
-          this.$router.push("/teams")
+
+          const fd = new FormData();
+          fd.append('team_image', this.fileToUpload)
+          fd.append('name', this.name)
+          fd.append('description', this.description)
+          fd.append('website_priority', this.priority)
+          fd.append('event_id', this.eventID)
+
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-team-vue', fd,{auth: {
+            username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+            password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+          }}).then(response => this.bigdata2 = response.data)
+            this.$router.push("/teams")
       },
     },
     mounted() {

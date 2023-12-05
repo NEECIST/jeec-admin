@@ -54,10 +54,6 @@
       <div>
         Teams: {{ this.teamsFiltradas.length}}
       </div>
-      
-      
-      
-      
 
       <p>Colaborators: {{ members_count }}</p>
     </div>
@@ -142,13 +138,6 @@
                   { id: 'B', name: 'EVENT2'},
                   { id: 'C', name: 'EVENT3'}
               ],
-              teams_experiencia: [{id:'1',name:'fortes', event:{id:'A', name: 'JEEC22'}, website_priority: 4, description: 'fchuwebdjcs' , members: [{name:'Afonso',ist_id: '1', email: 'afonso.alemao01@gmail.com', linkedin_url: 'https://www.google.com/'}, 
-              {name:'Afonso',ist_id: '2', email: 'afo01@gmail.com', linkedin_url: 'https://www.google.com/'}, 
-              {name:'germanboy',ist_id: '3', email: 'afonso.alemao01@gmail.com', linkedin_url: 'https://www.google.com/'}]},
-              {id:'2', name: 'fracos',event:{id:'A', name: 'JEEC22'}, website_priority: 4,  description: 'fchuwebdjcs', members: [{name:'Afonso',ist_id: '1', email: 'afonso.alemao01@gmail.com', linkedin_url: 'https://www.google.com/'}, 
-              {name:'Afonso',ist_id: '2', email: 'afo01@gmail.com', linkedin_url: 'https://www.google.com/'}, 
-              {name:'germanboy',ist_id: '3', email: 'afonso.alemao01@gmail.com', linkedin_url: 'https://www.google.com/'}]}
-              ],
               teams: [],
               update_member_count: true,
               teamsFiltradas: [],
@@ -190,11 +179,8 @@
           }
           this.members_count = 0;
           for (let i = 0; i < this.teamsFiltradas.length; i++){
-            console.log(this.teamsFiltradas[i]);
             this.members_count = this.members_count + this.teamsFiltradas[i].members.length;
           }
-
-
         }
       },
       computed:{
@@ -245,7 +231,7 @@
               })).length;
             }
             else{
-              return this.bigdata.teams.length;
+              return this.teams.length;
             }
           }
            
