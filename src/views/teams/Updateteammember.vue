@@ -52,7 +52,22 @@
                <label for="linkedin_url">LinkedIn</label>
              </div>
            </div>
-   
+           <div style="margin-left: -78vw;">
+            Show background in website:
+            <p>
+                <label style="margin-right: 20px;">
+                <input class="with-gap" type="radio" value="True" v-model="background_bool"/>
+                <span>Yes</span>
+                </label>
+                <label>
+                <input class="with-gap" type="radio" value="False" v-model="background_bool"/>
+                <span>No</span>
+                </label>
+            </p>
+          </div>
+
+
+
            <div class="file-field input-field" style="width:500px;">
              <div class="btn">
                <i class="material-icons left">add_a_photo</i>
@@ -96,6 +111,7 @@
           email: '',
           ist_id: '',
           linkedin_url: '',
+          background_bool: '',
           fileSelected: null,
           fileToUpload: null,
           image: null,
@@ -127,6 +143,7 @@
           fd.append('ist_id', this.ist_id)
           fd.append('email', this.email)
           fd.append('linkedin_url', this.linkedin_url)
+          fd.append('background_bool', this.background_bool)
           fd.append('member_external_id', this.$route.params.member_id)
 
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/update_team_member',fd,{auth: {
@@ -161,7 +178,7 @@
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members/get_team_member', {external_id : this.$route.params.externalid, member_external_id: this.$route.params.member_id },{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {const data = response.data; this.name = data.member.name; this.ist_id = data.member.ist_id; this.linkedin_url = data.member.linkedin_url; this.email = data.member.email })
+        }}).then(response => {const data = response.data; this.name = data.member.name; this.ist_id = data.member.ist_id; this.linkedin_url = data.member.linkedin_url; this.background_bool = data.member.background_bool; this.email = data.member.email })
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/members/create_url_error', {member_external_id: this.$route.params.member_id },{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
