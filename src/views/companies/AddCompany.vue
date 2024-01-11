@@ -67,12 +67,14 @@
         <p>
             <select name="partnership_tier" class="browser-default"
             style="margin-right: 100vw; width: 200px;display: inline-block;" v-model="partnership_tier">
-            <option value="" disabled selected>Partnership</option>
-            <option value="gold">Gold Partner</option>
-            <option value="silver">Silver Partner</option>
-            <option value="bronze">Bronze Partner</option>
-            <option value="main_sponsor">Main Sponsor</option>
-            <option value="sponsor">Partner</option>
+            <option value="" disabled selected>Tier</option>
+            <option value="partner_gold">Gold Partner</option>
+            <option value="partner_silver">Silver Partner</option>
+            <option value="partner_bronze">Bronze Partner</option>
+            <option value="sponsor_platinum">Platinum Sponsor</option>
+            <option value="sponsor_gold">Gold Sponsor</option>
+            <option value="sponsor_silver">Silver Sponsor</option>
+            <option value="sponsor_bronze">Bronze Sponsor</option>
             <option value="nucleo">Núcleo</option>
             </select>
         </p>
