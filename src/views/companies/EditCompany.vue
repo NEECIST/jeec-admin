@@ -16,6 +16,14 @@
           {{ responsedata.error }}
         </blockquote>
       
+      <div class="left" style="margin-left: 0px;">
+        <div class="sub_section-title">Event</div>
+        <form class="col s12" id="event_form">
+          <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required>
+            <option v-for="event in this.events" :key="event.id" :value="event.id">{{ event.name }}</option>
+          </select>
+        </form>
+      </div>
 
       <form class="col s12" @submit="updateCompany">
         <div v-if="this.url_image != null">
@@ -176,7 +184,9 @@ data(){
       url_image:null,
       fileSelected:null,
       fileToUpload:null,
-      role:''
+      role:'',
+      event_chooser:'',
+      events:'',
   };
 },
 async mounted(){
@@ -242,6 +252,7 @@ methods:{
           new_company.append('partnership_tier', this.responsedata.company.partnership_tier)
           new_company.append('cvs_access', this.responsedata.company.cvs_access)
           new_company.append('external_id', this.$route.params.company_external_id)
+          new_company.append('event', this.event_chooser)
 
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/update',new_company,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
