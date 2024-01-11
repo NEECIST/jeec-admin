@@ -80,12 +80,13 @@
           <p>
             Partnership tier
             <select v-model="responsedata.company.partnership_tier" class="browser-default" style="margin-left: 100px;width: 200px;display: inline-block;">
-              <option value="">Partnership</option>
-              <option value="gold">Gold</option>
-              <option value="silver">Silver</option>
-              <option value="bronze">Bronze</option>
-              <option value="main_sponsor" >Main Sponsor</option>
-              <option value="sponsor">Sponsor</option>
+              <option value="partner_gold">Gold Partner</option>
+              <option value="partner_silver">Silver Partner</option>
+              <option value="partner_bronze">Bronze Partner</option>
+              <option value="sponsor_platinum">Platinum Sponsor</option>
+              <option value="sponsor_gold">Gold Sponsor</option>
+              <option value="sponsor_silver">Silver Sponsor</option>
+              <option value="sponsor_bronze">Bronze Sponsor</option>
               <option value="nucleo">Núcleo</option>
             </select>
           </p>
