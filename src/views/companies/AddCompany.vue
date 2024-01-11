@@ -9,6 +9,14 @@
 
     <br>
     <br>
+    <div class="left" style="margin-left: 0px;">
+      <div class="sub_section-title">Event</div>
+      <form class="col s12" id="event_form">
+        <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required @change="checkOutput(event_chooser)">
+          <option v-for="event in this.events" :key="event.id" :value="event.id">{{ event.name }}</option>
+        </select>
+      </form>
+    </div>
 
     <div class="create-form" style="margin-left:5vw;">
         <div v-if="error != ''">
@@ -162,7 +170,9 @@ data(){
         show_in_website: null,
         fileToUpload: null,
         fileSelected:'',
-        role:''
+        role:'',
+        event_chooser:'',
+        events:'',
         
     }
 },
@@ -193,6 +203,7 @@ methods: {
           new_company.append('show_in_website', this.show_in_website)
           new_company.append('partnership_tier', this.partnership_tier)
         new_company.append('cvs_access', this.cvs_access)
+       new_company.append('event', this.event_chooser)
 
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-company-vue',new_company,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
@@ -207,6 +218,10 @@ methods: {
 
     },
     mounted(){
+    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/all_events',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.events = response.data.events),
         this.role = this.getRole()
     }
 }
