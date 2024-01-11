@@ -12,7 +12,7 @@
     <div class="left" style="margin-left: 0px;">
       <div class="sub_section-title">Event</div>
       <form class="col s12" id="event_form">
-        <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required @change="checkOutput(event_chooser)">
+        <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required >
           <option v-for="event in this.events" :key="event.id" :value="event.id">{{ event.name }}</option>
         </select>
       </form>
