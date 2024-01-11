@@ -193,7 +193,7 @@ async mounted(){
   await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/info',{external_id: this.$route.params.company_external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=> this.responsedata = response.data)
+        }}).then(response=> this.responsedata = response.data,this.event_chooser = this.responsedata.speaker.event)
   if(this.responsedata.company.image){
     axios({
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagecompany',
