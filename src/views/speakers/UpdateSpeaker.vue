@@ -250,18 +250,13 @@
         })
          },
          
-         forceFileDownload(response, title) {
-
-          console.log(title)
-          console.log(this.create_url)
+         forceFileDownload(response) {
           if (this.create_url != 'erro') {
             this.url_image = URL.createObjectURL(new Blob([response.data]))
           }
           
          },
-         forceFileDownload2(response, title) {
-          console.log(title)
-          console.log(this.create_url2)
+         forceFileDownload2(response) {
           if (this.create_url2 != 'erro') {
             this.url_image2 = URL.createObjectURL(new Blob([response.data]))
           }
@@ -324,7 +319,7 @@
           data: {
             external_id: this.$route.params.external_id,
           }
-        }).then(response=>this.forceFileDownload(response, 'img_jeec_speaker'))
+        }).then(response=>this.forceFileDownload(response))
 
         axios({
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagescompany',
@@ -337,7 +332,7 @@
           data: {
             external_id: this.$route.params.external_id,
           }
-        }).then(response=>this.forceFileDownload2(response, 'img_jeec_company'))
+        }).then(response=>this.forceFileDownload2(response))
 
           
         }
@@ -370,4 +365,5 @@
 }
 
 </style>
+
 
