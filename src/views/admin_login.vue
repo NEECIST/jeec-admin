@@ -8,6 +8,7 @@
           {{bigdata.show}}
             <div v-if="bigdata.show == ''" class="login-card center-align">
                 <img src="../assets/Untitled.jpg">
+                Version 2
                 <form method="post">
                     <div class="input-field col s2" :class="{boxname:detectext(form.username)}">
                         <input type="text" v-model="form.username" class="username-input" name="username">
