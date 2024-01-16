@@ -7,6 +7,7 @@
           <section-header-component name="BRAIN" description="Conference management system" back_page=""/>
           {{bigdata.show}}
             <div v-if="bigdata.show == ''" class="login-card center-align">
+                <img src="../assets/Untitled.png">
                 <form method="post">
                     <div class="input-field col s2" :class="{boxname:detectext(form.username)}">
                         <input type="text" v-model="form.username" class="username-input" name="username">
