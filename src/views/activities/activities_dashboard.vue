@@ -246,7 +246,8 @@
       ...mapGetters(["Event_id"]),
       ...mapMutations(["setEvent_id"]),
       EventSetter(external_id){
-          this.setEvent_id(external_id)
+          this.setEvent_id(external_id),
+          location.reload()
       },
       deleteActivity(external_id) {
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/delete_vue',{activity_external_id: external_id},{auth: {
