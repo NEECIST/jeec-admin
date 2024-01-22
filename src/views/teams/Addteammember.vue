@@ -40,6 +40,20 @@
             <label for="linkedin_url">LinkedIn</label>
           </div>
         </div>
+        <div style="margin-left: -78vw;">
+          Show background in website:
+            <p>
+                <label style="margin-right: 20px;">
+                <input class="with-gap" name="background_bool" type="radio" value="True" v-model="background_bool"/>
+                <span>Yes</span>
+                </label>
+                <label>
+                <input class="with-gap" name="background_bool" type="radio" value="False" checked v-model="background_bool"/>
+                <span>No</span>
+                </label>
+            </p>
+        </div>
+
 
         <div class="file-field input-field" style="width:500px;">
           <div class="btn">
@@ -81,6 +95,7 @@
         ist_id: '',
         email: '',
         linkedin_url: '',
+        background_bool: 'False',
         fileSelected: null,
         fileToUpload: null,
         bigdata: [],
@@ -107,6 +122,7 @@
         fd.append('ist_id', this.ist_id)
         fd.append('email', this.email)
         fd.append('linkedin_url', this.linkedin_url)
+        fd.append('background_bool', this.background_bool)
 
         axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/team/new-member',fd,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 

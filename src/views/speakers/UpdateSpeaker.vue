@@ -13,11 +13,17 @@
           {{ error }}
         </blockquote>
       </div>
+
+      <div class="left" style="margin-left: 0px;">
+        <div class="sub_section-title">Event</div>
+        <form class="col s12" id="event_form">
+          <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required>
+            <option v-for="event in this.events" :key="event.id" :value="event.id">{{ event.name }}</option>
+          </select>
+        </form>
+      </div>
       
       <form class="col s12">
-
-          
-
           <br>
 
           <div class="row s12">
@@ -166,33 +172,34 @@
         },
         data(){
           return{
-              error: null,
-              name: '',
-              company: '',
-              company_link: '',
-              position: '',
-              bio: '',
-              linkedin_url: '',
-              country: '',
-              youtube_url: '',
-              website_url: '',
-              spotlight: '',
-              bigdata:[],
-              bigdata2:[],
-              image: null,
-              speaker_old: [],
-              speaker: [],
-              company_logo: null,
-              fileSelected: null,
-              fileSelected2: null,
-              url_image: '',
-              url_image2: '',
-              create_url: '',
-              create_url2: '',
-              fileToUpload: null,
-              fileToUpload2: null,
-              role:''
-
+            error: null,
+            name: '',
+            company: '',
+            company_link: '',
+            position: '',
+            bio: '',
+            linkedin_url: '',
+            country: '',
+            youtube_url: '',
+            website_url: '',
+            spotlight: '',
+            bigdata:[],
+            bigdata2:[],
+            image: null,
+            speaker_old: [],
+            speaker: [],
+            company_logo: null,
+            fileSelected: null,
+            fileSelected2: null,
+            url_image: '',
+            url_image2: '',
+            create_url: '',
+            create_url2: '',
+            fileToUpload: null,
+            fileToUpload2: null,
+            role:'',
+            event_chooser:'',
+            events:'',
           }
         },
         methods: {
@@ -228,12 +235,13 @@
           fd.append('linkedin_url', this.linkedin_url)
           fd.append('youtube_url', this.youtube_url)
           fd.append('website_url', this.website_url)
-          fd.append('spotlight', this.spotlight)          
+          fd.append('spotlight', this.spotlight)
+          fd.append('event', this.event_chooser)        
           
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/speaker_external_id' ,fd,{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {
+            username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+            password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+          }}).then(response => {
           this.error = response.data.error
           if(this.error == ''){
             this.$router.push("/speakers")
@@ -242,18 +250,13 @@
         })
          },
          
-         forceFileDownload(response, title) {
-
-          console.log(title)
-          console.log(this.create_url)
+         forceFileDownload(response) {
           if (this.create_url != 'erro') {
             this.url_image = URL.createObjectURL(new Blob([response.data]))
           }
           
          },
-         forceFileDownload2(response, title) {
-          console.log(title)
-          console.log(this.create_url2)
+         forceFileDownload2(response) {
           if (this.create_url2 != 'erro') {
             this.url_image2 = URL.createObjectURL(new Blob([response.data]))
           }
@@ -261,21 +264,39 @@
          },
         },
         mounted() {
+          axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/all_events',{auth: {
+            username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+            password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+          }}).then(response => this.events = response.data.events),
+
           this.role = this.getRole()
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/getspeaker', {external_id: this.$route.params.external_id},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {const data = response.data; 
-          this.bigdata = data; this.speaker = data.speaker; this.name = data.speaker.name; 
-          this.company = data.speaker.company; this.company_link = data.speaker.company_link; this.position = data.speaker.position;
-          this.country = data.speaker.country; this.bio = data.speaker.bio; this.linkedin_url = data.speaker.linkedin_url; 
-          this.youtube_url = data.speaker.youtube_url; this.website_url = data.speaker.website_url
-          if(data.speaker.spotlight){
-            this.spotlight="True"
-          }
-        else{
-          this.spotlight = "False"
-        } })
+
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/getspeaker', {external_id: this.$route.params.external_id},{auth: {
+            username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+            password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+          }}).then(response => {
+            const data = response.data; 
+            this.bigdata = data; 
+            this.speaker = data.speaker; 
+            this.name = data.speaker.name; 
+            this.company = data.speaker.company; 
+            this.company_link = data.speaker.company_link; 
+            this.position = data.speaker.position;
+            this.country = data.speaker.country; 
+            this.bio = data.speaker.bio; 
+            this.linkedin_url = data.speaker.linkedin_url; 
+            this.youtube_url = data.speaker.youtube_url; 
+            this.website_url = data.speaker.website_url;
+            this.event_chooser = data.speaker.event;
+
+            console.log(this.event_chooser)
+
+            if(data.speaker.spotlight){
+              this.spotlight="True"
+            }
+            else{
+              this.spotlight = "False"
+            } })
          
         
         axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speakers/create_url_error_speaker' ,{external_id: this.$route.params.external_id },{auth: {
@@ -298,7 +319,7 @@
           data: {
             external_id: this.$route.params.external_id,
           }
-        }).then(response=>this.forceFileDownload(response, 'img_jeec_speaker'))
+        }).then(response=>this.forceFileDownload(response))
 
         axios({
           url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagescompany',
@@ -311,7 +332,7 @@
           data: {
             external_id: this.$route.params.external_id,
           }
-        }).then(response=>this.forceFileDownload2(response, 'img_jeec_company'))
+        }).then(response=>this.forceFileDownload2(response))
 
           
         }
@@ -344,4 +365,5 @@
 }
 
 </style>
+
 

@@ -52,7 +52,7 @@
                   </qrcode-stream>
                 </fullscreen>
         
-                <button  class="waves-effect blue lighten-2 btn-large dashboard-btn" type="button" @click="toggle" style="margin:20px;">Fullscreen</button>
+                <button v-if="!this.fullscreen" class="waves-effect blue lighten-2 btn-large dashboard-btn" type="button" @click="toggle" style="margin:20px;">Fullscreen</button>
               </div>
             </div>
             
@@ -133,9 +133,9 @@ export default {
     async onDecode (content) {
       this.result = content
       this.turnCameraOff()
-      this.activity_external_idistid= this.$route.params.activity_external_id + content
+      this.activity_external_id= this.$route.params.activity_external_id
 
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_idistid:  this.activity_external_idistid},{auth: {
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_id:  this.activity_external_idistid, student_external_id: this.result},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response =>{ this.SmallData = response.data} )
@@ -168,13 +168,14 @@ export default {
     }
   },
   mounted() {
-    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/qrcode',{user: this.StateUsername(), activity_external_id: this.$route.params.activity_external_id},{auth: {
+    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/qrcode',{activity_external_id: this.$route.params.activity_external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response => {this.BigData = response.data
     if (this.BigData.error != '') {
         this.$router.push({name: 'activities-dashboard'})
     }})
+    this.SmallData.student_username = this.StateUsername()
   },
 }
 </script>

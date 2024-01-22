@@ -4,9 +4,6 @@
     <TopBar/>
 
     <SectionHeader :name="responsedata.company.name" description="Edit Company information" back_page="/companies"/>
-
-
-    
   <br>  
 
   
@@ -16,6 +13,14 @@
           {{ responsedata.error }}
         </blockquote>
       
+      <div class="left" style="margin-left: 0px;">
+        <div class="sub_section-title">Event</div>
+        <form class="col s12" id="event_form">
+          <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required>
+            <option v-for="event in this.events" :key="event.id" :value="event.id">{{ event.name }}</option>
+          </select>
+        </form>
+      </div>
 
       <form class="col s12" @submit="updateCompany">
         <div v-if="this.url_image != null">
@@ -80,12 +85,13 @@
           <p>
             Partnership tier
             <select v-model="responsedata.company.partnership_tier" class="browser-default" style="margin-left: 100px;width: 200px;display: inline-block;">
-              <option value="">Partnership</option>
-              <option value="gold">Gold</option>
-              <option value="silver">Silver</option>
-              <option value="bronze">Bronze</option>
-              <option value="main_sponsor" >Main Sponsor</option>
-              <option value="sponsor">Sponsor</option>
+              <option value="partner_gold">Gold Partner</option>
+              <option value="partner_silver">Silver Partner</option>
+              <option value="partner_bronze">Bronze Partner</option>
+              <option value="sponsor_platinum">Platinum Sponsor</option>
+              <option value="sponsor_gold">Gold Sponsor</option>
+              <option value="sponsor_silver">Silver Sponsor</option>
+              <option value="sponsor_bronze">Bronze Sponsor</option>
               <option value="nucleo">Núcleo</option>
             </select>
           </p>
@@ -123,13 +129,13 @@
             </div>
             <div class="file-path-wrapper">
               <div v-if="url_image != null">
-                <input class="file-path validate" type="text" :placeholder="url_image">
+                <input class="file-path validate" type="text" placeholder="use a .png, .jpg or .svg with < 200kB">
               </div>
               <div v-else-if="fileSelected != null">
                 <input class="file-path validate" type="text" :placeholder="fileSelected">
               </div>
               <div v-else>
-                <input class="file-path validate" type="text" placeholder="use a .png, .jpg, .jpeg or .svg with < 200kB">
+                <input class="file-path validate" type="text" placeholder="use a .png, .jpg or .svg with < 200kB">
               </div>
             </div>
           </div>
@@ -175,32 +181,47 @@ data(){
       url_image:null,
       fileSelected:null,
       fileToUpload:null,
-      role:''
+      role:'',
+      event_chooser:'',
+      events:'',
   };
 },
 async mounted(){
-  await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/info',{external_id: this.$route.params.company_external_id},{auth: {
+  axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/all_events',{auth: {
+            username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+            password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+          }}).then(response => this.events = response.data.events),
+
+  axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/info',{external_id: this.$route.params.company_external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=> this.responsedata = response.data)
-  if(this.responsedata.company.image){
-    axios({
-          url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagecompany',
-          method: 'POST',
-          auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY,
-          },
-          responseType: 'arraybuffer',
-          data: {
-            external_id: this.$route.params.company_external_id,
-          }
-        }).then(response=>{
-          if(response.data!=''){
-            this.forceFileDownload(response)
-          }
+        }}).then(response=>{ 
+          this.responsedata = response.data;
+          this.event_chooser = this.responsedata.company.event;
+          console.log(this.responsedata.company.image)
         })
-  }
+
+        
+  
+  console.log('IN')
+
+  axios({
+        url: process.env.VUE_APP_JEEC_BRAIN_URL+'/getimagecompany',
+        method: 'POST',
+        auth: {
+        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+        password: process.env.VUE_APP_JEEC_WEBSITE_KEY,
+        },
+        responseType: 'arraybuffer',
+        data: {
+          external_id: this.$route.params.company_external_id,
+        }
+      }).then(response=>{
+        if(response.data!=''){
+          this.forceFileDownload(response)
+        }
+      })
+  
   this.role = this.getRole()
 },
 methods:{
@@ -209,52 +230,52 @@ methods:{
     this.fileSelected = event.target.files[0].name;
     this.fileToUpload = event.target.files[0];
     this.url_image = URL.createObjectURL(new Blob([event.target.files[0]]))
-    },
-    deleteCompany(e){
-      e.preventDefault()
-      if(confirm('Are you sure you want to delete this company?')){
-        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/delete',{external_id: this.$route.params.company_external_id},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>{
-          if(response.data==''){
-            this.$router.push("/companies")
-          }
-          else{
-            this.responsedata.error = response.data
-          }
-        })
-      }
-    },
-    updateCompany(e){
-      e.preventDefault()
-          const new_company = new FormData();
+  },
+  deleteCompany(e){
+    e.preventDefault()
+    if(confirm('Are you sure you want to delete this company?')){
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/delete',{external_id: this.$route.params.company_external_id},{auth: {
+        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+      }}).then(response=>{
+        if(response.data==''){
+          this.$router.push("/companies")
+        }
+        else{
+          this.responsedata.error = response.data
+        }
+      })
+    }
+  },
+  updateCompany(e){
+    e.preventDefault()
+        const new_company = new FormData();
 
-          console.log(this.fileToUpload)
-          new_company.append('image', this.fileToUpload)
-          
-          new_company.append('name', this.responsedata.company.name)
-          new_company.append('link', this.responsedata.company.link)
-          new_company.append('business_area', this.responsedata.company.business_area)
-          new_company.append('email', this.responsedata.company.email)
-          new_company.append('show_in_website', this.responsedata.company.show_in_website)
-          new_company.append('partnership_tier', this.responsedata.company.partnership_tier)
-          new_company.append('cvs_access', this.responsedata.company.cvs_access)
-          new_company.append('external_id', this.$route.params.company_external_id)
+        console.log(this.fileToUpload)
+        new_company.append('image', this.fileToUpload)
+        new_company.append('name', this.responsedata.company.name)
+        new_company.append('link', this.responsedata.company.link)
+        new_company.append('business_area', this.responsedata.company.business_area)
+        new_company.append('email', this.responsedata.company.email)
+        new_company.append('show_in_website', this.responsedata.company.show_in_website)
+        new_company.append('partnership_tier', this.responsedata.company.partnership_tier)
+        new_company.append('cvs_access', this.responsedata.company.cvs_access)
+        new_company.append('external_id', this.$route.params.company_external_id)
+        new_company.append('event', this.event_chooser)
 
-          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/update',new_company,{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {
-            this.responsedata.error = response.data
-            if(this.responsedata.error==""){
-                this.$router.push("/companies")
-            }
-        })
-    },
-    forceFileDownload(response) {
-      this.url_image = URL.createObjectURL(new Blob([response.data]))
-    },
+        axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/company/update',new_company,{auth: {
+        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+      }}).then(response => {
+          this.responsedata.error = response.data
+          if(this.responsedata.error==""){
+              this.$router.push("/companies")
+          }
+      })
+  },
+  forceFileDownload(response) {
+    this.url_image = URL.createObjectURL(new Blob([response.data]))
+  },
 }
 }
 

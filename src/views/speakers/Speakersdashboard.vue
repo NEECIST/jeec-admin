@@ -8,6 +8,15 @@
       </form>
     </router-link>
     <br> 
+
+    <div class="left" style="margin-left: 30px;">
+      <div class="sub_section-title">Events</div>
+      <form class="col s12" id="event_form">
+        <select v-model="event_chooser" class="form-control" style="height:50px; width: 100px; display: block;" required @change="changeEvent(event_chooser.id)">
+          <option v-for="eventt in this.events" :key="eventt.id" :value="eventt"  selected>{{ eventt.name }}</option>
+        </select>
+      </form>
+    </div>
   
 
     <div class="section-title center-align" style="margin-top:90px;">
@@ -45,6 +54,7 @@
           <table class="striped">
               <thead><tr>
                 <th>ID</th>
+                <th>Event</th>
                 <th>Name</th>
                 <th>Company</th>
                 <th>Position</th>
@@ -55,6 +65,8 @@
               <tbody>
                     <tr v-for="speaker in filteredSpeakers" v-bind:key="speaker.id" >
                       <td>{{ speaker.id }}</td>
+
+                      <td>{{ event_chooser.name }}</td>
 
                       <td><b>{{ speaker.name }}
                         <div v-if="speaker.spotlight">
@@ -106,8 +118,8 @@
                         </router-link>
                       </td>
                       <td>
-                  <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteSpeaker(speaker.external_id)">
-                    <i class="material-icons left">close</i>Delete Activity</button>
+                  <button type="submit" class="waves-effect red btn-floating" @click="deleteSpeaker(speaker.external_id)">
+                    <i class="material-icons left">person_remove</i>Delete Speaker</button>
                 </td>
                     </tr>
               </tbody> 
@@ -129,40 +141,50 @@
               bigdata: [],
               error: '',
               search: '',
-              searchspeaker: true,
               speakers: [],
-              speak: {id: 'fhcruiedbn'},
               role:'',
+              events:[],
+              event_chooser:[],
+              show_speakers:[],
           }
       },
       methods: {
         ...mapGetters(["StateUsername"]),
         ...mapGetters(["getRole"]),
+
+        changeEvent(event){
+          this.show_speakers = this.speakers[event - 1]
+        },
         eraseSearch(){
           this.search = '';
         },
-        async deleteSpeaker(external_id) {
-
-        await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/delete', {external_id: external_id},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => this.error = response.data.error)
-        await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss',{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers })
-
+        deleteSpeaker(external_id) {
+          axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/speaker/delete', {external_id: external_id},{auth: {
+            username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+            password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+          }}).then(response => {
+            const data = response.data;
+            this.error = data.error;
+            this.speakers = data.speakers;
+            this.events = data.events;
+            this.show_speakers = this.speakers[this.event_chooser-1];
+          })
+          this.$router.go()
         },
       },
       computed:{
         filteredSpeakers: function(){
-          if(this.searchspeaker){
-            return this.speakers.filter((speaker) => {
-            return speaker.name.toLowerCase().match(this.search.toLowerCase());
+          if(this.search){
+            return (this.show_speakers.filter((speaker) => {
+            return speaker.name.match(this.search);
+            })).filter((speaker) => {
+            return speaker.event==this.event_chooser.id;
             });
           }
           else{
-            return this.speakers;
+            return this.show_speakers.filter((speaker) => {
+              return speaker.event==this.event_chooser.id;
+            });
           }
         }
       },  
@@ -170,7 +192,20 @@
         axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/speakerss',{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response => {const data = response.data; this.bigdata = data; this.speakers = data.speakers }),
+        }}).then(response => {
+          const data = response.data;
+          this.speakers = data.speakers;
+          this.events = data.events;
+        
+          for(var i = this.events.length; i != 0; i--){
+            if(this.events[i-1].default == true){
+              this.event_chooser = this.events[i-1];
+              this.show_speakers = this.speakers[i-1];
+              break
+            } 
+          }
+          console.log(this.show_speakers)
+        }),
         this.role = this.getRole()
       }
   }

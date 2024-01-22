@@ -9,6 +9,14 @@
 
     <br>
     <br>
+    <div class="left" style="margin-left: 0px;">
+      <div class="sub_section-title">Event</div>
+      <form class="col s12" id="event_form">
+        <select v-model="event_chooser" class="form-control" style="height:50px; width: 200px; display: block;" required >
+          <option v-for="event in this.events" :key="event.id" :value="event.id">{{ event.name }}</option>
+        </select>
+      </form>
+    </div>
 
     <div class="create-form" style="margin-left:5vw;">
         <div v-if="error != ''">
@@ -67,12 +75,14 @@
         <p>
             <select name="partnership_tier" class="browser-default"
             style="margin-right: 100vw; width: 200px;display: inline-block;" v-model="partnership_tier">
-            <option value="" disabled selected>Partnership</option>
-            <option value="gold">Gold Partner</option>
-            <option value="silver">Silver Partner</option>
-            <option value="bronze">Bronze Partner</option>
-            <option value="main_sponsor">Main Sponsor</option>
-            <option value="sponsor">Partner</option>
+            <option value="" disabled selected>Tier</option>
+            <option value="partner_gold">Gold Partner</option>
+            <option value="partner_silver">Silver Partner</option>
+            <option value="partner_bronze">Bronze Partner</option>
+            <option value="sponsor_platinum">Platinum Sponsor</option>
+            <option value="sponsor_gold">Gold Sponsor</option>
+            <option value="sponsor_silver">Silver Sponsor</option>
+            <option value="sponsor_bronze">Bronze Sponsor</option>
             <option value="nucleo">Núcleo</option>
             </select>
         </p>
@@ -160,7 +170,9 @@ data(){
         show_in_website: null,
         fileToUpload: null,
         fileSelected:'',
-        role:''
+        role:'',
+        event_chooser:'',
+        events:'',
         
     }
 },
@@ -191,6 +203,7 @@ methods: {
           new_company.append('show_in_website', this.show_in_website)
           new_company.append('partnership_tier', this.partnership_tier)
         new_company.append('cvs_access', this.cvs_access)
+       new_company.append('event', this.event_chooser)
 
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/new-company-vue',new_company,{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
@@ -205,6 +218,10 @@ methods: {
 
     },
     mounted(){
+    axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + '/all_events',{auth: {
+          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+        }}).then(response => this.events = response.data.events),
         this.role = this.getRole()
     }
 }
