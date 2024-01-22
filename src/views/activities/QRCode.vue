@@ -52,7 +52,7 @@
                   </qrcode-stream>
                 </fullscreen>
         
-                <button  class="waves-effect blue lighten-2 btn-large dashboard-btn" type="button" @click="toggle" style="margin:20px;">Fullscreen</button>
+                <button v-if="!this.fullscreen" class="waves-effect blue lighten-2 btn-large dashboard-btn" type="button" @click="toggle" style="margin:20px;">Fullscreen</button>
               </div>
             </div>
             
