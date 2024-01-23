@@ -206,7 +206,7 @@ methods:{
         this.search_bool=true
         this.events=[]
         for(var i=0;i<this.responsedata.events.length;i++){
-          if(this.responsedata.events[i].name.includes(this.search_str)){
+          if(this.responsedata.events[i].name.toLowerCase().includes(this.search_str.toLowerCase())){
             this.events.push(this.responsedata.events[i])
           }
         }

@@ -198,7 +198,7 @@ data(){
       this.search_day = this.search_input
       let new_meals = []
       for(let i=0;i<this.meals_list.length;i++){
-        if(this.meals_list[i].day.includes(this.search_day)){
+        if(this.meals_list[i].day.toLowerCase().includes(this.search_day.toLowerCase())){
           new_meals.push(this.meals_list[i])
         }
       }

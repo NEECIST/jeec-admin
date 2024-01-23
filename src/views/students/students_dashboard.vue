@@ -201,7 +201,7 @@
         computed: {
             filteredStudents() {
                 return this.responsedata.students.filter((student) => {
-                    return student.name.toLowerCase().includes(this.search.toLowerCase())
+                    return student.name.toLowerCase().includes(this.search.toLowerCase()).sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
                 });
             }
         },

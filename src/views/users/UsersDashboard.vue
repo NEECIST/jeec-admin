@@ -25,7 +25,7 @@
     <form class="col s12" @submit="searchUsers">
       <div class="row">
         <div class="input-field col s8">
-          <input class="col s12 validate" id="username" name="username" type="text" v-model="input" required>
+          <input class="col s12 validate" id="username" name="username" type="text" v-model="input" placeholder="username" required>
         </div>
         <button type="submit" class="btn-floating blue lighten-2 search-btn"><i
             class="material-icons">search</i>Search</button>
@@ -191,13 +191,13 @@ export default {
       e.preventDefault();
       this.users=[]
       for(let i=0;i<this.response_data.users.length;i++){
-        if(this.response_data.users[i].name.includes(this.input)){
+        if(this.response_data.users[i].username.toLowerCase().includes(this.input.toLowerCase())){
           this.users.push(this.response_data.users[i])
         }
       }
       this.company_users=[]
       for(let i=0;i<this.response_data.company_users.length;i++){
-        if(this.response_data.company_users[i].name.includes(this.input)){
+        if(this.response_data.company_users[i].username.toLowerCase().includes(this.input.toLowerCase())){
           this.company_users.push(this.response_data.company_users[i])
         }
       }

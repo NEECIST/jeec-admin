@@ -39,12 +39,12 @@ import ActivitiesDashboard from '../views/activities/activities_dashboard.vue'
 import ActivityTypesDashboard from '../views/activities/activity_types_dashboard'
 import AddActivityType from '../views/activities/add_activity_type'
 import AddActivity from '../views/activities/add_activity'
-import AddAuction from '../views/auctions/add_auction'
-import AuctionParticipantsDashboard from '../views/auctions/auction_participants_dashboard'
-import AuctionsDashboard from '../views/auctions/auctions_dashboard'
+// import AddAuction from '../views/auctions/add_auction'
+// import AuctionParticipantsDashboard from '../views/auctions/auction_participants_dashboard'
+// import AuctionsDashboard from '../views/auctions/auctions_dashboard'
 import UpdateActivityType from '../views/activities/update_activity_type'
 import UpdateActivity from '../views/activities/update_activity'
-import UpdateAuction from '../views/auctions/update_auction'
+// import UpdateAuction from '../views/auctions/update_auction'
 import QRCode from '../views/activities/QRCode.vue'
 import AddCompanyUser from '../views/users/AddCompanyUser.vue'
 import AddTeamUser from '../views/users/AddTeamUser.vue'
@@ -54,7 +54,7 @@ import AddQuest from '../views/quests/AddQuest.vue'
 import UpdateQuest from '../views/quests/UpdateQuest.vue'
 import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
 import DistributeRewards from '../views/activities/distribute_rewards'
-import KingsDashboard from '../views/Kings.vue'
+// import KingsDashboard from '../views/Kings.vue'
 
 Vue.use(VueRouter)
 
@@ -64,11 +64,11 @@ const routes = [
     name: 'add-company',
     component: AddCompany
    },
-   {
-    path: '/kings',
-    name: 'kings-dashboard',
-    component: KingsDashboard
-   },
+  //  {
+  //   path: '/kings',
+  //   name: 'kings-dashboard',
+  //   component: KingsDashboard
+  //  },
    {
     path: '/squad_rewards/add',
     name: 'add-squad-reward',
@@ -274,21 +274,21 @@ const routes = [
     name: 'add-activity',
     component: AddActivity
   },
-  {
-    path: '/auctions/new-auction',
-    name: 'add-auction',
-    component: AddAuction
-  },
-  {
-    path: '/auctions/participants/:auction_id',
-    name: 'auction-participants-dashboard',
-    component: AuctionParticipantsDashboard
-  },
-  {
-    path: '/auctions',
-    name: 'auctions-dashboard',
-    component: AuctionsDashboard
-  },
+  // {
+  //   path: '/auctions/new-auction',
+  //   name: 'add-auction',
+  //   component: AddAuction
+  // },
+  // {
+  //   path: '/auctions/participants/:auction_id',
+  //   name: 'auction-participants-dashboard',
+  //   component: AuctionParticipantsDashboard
+  // },
+  // {
+  //   path: '/auctions',
+  //   name: 'auctions-dashboard',
+  //   component: AuctionsDashboard
+  // },
   {
     path: '/activities/update-type/:activity_type_id',
     name: 'update-activity-type',
@@ -299,11 +299,11 @@ const routes = [
     name: 'update-activity',
     component: UpdateActivity
   },
-  {
-    path: '/auctions/update/:auction_id',
-    name: 'update-auction',
-    component: UpdateAuction
-  },
+  // {
+  //   path: '/auctions/update/:auction_id',
+  //   name: 'update-auction',
+  //   component: UpdateAuction
+  // },
   {
     path: '/usersdashboard',
     name: 'users-dashboard',

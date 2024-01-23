@@ -12,7 +12,7 @@
           <form class="col s12" method="post" @submit="search">
             <div class="row">
               <div class="input-field col s8">
-                <input placeholder="ist1xxxxxx" class="col s12 validate" v-model="search_str" type="text" required>
+                <input placeholder="username" class="col s12 validate" v-model="search_str" type="text" required>
                 
                 <label for="name"></label>
               </div>
@@ -88,6 +88,7 @@
         },
   mounted(){
     this.role =  this.getRole()
+    
   },
   methods:{
     ...mapGetters(["isAuthenticated"]),

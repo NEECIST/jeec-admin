@@ -53,12 +53,12 @@
            
                 </router-link>
 
-                <router-link router-link to="/kings" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
+                <!-- <router-link router-link to="/kings" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
         
                     <button class="waves-effect blue lighten-2 btn-large dashboard-btn" ><i
                         class="large material-icons left">emoji_events</i>Get Kings</button>
 
-                </router-link>
+                </router-link> -->
 
                 <router-link router-link to="/companies" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'business' || user.role == 'coordination' || user.role == 'admin'">
                     <form method="get">
@@ -90,12 +90,12 @@
             </div>
 
             <div class="flexbox-btns" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
-                <router-link router-link to="/auctions">
+                <!-- <router-link router-link to="/auctions">
                     <form method="get">
                     <button v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">attach_money</i>Auctions</button>
                     </form>
-                </router-link>
+                </router-link> -->
                 
                 <router-link router-link to="/events" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
                     <form method="get">

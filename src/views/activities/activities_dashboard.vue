@@ -58,10 +58,6 @@
             <button v-if="name_search != ''" class="search-btn red btn-floating left" 
                     style="margin-top: 20px;" @click="eraseSearch"><i class="material-icons">clear</i></button>
 
-            <router-link router-link :to="{ name: 'activities-dashboard'}" :name_search="name_search">
-              <button type="submit" class="btn-floating blue lighten-2 search-btn"><i
-                  class="material-icons">search</i>Search</button>
-            </router-link>
           </div>
         </form>
 
