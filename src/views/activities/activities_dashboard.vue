@@ -322,7 +322,6 @@
       }
     },
     mounted() {
-      console.log(this.Event_id())
       axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities_vue',{event_id: this.Event_id(), username: this.StateUsername()}, {auth: {
         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
