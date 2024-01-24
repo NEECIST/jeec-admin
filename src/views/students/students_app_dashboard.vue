@@ -51,6 +51,11 @@
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">local_offer</i>Tags</button>
             </router-link>
+
+            <router-link router-link to="/cvs_dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+                <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                        class="large material-icons left">local_offer</i>CVs</button>
+            </router-link>
         </div>
 
         <blockquote class="left" style="margin-left: 40px;margin-top: 70px;">
