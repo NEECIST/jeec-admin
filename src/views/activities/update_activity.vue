@@ -4,6 +4,7 @@
         
       <body>
          <!-- <navbar-component logo="brain.png"/> -->
+         <TopBar :username="this.StateUsername()"/>
 
         <section-header-component :name="bigdata.activity.activity_type.name" description="Edit information" back_page="/activities"/>
 
