@@ -23,7 +23,9 @@ import Teamsdashboard from '../views/teams/Teamsdashboard.vue'
 import Updateteammember from '../views/teams/Updateteammember.vue'
 import Updateteam from '../views/teams/Updateteam.vue'
 import AdminLogin from '../views/admin_login'
+import cvs_dashboard from '../views/cvs/cvs_dashboard.vue'
 import students_app_dashboard from '../views/students/students_app_dashboard.vue'
+
 // import levels_dashboard from '../views/levels/levels_dashboard.vue'
 import tags_dashboard from '../views/tags/tags_dashboard.vue'
 import squads_dashboard from '../views/squads/squads_dashboard.vue'
@@ -100,6 +102,11 @@ const routes = [
     name: 'edit-company',
     component: EditCompany
    },
+  {
+    path: '/cvs_dashboard',
+    name: 'cvs-dashboard',
+    component: cvs_dashboard, 
+  },
    {
     path: '/events/edit-event/:event_external_id',
     name: 'edit-event',
