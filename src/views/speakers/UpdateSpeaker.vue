@@ -73,7 +73,7 @@
 
           <div class="row">
             <div class="input-field col s9 box" :class="{boxname:detectext(bio)}">
-              <textarea id="bio" name="bio" class="materialize-textarea" value="bio" v-model="bio" maxlength="300"> speaker.bio </textarea>
+              <textarea id="bio" name="bio" class="materialize-textarea" value="bio" v-model="bio" maxlength="700"> speaker.bio </textarea>
               <label for="bio">Biography</label>
             </div>
           </div>
