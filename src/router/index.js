@@ -54,6 +54,7 @@ import AddQuest from '../views/quests/AddQuest.vue'
 import UpdateQuest from '../views/quests/UpdateQuest.vue'
 import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
 import DistributeRewards from '../views/activities/distribute_rewards'
+import ticket_levels_dashboard from '../views/ticket_levels/ticket_levels_dashboard.vue'
 // import KingsDashboard from '../views/Kings.vue'
 
 Vue.use(VueRouter)
@@ -79,6 +80,11 @@ const routes = [
     name: 'add-event',
     component: AddEvent
    },
+   {
+    path: '/ticket_levels',
+    name: 'ticket_levels-dashboard',
+    component: ticket_levels_dashboard, 
+  },
    {
     path: '/meals/add-meal',
     name: 'add-meal',
