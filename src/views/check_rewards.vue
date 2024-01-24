@@ -3,7 +3,8 @@
 
       <head-component/>
 
-      <navbar-component logo="brain.png"/>
+      <!-- <navbar-component logo="brain.png"/> -->
+      <TopBar :username="this.StateUsername()"/>
 
       <section-header-component name="Check student's rewards" description="Check the rewards each student has obtained" back_page="/dashboard/"/>
 
@@ -69,11 +70,13 @@
 </template>
 
 <script>
-  import axios from "axios"
+  import axios from "axios";
   import { mapGetters } from "vuex";
+  import TopBar from '../components/TopBar.vue';
   export default {
       name: 'check_rewards',
       components: {
+        TopBar
           },
       data(){
           return{
