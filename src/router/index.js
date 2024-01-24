@@ -186,11 +186,11 @@ const routes = [
     component: students_app_dashboard, 
   },
   
-  {
-    path: '/levels',
-    name: 'levels-dashboard',
-    component: levels_dashboard, 
-  },
+  // {
+  //   path: '/levels',
+  //   name: 'levels-dashboard',
+  //   component: levels_dashboard, 
+  // },
 
   {
     path: '/tags',
