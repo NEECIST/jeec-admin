@@ -131,6 +131,7 @@
     import { mapGetters, mapMutations } from "vuex";
     import axios from 'axios'
     import { mapActions } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
 
     export default {
       name: 'dashboard-main',

@@ -66,6 +66,7 @@
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
+import TopBar from '../../components/TopBar.vue';
 import { mapGetters } from "vuex";
 import axios from "axios"
 

@@ -121,6 +121,7 @@
 <script>
     import axios from "axios";
     import { mapGetters } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
 
     export default {
       name: 'update-activity-type',

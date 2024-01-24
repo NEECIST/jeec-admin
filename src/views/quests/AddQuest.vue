@@ -104,7 +104,8 @@
     import DatePick from 'vue-date-pick';
     import 'vue-date-pick/dist/vueDatePick.css';
     import fecha from 'fecha';
-    import axios from "axios"
+    import axios from "axios";
+    import TopBar from '../../components/TopBar.vue';
     import { mapGetters } from "vuex";
     export default {
         name: 'add-quest',

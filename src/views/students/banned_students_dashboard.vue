@@ -66,7 +66,8 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
+    import TopBar from '../../components/TopBar.vue';
     import { mapGetters } from "vuex";
     export default {
         name: 'banned-students-dashboard',

@@ -75,8 +75,9 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
     import { mapGetters } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
     export default {
         name: 'add-reward',
         components: {

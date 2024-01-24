@@ -46,6 +46,7 @@
 
 <script>
 import axios from "axios";
+import TopBar from '../../components/TopBar.vue';
 import CryptoJS from 'crypto-js' 
 import { mapGetters } from "vuex";
 // import axios from "axios"

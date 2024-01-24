@@ -65,6 +65,7 @@
 <script>
     import { mapGetters } from "vuex";
     import axios from 'axios';
+    import TopBar from '../../components/TopBar.vue';
 
     export default {
         name: 'squad-rewards-dashboard',

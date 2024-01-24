@@ -229,6 +229,7 @@
 <script>
   import axios from "axios";
   import { mapGetters, mapMutations } from "vuex";
+  import TopBar from '../../components/TopBar.vue';
   export default {
     name: 'activities-dashboard',
     components: {

@@ -101,11 +101,12 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
     import { mapGetters } from "vuex";
     import DatePick from 'vue-date-pick';
     import 'vue-date-pick/dist/vueDatePick.css';
     import fecha from 'fecha';
+    import TopBar from '../../components/TopBar.vue';
     export default {
         name: 'update-quest',
         components: {

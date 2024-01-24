@@ -185,6 +185,7 @@
     import { mapGetters } from "vuex";
     import vueMultiSelect from 'vue-multi-select';
     import 'vue-multi-select/dist/lib/vue-multi-select.css';
+    import TopBar from '../../components/TopBar.vue';
     export default {
       name: 'update-activity',
       components: {
