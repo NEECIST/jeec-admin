@@ -15,6 +15,13 @@
                         class="large material-icons left">bar_chart</i>Levels</button>
             
             </router-link>
+            
+            <router-link router-link to="/ticket_levels" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+
+                <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                        class="large material-icons left">bar_chart</i>Ticket Levels</button>
+
+            </router-link>
 
             <router-link router-link to="/quests" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
             
