@@ -137,7 +137,7 @@ export default {
       this.turnCameraOff()
       this.activity_external_id= this.$route.params.activity_external_id
 
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_id:  this.activity_external_idistid, student_external_id: this.result},{auth: {
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_id:  this.activity_external_id, student_external_id: this.result},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response =>{ this.SmallData = response.data} )
