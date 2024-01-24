@@ -50,7 +50,7 @@
                         <th>Email</th>
                         <th>Uploaded CV</th>
                         <th>Approved CV</th>
-                        <th>Download</th>
+                        <th>Review</th>
                         <th>Reject</th>
                         <th>Approve</th>
 
@@ -78,7 +78,7 @@
 
 
                             <td>
-                                <div v-if="student.cv == true">
+                                <div v-if="student.cv == true || student.approved == true">
                                     <i class="material-icons icon-green">check</i>
                                 </div>
                                 <div v-else>
@@ -87,7 +87,7 @@
                             </td>
 
                             <td>
-                                <div v-if="student.cv == true">
+                                <div v-if="student.approved">
                                     <i class="material-icons icon-green">check</i>
                                 </div>
                                 <div v-else>
@@ -96,19 +96,30 @@
                             </td>
 
                             <td>
-                                <button class="waves-effect blue lighten-2 btn dashboard-btn">Download</button>
+                                <button @click="getCV(student.ist_id)" class="waves-effect blue lighten-2 btn dashboard-btn">Review</button>
                             </td>
 
                             <td>
-                                <button class="waves-effect red lighten-2 btn dashboard-btn">Reject</button>
-                            </td>
-
-                            <td>
-                                <div v-if="student.cv == true">
-                                    <button class="waves-effect green lighten-2 btn dashboard-btn">Approve</button>
+                                <div v-if="student.cv == true && student.approved == false">
+                                    <button @click="deleteCV(student.ist_id)" class="waves-effect red lighten-2 btn dashboard-btn">Reject</button>
+                                </div>
+                                <div v-else-if="student.approved == false">
+                                    <button class="waves-effect grey lighten-2 btn dashboard-btn">Reject</button>
                                 </div>
                                 <div v-else>
+                                    <button class="waves-effect grey lighten-2 btn dashboard-btn">Approved</button>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div v-if="student.cv == true && student.approved == false">
+                                    <button @click="acceptCV(student.ist_id)" class="waves-effect green lighten-2 btn dashboard-btn">Approve</button>
+                                </div>
+                                <div v-else-if="student.approved == false">
                                     <button class="waves-effect grey lighten-2 btn dashboard-btn">Approve</button>
+                                </div>
+                                <div v-else>
+                                    <button class="waves-effect grey lighten-2 btn dashboard-btn">Approved</button>
                                 </div>
                             </td>
 
@@ -135,7 +146,8 @@
                 search:'',
                 role:'',
                 remove_points:1,
-                responsedata: {error: '', students: []}
+                responsedata: {error: '', students: []},
+                responsedata2: ""   
             }
         },
 
@@ -160,6 +172,75 @@
             eraseSearch(){
                 this.search = '';
             },
+            getCV(student_istid) {
+                axios({
+                    url: process.env.VUE_APP_JEEC_BRAIN_URL + "/get_cv",
+                    method: 'POST',
+                    responseType: 'blob', // Important for handling the PDF binary data
+                    data: {
+                    student_istid: student_istid
+                    },
+                    auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }
+                }).then(response => {
+                    // Create a new Blob object using the response data of the server
+                    const blob = new Blob([response.data], { type: 'application/pdf' });
+                    
+                    // Create an object URL for the Blob object
+                    const url = window.URL.createObjectURL(blob);
+                    
+                    // Create a new anchor element
+                    const a = document.createElement('a');
+                    a.href = url;
+                    // a.download = "cv_" + student_istid + ".pdf"; // Specify the file name for Review
+                    try {
+                        a.target = "_blank"
+                    } catch(e) {
+                        a.download = "cv_" + student_istid + ".pdf"; // Specify the file name for Review
+                    }
+
+                    document.body.appendChild(a); // Append the anchor to the body
+                    a.click(); // Simulate a click on the anchor
+                    document.body.removeChild(a); // Remove the anchor from the body
+                    window.URL.revokeObjectURL(url); // Clean up the URL object
+                }).catch(error => {
+                    console.error("Error downloading the file: ", error);
+                });
+            },
+            deleteCV(student_istid) {
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/remove_cv", {
+                    student_istid: student_istid // Make sure this matches the key expected by your Flask route
+                }, {
+                    auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }
+                }).then(response => {
+                    // Handle the response here, e.g., log it or update UI
+                    this.$router.go()
+                    console.log("File deletion response:", response.data);
+                }).catch(error => {
+                    console.error("Error deleting file: ", error);
+                });
+            },
+            acceptCV(student_istid) {
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/accept_cv", {
+                    student_istid: student_istid // Make sure this matches the key expected by your Flask route
+                }, {
+                    auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }
+                }).then(response => {
+                    // Handle the response here, e.g., log it or update UI
+                    this.$router.go()
+                    console.log("File acception response:", response.data);
+                }).catch(error => {
+                    console.error("Error deleting file: ", error);
+                });
+            }
         },
         
     }
