@@ -3,7 +3,8 @@
 
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Ticket Levels Management" description="Define the students progess" back_page="/students-app/"/>
 
@@ -99,11 +100,13 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
     import { mapGetters } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
     export default {
         name: 'ticket_levels-dashboard',
         components: {
+            TopBar
             },
         data(){
             return{
@@ -132,6 +135,7 @@
         },
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             deleteTicketLevel(external_id){
                 if(!confirm('Are you sure that you want to delete this level?')){
                     return
