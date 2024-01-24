@@ -3,7 +3,8 @@
 
         <head-component/>
 
-        <navbar-component logo="jeec_logo_mobile.svg"/>
+        <!-- <navbar-component logo="jeec_logo_mobile.svg"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Student App Management" description="Manage the JEEC Student App" back_page="/dashboard/"/>
 
@@ -57,7 +58,7 @@
     export default {
         name: 'student-app-dashboard',
         components: {
-
+            TopBar
             },
 
         data(){
@@ -75,6 +76,7 @@
         },
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
         }
     }
 </script>

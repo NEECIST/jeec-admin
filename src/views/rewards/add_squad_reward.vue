@@ -2,7 +2,8 @@
     <div class="add-squad-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Squad Rewards Management" description="Add a new squad reward" back_page="/rewards/squad"/>
 
@@ -47,7 +48,7 @@
     export default {
         name: 'add-squad-reward',
         components: {
-
+                TopBar
             },
 
         data(){
@@ -68,6 +69,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             
             newsquadreward(e){
                 e.preventDefault()

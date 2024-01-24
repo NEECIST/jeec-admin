@@ -3,7 +3,8 @@
         <head-component/>
         
       <body>
-            <navbar-component logo="brain.png"/>
+            <!-- <navbar-component logo="brain.png"/> -->
+            <TopBar :username="this.StateUsername()"/>
 
             <section-header-component name="Activity Types Management" :description="'Add a new activity type to ' + bigdata.event.name" back_page="/activities/types"/>
 
@@ -88,7 +89,7 @@
     export default {
         name: 'add-activity-type',
         components: {
-        
+            TopBar,
         },
         props:{
             

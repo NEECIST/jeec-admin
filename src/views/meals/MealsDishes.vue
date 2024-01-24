@@ -2,7 +2,7 @@
 
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Meals Management" description="Dishes chosen by the companies" back_page="/meals"/>
 
@@ -100,6 +100,7 @@ mounted(){
 },
 methods:{
   ...mapGetters(["getRole"]),
+  ...mapGetters(["StateUsername"]),
   // get_total(){
   //   for(let i=0; i< this.responsedata.dishes_per_companies.length; i++){
   //     for(let j = 0 ; j < this.responsedata.dishes_per_companies[j]; j++){

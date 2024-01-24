@@ -3,7 +3,7 @@
         <head-component/>
         
         <body v-if="bigdata.error==''">
-            <div class="navbar-component">
+            <!-- <div class="navbar-component">
                 <div class="nav-bar">
                     <a href=""><img class="jeec-logo-mobile"
                         :src="require('@/assets/' + 'brain.png')"></a>
@@ -20,7 +20,8 @@
                                 class="large material-icons left">web</i>Visit website</button>
                     </a>
                 </div>
-            </div>
+            </div> -->
+            <TopBar :username="this.StateUsername()"/>
 
             <div class="section-header" style="margin-top:100px">
                    <h2>Brain</h2>
@@ -134,7 +135,7 @@
     export default {
       name: 'dashboard-main',
       components: {
-        
+        TopBar
       },
       props:{
           

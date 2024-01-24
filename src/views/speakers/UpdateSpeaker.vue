@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'partnerships' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+  <TopBar :username="this.StateUsername()"/>
     <section-header-component name="SPEAKER" description="Edit speaker information" back_page="/speakers"/>
       <br>
     <div>
@@ -169,6 +169,7 @@
         export default {
           name: 'update-speaker',
           components: {
+            TopBar
         },
         data(){
           return{
@@ -204,6 +205,7 @@
         },
         methods: {
           ...mapGetters(["getRole"]),
+          ...mapGetters(["StateUsername"]),
          detectext(stringvar){
           return stringvar!=''; 
          },

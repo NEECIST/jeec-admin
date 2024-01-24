@@ -2,7 +2,7 @@
 
   <div class="users-dashboard" v-if="current_user.role == 'webdev' || current_user.role == 'webdev_tl' || current_user.role == 'coordination' || current_user.role == 'admin'">
       <!-- <div v-if="this.isAuthenticated()"> -->
-        <top-bar :username="current_user.name"/>
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component
         name="Users Management"
@@ -162,7 +162,7 @@ import CryptoJS from 'crypto-js'
 export default {
   name: 'users-dashboard',
   components: {
-    
+    TopBar
   },
   data(){
     return{

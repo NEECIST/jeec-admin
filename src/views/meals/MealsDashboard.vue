@@ -1,7 +1,7 @@
 <template>
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Meals Management" description="Add, edit or delete meal" back_page="/dashboard/"/>
 
@@ -180,6 +180,7 @@ data(){
   },
   methods:{
     ...mapGetters(["getRole"]),
+    ...mapGetters(["StateUsername"]),
     newTypeSearch(search_type){
       this.search_on = true
       this.meals_list=[]

@@ -3,7 +3,7 @@
  
  
     <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-        <TopBar/>
+        <TopBar :username="this.StateUsername()"/>
 
         <SectionHeader name = "Companies Management" description="Add a new company" back_page="/companies"/>
 
@@ -178,6 +178,7 @@ data(){
 },
 methods: {
     ...mapGetters(["getRole"]),
+    ...mapGetters(["StateUsername"]),
         selectFile(event){
             this.fileSelected = event.target.files[0].name;
             this.fileToUpload = event.target.files[0];

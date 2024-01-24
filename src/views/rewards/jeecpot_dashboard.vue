@@ -2,7 +2,8 @@
     <div class="jeecpot-rewards-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="JEECPOT Rewards Management" description="Manage the rewards for the top students and squads" back_page="/rewards"/>
 
@@ -200,7 +201,7 @@
     export default {
         name: 'jeecpot-rewards-dashboard',
         components: {
-
+                TopBar
             },
 
         data(){
@@ -220,6 +221,7 @@
 
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             updateReward(){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot-rewards/update",{jeecpot_external_id: this.responsedata.jeecpot_external_id,
                     first_student_reward_id: this.responsedata.jeecpot_rewards.first_student_reward_id,

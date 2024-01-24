@@ -1,7 +1,7 @@
 <template>
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Events Management" description="Add or edit event editions" back_page="/dashboard/"/>
 
@@ -201,6 +201,7 @@ mounted(){
 },
 methods:{
   ...mapGetters(["getRole"]),
+  ...mapGetters(["StateUsername"]),
       search(e){
         e.preventDefault()
         this.search_bool=true

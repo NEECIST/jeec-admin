@@ -2,7 +2,8 @@
     <div class="squad-rewards-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Squad Rewards Management" description="Manage the daily rewards for the top Squads" back_page="/rewards"/>
 
@@ -68,7 +69,7 @@
     export default {
         name: 'squad-rewards-dashboard',
         components: {
-
+                TopBar
             },
         
         data(){
@@ -86,6 +87,7 @@
         },
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             async deleteSquadReward(external_id) {
                 await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/deletesquadreward_vue',{external_id: external_id},{auth: {
                 username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 

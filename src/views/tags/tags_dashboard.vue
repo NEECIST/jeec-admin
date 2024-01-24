@@ -3,7 +3,8 @@
 
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Tags Management" description="Create tags for activities" back_page="/students-app/"/>
 
@@ -55,7 +56,7 @@
     export default {
         name: 'tags-dashboard',
         components: {
-                
+                TopBar
             },
 
         data(){
@@ -76,6 +77,7 @@
 
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             newtag(event){
                 event.preventDefault();
                 if(this.name == ''){

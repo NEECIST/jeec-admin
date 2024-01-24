@@ -3,7 +3,8 @@
 
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Banned Students Management" description="Unban students" back_page="/students"/>
 
@@ -70,7 +71,7 @@
     export default {
         name: 'banned-students-dashboard',
         components: {
-
+            TopBar
             },
 
         data(){
@@ -93,6 +94,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             unban(external_id){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/unban", {unbanstudent: external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 

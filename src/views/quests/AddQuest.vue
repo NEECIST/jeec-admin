@@ -2,7 +2,8 @@
     <div class="add-quest" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Quests Management" description="Create a new quest" back_page="/quests"/>
 
@@ -108,7 +109,7 @@
     export default {
         name: 'add-quest',
         components: {
-            DatePick,
+            DatePick,TopBar
             },
 
         data(){
@@ -133,6 +134,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             detectext(stringvar){
                 return stringvar!=''; 
             },

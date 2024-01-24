@@ -3,7 +3,8 @@
 
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Check what Activities have a winner" description="Attribute a winner to each activity" back_page="/dashboard/"/>
 
@@ -81,6 +82,7 @@
     export default {
         name: 'distribute-rewards',
         components: {
+          TopBar,
             },
         data(){
             return{

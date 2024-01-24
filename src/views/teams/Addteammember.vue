@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+  <TopBar :username="this.StateUsername()"/>
     <section-header-component name="DEVELOPMENT" description="Add a new member" back_page=""/>
     <router-link router-link :to="{ name: 'teamdashboard-main', params: { externalid : this.$route.params.externalid }}">
       <form >
@@ -87,6 +87,7 @@
     export default {
       name: 'addteammember-main',
       components: {
+        TopBar
     },
     data(){
       return{
@@ -105,6 +106,7 @@
     },
     methods: {
       ...mapGetters(["getRole"]),
+      ...mapGetters(["StateUsername"]),
       detectext(stringvar){
         return stringvar!=''; 
       },

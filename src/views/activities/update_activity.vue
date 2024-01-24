@@ -3,7 +3,7 @@
       <head-component/>
         
       <body>
-         <navbar-component logo="brain.png"/>
+         <!-- <navbar-component logo="brain.png"/> -->
 
         <section-header-component :name="bigdata.activity.activity_type.name" description="Edit information" back_page="/activities"/>
 
@@ -188,7 +188,7 @@
     export default {
       name: 'update-activity',
       components: {
-        DatePick, VueTimepicker,vueMultiSelect
+        DatePick, VueTimepicker,vueMultiSelect,TopBar
       },
       props:{
           

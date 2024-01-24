@@ -3,7 +3,8 @@
       <head-component/>
         
       <body>
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Activities Management" :description="'Add a new activity to ' + bigdata.event.name" back_page="/activities"/>
 
@@ -173,7 +174,7 @@
     export default {
       name: 'add-activity',
       components: {
-        DatePick, VueTimepicker,vueMultiSelect
+        DatePick, VueTimepicker,vueMultiSelect,TopBar
       },
       props:{
           

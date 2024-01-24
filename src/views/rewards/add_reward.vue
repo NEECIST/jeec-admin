@@ -2,7 +2,8 @@
     <div class="add-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Rewards Management" description="Add a new reward" back_page="/rewards"/>
 
@@ -79,7 +80,7 @@
     export default {
         name: 'add-reward',
         components: {
-
+            TopBar
             },
 
         data(){
@@ -97,6 +98,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             selectFile(event){
                 this.fileSelected = event.target.files[0].name;
                 this.fileToUpload = event.target.files[0];

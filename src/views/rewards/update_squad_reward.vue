@@ -2,7 +2,8 @@
     <div class="update-squad-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <div class="section-header-component">
             <div class="section-header" style="margin-top:100px">
@@ -69,7 +70,7 @@
     export default {
         name: 'update-squad-reward',
         components: {
-
+                TopBar
             },
 
         data(){
@@ -88,6 +89,7 @@
 
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             deleteSquadReward(e) {
                 e.preventDefault()
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/deletesquadreward_vue',{external_id: this.external_id},{auth: {

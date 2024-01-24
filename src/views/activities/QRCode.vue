@@ -3,7 +3,8 @@
         <head-component/>
           
         <body>
-          <navbar-component logo="brain.png"/>
+          <!-- <navbar-component logo="brain.png"/> -->
+          <TopBar :username="this.StateUsername()"/>
           <section-header-component name="QR Code Reading" description="Read QR Code of a student for an activity" back_page="/activities"/>
 
           <div  v-if="this.isAuthenticated()">
@@ -71,7 +72,7 @@ import axios from "axios"
 
 export default {
   name: 'activity-full-detail',
-  components: { QrcodeStream },
+  components: { QrcodeStream,TopBar },
 
   data () {
     return {

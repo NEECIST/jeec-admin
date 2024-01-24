@@ -2,7 +2,8 @@
     <div class="students-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Students Management" description="Ban and manage students" back_page="/students-app/"/>
 
@@ -178,7 +179,7 @@
     export default {
         name: 'students-dashboard',
         components: {
-                
+                TopBar
             },
 
         data(){
@@ -208,6 +209,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             eraseSearch(){
                 this.search = '';
             },

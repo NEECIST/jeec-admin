@@ -3,7 +3,8 @@
         <div>
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Rewards Management" description="Create and manage rewards" back_page="/students-app/"/>
 
@@ -112,7 +113,7 @@
     export default {
         name: 'rewards-dashboard',
         components: {
-
+                TopBar
             },
         
         data(){
@@ -135,6 +136,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             eraseSearch(){
                 this.search = '';
             },

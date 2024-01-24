@@ -2,7 +2,8 @@
   <div class="activities-dashboard">
     <head-component/>
       
-      <navbar-component logo="brain.png"/>
+      <!-- <navbar-component logo="brain.png"/> -->
+      <TopBar :username="this.StateUsername()"/>
 
       <section-header-component name="Activities Management" description="Manage the activities for each event" back_page="/dashboard"/>
 
@@ -231,7 +232,7 @@
   export default {
     name: 'activities-dashboard',
     components: {
-      
+      TopBar
     },
     props:{
         

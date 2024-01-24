@@ -1,7 +1,7 @@
 <template>
 
 <div class="add-company-user" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <top-bar :username="current_user"/>
+  <TopBar :username="this.StateUsername()"/>
 
         <section-header-component
         name="Company User"
@@ -77,7 +77,7 @@ import CryptoJS from 'crypto-js'
 export default {
   name: 'add-company-user',
   components: {
-    
+    TopBar
   },
   data(){
     return{

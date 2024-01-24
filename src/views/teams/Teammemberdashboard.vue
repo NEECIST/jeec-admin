@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+    <TopBar :username="this.StateUsername()"/>
     <section-header-component name="DEVELOPMENT" description="Members" back_page="/teams"/>
 
     <div>
@@ -96,6 +96,7 @@
         export default {
           name: 'teamdashboard-main',
           components: {
+            TopBar
         },
         data(){
             return{
@@ -114,6 +115,7 @@
         },
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
           eraseSearch(){
             this.search = '';
           },

@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-       <top-bar logo="brain.png" username=""/>
+      <TopBar :username="this.StateUsername()"/>
        <section-header-component name="Team Management" description="Add, edit or delete JEEC teams" back_page="/dashboard/"/>
        
   <router-link router-link to="/teams/addteam">
@@ -122,6 +122,7 @@
     export default {
         name: 'teamsdashboard-main',
         components: {
+          TopBar
       },
       data(){ 
           return{
@@ -146,6 +147,7 @@
       },
       methods: {
         ...mapGetters(["getRole"]),
+        ...mapGetters(["StateUsername"]),
         eraseSearch(){
           this.search = '';
           this.event = '';

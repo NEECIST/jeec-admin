@@ -1,6 +1,6 @@
 <template>  
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'partnerships' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+    <TopBar :username="this.StateUsername()"/>
     <section-header-component name="SPEAKERS MANAGEMENT" description="Add a new speaker" back_page="/speakers"/>
     <br>
  
@@ -138,6 +138,7 @@
     export default {
       name: 'addspeaker-main',
       components: {
+        TopBar
     },
     data(){
       return{
@@ -173,6 +174,7 @@
     },
     methods: {
       ...mapGetters(["getRole"]),
+      ...mapGetters(["StateUsername"]),
       checkOutput(output){
         console.log(output)
       },

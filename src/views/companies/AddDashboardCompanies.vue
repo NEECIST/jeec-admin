@@ -1,7 +1,7 @@
 <template>  
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Companies Management" description="Add, edit or delete company" back_page="/dashboard"/>
 
@@ -186,6 +186,7 @@
     },
     methods:{
       ...mapGetters(["getRole"]),
+      ...mapGetters(["StateUsername"]),
       clearSearch(){
         this.search_str = ""
       },

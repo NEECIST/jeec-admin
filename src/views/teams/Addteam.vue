@@ -1,6 +1,6 @@
 <template>
 <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+  <TopBar :username="this.StateUsername()"/>
     <section-header-component name="TEAM MANAGEMENT" description="Create a new team" back_page="/teams"/>
     
     <br>
@@ -73,6 +73,7 @@
     export default {
     name: 'addteam-main',
     components: {
+      TopBar
     },
     data(){
       return{
@@ -91,6 +92,7 @@
     },
     methods: {
       ...mapGetters(["getRole"]),
+      ...mapGetters(["StateUsername"]),
       detectext(stringvar){
         return stringvar!=''; 
       },

@@ -2,7 +2,8 @@
     <div class="squads-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Squads Management" description="Ban and manage squads" back_page="/students-app/"/>
 
@@ -100,7 +101,7 @@
     export default {
         name: 'squads-dashboard',
         components: {
-
+            TopBar
             },
 
         data(){
@@ -129,6 +130,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             bansquads(name){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/bansquad", {bansquad: name},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 

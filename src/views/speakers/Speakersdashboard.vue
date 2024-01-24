@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'partnerships' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+  <TopBar :username="this.StateUsername()"/>
     <section-header-component name="SPEAKERS MANAGEMENT" description="Add, edit or delete speakers" back_page="/dashboard/"/>
     <router-link router-link to="/new-speaker">
       <form >
@@ -135,6 +135,7 @@
     export default {
         name: 'dashboard-speaker',
         components: {
+          TopBar
       },
       data(){
           return{
