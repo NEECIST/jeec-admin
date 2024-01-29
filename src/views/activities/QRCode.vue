@@ -38,7 +38,8 @@
                   <div >
                     <button v-if="this.fullscreen" type="button" @click="toggle" class="waves-effect red lighten-2 btn-large dashboard-btn" style="width: auto;margin:5px;"> Leave Fullscreen</button>
                   </div>
-                  <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
+                  <CameraCodeScanner @scan="onDecode" @load="onLoad"></CameraCodeScanner>
+                  <!-- <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
                     <div v-if="validationSuccess" class="validation-success">
                       Activity Added to {{SmallData.student_username}}
                     </div>
@@ -50,7 +51,7 @@
                     <div v-if="validationPending" class="validation-pending">
                       Validation in progress
                     </div>
-                  </qrcode-stream>
+                  </qrcode-stream> -->
                 </fullscreen>
         
                 <button v-if="!this.fullscreen" class="waves-effect blue lighten-2 btn-large dashboard-btn" type="button" @click="toggle" style="margin:20px;">Fullscreen</button>
@@ -65,7 +66,7 @@
 </template>
 
 <script>
-import { QrcodeStream } from 'vue-qrcode-reader'
+import { CameraCodeScanner } from "vue-barcode-qrcode-scanner";
 import TopBar from '../../components/TopBar.vue';
 import { mapGetters } from "vuex";
 import axios from "axios"
@@ -73,7 +74,7 @@ import axios from "axios"
 
 export default {
   name: 'activity-full-detail',
-  components: { QrcodeStream,TopBar },
+  components: { CameraCodeScanner,TopBar },
 
   data () {
     return {
@@ -95,7 +96,7 @@ export default {
       },
       error:"",
       isValid: undefined,
-      camera: 'auto',
+      // camera: 'auto',
       result: null,
       fullscreen: false
     }
@@ -103,7 +104,7 @@ export default {
   computed: {
     validationPending () {
       return this.isValid === undefined
-        && this.camera === 'off'
+        // && this.camera === 'off'
     },
 
     validationSuccess () {
@@ -131,37 +132,64 @@ export default {
     resetValidationState () {
       this.isValid = undefined
     },
+    onLoad({
+    controls,
+    scannerElement,
+    browserMultiFormatReader
+  }) {
+    console.log(controls)
+    // ---- BrowserMultiFormatReader Controls API ----
+    // {
+    //   stop: f() // Stops the video stream (Basically turns off the camera)
+    // }
 
-    async onDecode (content) {
+    console.log(scannerElement)
+    // ---- The ref to the video native element that streams the video-camera output ----
+    // <video data-v-73df36b4="" poster="data:image/gif,AAAA" autoplay="true" muted="true" // playsinline="true"></video>
+
+    console.log(browserMultiFormatReader)
+    // ---- A reference to the BrowserMultiFormatReader object. ----
+    // hints: Map(0)
+    // options: {
+    //  delayBetweenScanAttempts: 500
+    //  delayBetweenScanSuccess: 500
+    //  tryPlayVideoTimeout: 5000
+    // }
+    // reader: MultiFormatReader
+
+    // Please refer to the [ZXing (Zebra crossing) browser documentation](https://github.com/zxing-js/browser)
+
+  },
+
+    async onDecode (content, raw) {
+      console.log(raw)
       this.result = content
-      this.turnCameraOff()
+      // this.turnCameraOff()
       this.activity_external_id= this.$route.params.activity_external_id
 
       axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_id:  this.activity_external_id, student_external_id: this.result},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response =>{ this.SmallData = response.data} )
-  
-      await this.timeout(3000)
+        }}).then(response =>{ this.SmallData = response.data
       if (this.SmallData.errorQR != ""){
         this.isValid = false
       }
       else{
         this.isValid = true
       }
+    })
+      // await this.timeout(2000)
 
-      await this.timeout(2000)
-
-      this.turnCameraOn()
+      // this.turnCameraOn()
     },
 
-    turnCameraOn () {
-      this.camera = 'auto'
-    },
+    // turnCameraOn () {
+    //   this.camera = 'auto'
+    // },
 
-    turnCameraOff () {
-      this.camera = 'off'
-    },
+    // turnCameraOff () {
+    //   this.camera = 'off'
+    // },
 
     timeout (ms) {
       return new Promise(resolve => {
