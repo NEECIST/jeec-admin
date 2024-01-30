@@ -32,6 +32,10 @@
                 <button class="waves-effect blue lighten-2 btn add-btn right"><i
                     class="material-icons left">add</i>Reward</button>
             </router-link>
+            <router-link router-link to="/rewards/individual">
+                <button class="waves-effect blue lighten-2 btn add-btn right"><i
+                    class="material-icons left">add</i>Individual Reward</button>
+            </router-link>
             <router-link router-link to="/rewards/squad">
             
                 <button class="waves-effect lighten-2 btn add-btn right"><i

@@ -57,6 +57,9 @@ import UpdateQuest from '../views/quests/UpdateQuest.vue'
 import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
 import DistributeRewards from '../views/activities/distribute_rewards'
 import ticket_levels_dashboard from '../views/ticket_levels/ticket_levels_dashboard.vue'
+import update_individual_reward from '../views/rewards/update_individual_reward'
+import individual_reward_dashboard from '../views/rewards/individual_reward_dashboard'
+import AddIndividualRewards from '../views/rewards/add_individual_reward'
 // import KingsDashboard from '../views/Kings.vue'
 
 Vue.use(VueRouter)
@@ -76,6 +79,11 @@ const routes = [
     path: '/squad_rewards/add',
     name: 'add-squad-reward',
     component: AddSquadRewards
+   },
+   {
+    path: '/individual_rewards/add',
+    name: 'add-individual-reward',
+    component: AddIndividualRewards
    },
    {
     path: '/companies/add-event',
@@ -245,11 +253,22 @@ const routes = [
     name: 'update-squad-reward',
     component: update_squad_reward, 
   },
+  {
+    path: '/rewards/individual/update/:external_id',
+    name: 'update-individual-reward',
+    component: update_individual_reward, 
+  },
+
 
   {
     path: '/rewards/squad',
     name: 'squad-rewards-dashboard',
     component: squad_rewards_dashboard, 
+  },
+  {
+    path: '/rewards/individual',
+    name: 'individual-rewards-dashboard',
+    component: individual_reward_dashboard, 
   },
 
   {
