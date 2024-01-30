@@ -125,7 +125,7 @@
                 }}).then(response => {
                     const data = response.data; // [{}, {}]
                     this.rewards = data.rewards;
-                    this.squad_rewards = data.squad_rewards;
+                    this.squad_rewards = data.individual_rewards;
                     this.dates = data.dates})
         
             axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_reward/update/get', {external_id: this.$route.params.external_id},{auth: {
