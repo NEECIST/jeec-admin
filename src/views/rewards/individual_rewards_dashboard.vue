@@ -9,7 +9,7 @@
         <section-title-component section="List of Individual Rewards"/>
 
         <div>
-            <router-link router-link to="/squad_rewards/add">
+            <router-link router-link to="/individual_rewards/add">
                 <button class="waves-effect blue lighten-2 btn add-btn right"><i
                     class="material-icons left">add</i>Individual Reward</button>
             </router-link>
@@ -99,7 +99,7 @@
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                         }}).then(response => {
                             const data = response.data; // [{}, {}]
-                            this.squad_rewards = data.squad_rewards;
+                            this.squad_rewards = data.individual_rewards;
                             this.rewards = data.rewards})
                 }})
             },
