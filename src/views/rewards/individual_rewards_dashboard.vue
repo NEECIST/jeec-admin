@@ -111,7 +111,7 @@
                 password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                 }}).then(response => {
                     const data = response.data; // [{}, {}]
-                    this.squad_rewards = data.squad_rewards;
+                    this.squad_rewards = data.individual_rewards;
                     this.rewards = data.rewards})
         },
     }
