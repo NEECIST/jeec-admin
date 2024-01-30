@@ -58,7 +58,7 @@ import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
 import DistributeRewards from '../views/activities/distribute_rewards'
 import ticket_levels_dashboard from '../views/ticket_levels/ticket_levels_dashboard.vue'
 import update_individual_reward from '../views/rewards/update_individual_reward'
-import individual_reward_dashboard from '../views/rewards/individual_reward_dashboard'
+import individual_rewards_dashboard from '../views/rewards/individual_rewards_dashboard'
 import AddIndividualRewards from '../views/rewards/add_individual_reward'
 // import KingsDashboard from '../views/Kings.vue'
 
@@ -268,7 +268,7 @@ const routes = [
   {
     path: '/rewards/individual',
     name: 'individual-rewards-dashboard',
-    component: individual_reward_dashboard, 
+    component: individual_rewards_dashboard, 
   },
 
   {
