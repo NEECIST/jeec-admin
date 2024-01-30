@@ -54,7 +54,7 @@
         </div>
 
         <form>
-            <button class="waves-effect red darken-2 btn delete-btn left" @click="deleteIndividualReward"><i class="material-icons left">clear</i>Delete
+            <button class="waves-effect red darken-2 btn delete-btn left" @click="deleteIndividualreward"><i class="material-icons left">clear</i>Delete
             Reward</button>
 
             <button type="submit" class="waves-effect blue lighten-2 btn add-btn right" @click="updateIndividualReward"><i
