@@ -46,7 +46,7 @@
                         <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>IST Id</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Uploaded CV</th>
                         <th>Approved CV</th>
@@ -69,7 +69,7 @@
                             </td>
 
                             <td>
-                                {{ student.ist_id }}
+                                {{ student.username }}
                             </td>
 
                             <td>
@@ -78,7 +78,7 @@
 
 
                             <td>
-                                <div v-if="student.cv == true || student.approved == true">
+                                <div v-if="student.uploaded_cv == true || student.approved_cv == true">
                                     <i class="material-icons icon-green">check</i>
                                 </div>
                                 <div v-else>
@@ -87,7 +87,7 @@
                             </td>
 
                             <td>
-                                <div v-if="student.approved">
+                                <div v-if="student.approved_cv">
                                     <i class="material-icons icon-green">check</i>
                                 </div>
                                 <div v-else>
@@ -96,14 +96,14 @@
                             </td>
 
                             <td>
-                                <button @click="getCV(student.ist_id)" class="waves-effect blue lighten-2 btn dashboard-btn">Review</button>
+                                <button @click="getCV(student.username)" class="waves-effect blue lighten-2 btn dashboard-btn">Review</button>
                             </td>
 
                             <td>
-                                <div v-if="student.cv == true && student.approved == false">
-                                    <button @click="deleteCV(student.ist_id)" class="waves-effect red lighten-2 btn dashboard-btn">Reject</button>
+                                <div v-if="student.uploaded_cv == true && student.approved_cv == false">
+                                    <button @click="deleteCV(student.username)" class="waves-effect red lighten-2 btn dashboard-btn">Reject</button>
                                 </div>
-                                <div v-else-if="student.approved == false">
+                                <div v-else-if="student.approved_cv == false">
                                     <button class="waves-effect grey lighten-2 btn dashboard-btn">Reject</button>
                                 </div>
                                 <div v-else>
@@ -112,10 +112,10 @@
                             </td>
 
                             <td>
-                                <div v-if="student.cv == true && student.approved == false">
-                                    <button @click="acceptCV(student.ist_id)" class="waves-effect green lighten-2 btn dashboard-btn">Approve</button>
+                                <div v-if="student.uploaded_cv == true && student.approved_cv == false">
+                                    <button @click="acceptCV(student.username)" class="waves-effect green lighten-2 btn dashboard-btn">Approve</button>
                                 </div>
-                                <div v-else-if="student.approved == false">
+                                <div v-else-if="student.approved_cv == false">
                                     <button class="waves-effect grey lighten-2 btn dashboard-btn">Approve</button>
                                 </div>
                                 <div v-else>
@@ -156,13 +156,13 @@
             axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/studentss",{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
+        }}).then(response=>{this.responsedata = response.data; console.log(this.responsedata)});
         },
 
         computed: {
             filteredStudents() {
                 return this.responsedata.students.filter((student) => {
-                    return student.name.toLowerCase().includes(this.search.toLowerCase())
+                    return student.username.toLowerCase().includes(this.search.toLowerCase())
                 });
             }
         },
@@ -172,17 +172,17 @@
             eraseSearch(){
                 this.search = '';
             },
-            getCV(student_istid) {
+            getCV(student_username) {
                 axios({
                     url: process.env.VUE_APP_JEEC_BRAIN_URL + "/get_cv",
                     method: 'POST',
                     responseType: 'blob', // Important for handling the PDF binary data
                     data: {
-                    student_istid: student_istid
+                        student_username: student_username
                     },
                     auth: {
-                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
-                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }
                 }).then(response => {
                     // Create a new Blob object using the response data of the server
@@ -194,11 +194,11 @@
                     // Create a new anchor element
                     const a = document.createElement('a');
                     a.href = url;
-                    // a.download = "cv_" + student_istid + ".pdf"; // Specify the file name for Review
+                    // a.download = "cv_" + student_username + ".pdf"; // Specify the file name for Review
                     try {
                         a.target = "_blank"
                     } catch(e) {
-                        a.download = "cv_" + student_istid + ".pdf"; // Specify the file name for Review
+                        a.download = "cv_" + student_username + ".pdf"; // Specify the file name for Review
                     }
 
                     document.body.appendChild(a); // Append the anchor to the body
@@ -209,9 +209,9 @@
                     console.error("Error downloading the file: ", error);
                 });
             },
-            deleteCV(student_istid) {
+            deleteCV(student_username) {
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/remove_cv", {
-                    student_istid: student_istid // Make sure this matches the key expected by your Flask route
+                    student_username: student_username // Make sure this matches the key expected by your Flask route
                 }, {
                     auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
@@ -225,9 +225,9 @@
                     console.error("Error deleting file: ", error);
                 });
             },
-            acceptCV(student_istid) {
+            acceptCV(student_username) {
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/accept_cv", {
-                    student_istid: student_istid // Make sure this matches the key expected by your Flask route
+                    student_username: student_username // Make sure this matches the key expected by your Flask route
                 }, {
                     auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,

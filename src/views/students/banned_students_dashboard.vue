@@ -38,7 +38,7 @@
                         <tr v-for="student in responsedata.students" :key="student.ist_id">
                             <td>
                                 <b>
-                                {{ student.name }}
+                                {{ student.username }}
                                 </b>
                             </td>
 
