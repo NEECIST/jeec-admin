@@ -6,56 +6,82 @@
 
         <section-header-component name="Individual Rewards Management" description="Manage the daily rewards for the top Students" back_page="/rewards"/>
 
-        <section-title-component section="List of Individual Rewards"/>
+        <div class="flexbox">
+            <div class="flex-child">
+                <section-title-component section="Daily Rewards"/>
 
-        <div>
-            <router-link router-link to="/individual_rewards/add">
-                <button class="waves-effect blue lighten-2 btn add-btn right"><i
-                    class="material-icons left">add</i>Individual Reward</button>
-            </router-link>
-        </div>
+                <div class="list">
+                    <div v-if="error != ''">
+                        <blockquote class="create-error">
+                            {{ error }}
+                        </blockquote>
+                    </div>
+                    <div v-else>
+                        <table class="striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Reward</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="date in this.dates" :key="date.id">
+                                    <td>
+                                        <b>{{ date.name }}</b>
+                                    </td>
 
-        <div class="list">
-            <div v-if="error != ''">
-                <blockquote class="create-error">
-                    {{ error }}
-                </blockquote>
+                                    <td>
+                                        <select name="reward" class="form-control" 
+                                        v-model="daily_rewards[date.id].reward_id" 
+                                        @change="updateDailyReward(date.name, daily_rewards[date.id])">
+                                            <option selected disabled value="">Select one reward</option>
+                                            <option v-for="reward in rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
+                                        </select>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div v-else>
-                <table class="striped">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Reward</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="squad_reward in squad_rewards" :key="squad_reward.id">
-                            <td>
-                                <b>{{ squad_reward.date }}</b>
-                            </td>
+            <div class="flex-child">
+                <section-title-component section="Weekly Rewards"/>
 
-                            <td>
-                                <b>{{ squad_reward.name }}</b>
-                            </td>
+                <div class="list">
+                    <div v-if="error != ''">
+                        <blockquote class="create-error">
+                            {{ error }}
+                        </blockquote>
+                    </div>
+                    <div v-else>
+                        <table class="striped">
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Reward</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="weekly_reward in this.weekly_rewards" :key="weekly_reward.id">
+                                    <td>
+                                        <b>{{ weekly_reward.place }}</b>
+                                    </td>
 
-                            <td>
-                                <form method="get" style="margin: 0;">
-                                    <router-link router-link :to="{ name: 'update-individual-reward', params: { external_id: squad_reward.external_id }}">
-                                    <button title="Edit Individual Reward" class="waves-effect waves-light btn-floating"><i
-                                        class="material-icons left">edit</i>Edit</button>
-                                    </router-link>
-                                </form>
-                            </td>
-                            <td>
-                                <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteIndividualReward(squad_reward.external_id)">
-                                <i class="material-icons left">close</i>Delete Individual Reward</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    <td>
+                                        <select name="reward" class="form-control" 
+                                        v-model="weekly_reward.reward_id" 
+                                        @change="updateWeeklyReward(weekly_reward.place, weekly_reward)">
+                                            <option selected disabled value="">Select one reward</option>
+                                            <option v-for="reward in rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
+                                        </select>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -67,42 +93,44 @@
 
     export default {
         name: 'individual-rewards-dashboard',
-        components: {
-
-            },
+        components: {},
         
         data(){
             return{
                 error: '',
-                squad_rewards: [{reward_id: '#', date: '27/11'}, {reward_id: '#2', date: '28/11'},],
-                reward: '',
-                rewards: [
-                    {id: '#', name: 'something'},
-                    {id: '#2', name: 'something2'},
-                ],
+                individual_rewards: [{reward_id: '', date: ''}, {reward_id: '', date: ''},],
+                rewards: [],
                 role:'',
-                errorr: ''
+                errorr: '',
+                dates:[],
+                daily_rewards: [],
+                weekly_rewards: [],
             }
         },
         methods:{
             ...mapGetters(["getRole"]),
-            async deleteIndividualReward(external_id) {
-                await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/delete_individual_reward',{external_id: external_id},{auth: {
-                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                }}).then(response => 
-                {const data = response.data; // [{}, {}]
-                this.errorr = data.error;
-                if (this.errorr == '') {
-                    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
+            updateDailyReward(date, individualReward){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/individual_rewards/update",
+                    {external_id: individualReward.external_id,
+                     reward_id: individualReward.reward_id,
+                     date: date,
+                     place: null,
+                    },{auth: {
                         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                        }}).then(response => {
-                            const data = response.data; // [{}, {}]
-                            this.squad_rewards = data.individual_rewards;
-                            this.rewards = data.rewards})
-                }})
-            },
+                    }});
+                },
+            updateWeeklyReward(place, individualReward){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/individual_rewards/update",
+                    {external_id: individualReward.external_id,
+                     reward_id: individualReward.reward_id,
+                     date: null,
+                     place: place,
+                    },{auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }});
+                },
         },
         mounted(){
             this.role = this.getRole()
@@ -111,8 +139,11 @@
                 password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                 }}).then(response => {
                     const data = response.data; // [{}, {}]
-                    this.squad_rewards = data.individual_rewards;
-                    this.rewards = data.rewards})
+                    this.daily_rewards = data.individual_rewards_daily;
+                    this.weekly_rewards = data.individual_rewards_weekly;
+                    this.rewards = data.rewards
+                    this.dates = data.dates
+                })
         },
     }
 </script>
@@ -135,6 +166,17 @@
     margin-left: 30px;
     margin-right: 30px;
     margin-top: 30px;
-    padding-bottom: 150px;
+    padding-bottom: 0px;
+    }
+
+    .flexbox{
+        display:flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-evenly;
+    }
+
+    .flex-child{
+        width:40%;
     }
 </style>

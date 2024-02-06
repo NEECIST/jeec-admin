@@ -217,7 +217,9 @@
             await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/jeecpot-rewardss",{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>{this.responsedata = response.data});
+        }}).then(response=>{
+            this.responsedata = response.data;
+            this.responsedata.jeecpot_rewards.first_student_reward_id = null});
         },
 
         methods:{

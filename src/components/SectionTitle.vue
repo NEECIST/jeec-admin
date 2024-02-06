@@ -1,6 +1,6 @@
 <template>
     <div class="section-title-component">
-        <div class="section-title center-align" style="margin-top:90px;">
+        <div class="section-title center-align" style="margin-top:30px;">
             {{section}}
         </div>
     </div>
