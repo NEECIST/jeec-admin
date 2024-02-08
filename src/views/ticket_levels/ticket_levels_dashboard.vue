@@ -120,17 +120,17 @@
         mounted(){
             this.role = this.getRole()
             axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/ticket_levelss",
-            {auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>{
-                this.responsedata = response.data;
-                // let points = 0;
-                // for(var i = 0; i < this.responsedata.levels.length; i++){
-                //     this.responsedata.levels[i].starting_points = points;
-                //     this.responsedata.levels[i].points = this.responsedata.levels[i].ending_points - this.responsedata.levels[i].starting_points;
-                //     points += this.responsedata.levels[i].points;
-                // }
+                    {auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>{
+                        this.responsedata = response.data;
+                        // let points = 0;
+                        // for(var i = 0; i < this.responsedata.levels.length; i++){
+                        //     this.responsedata.levels[i].starting_points = points;
+                        //     this.responsedata.levels[i].points = this.responsedata.levels[i].ending_points - this.responsedata.levels[i].starting_points;
+                        //     points += this.responsedata.levels[i].points;
+                        // }
             });
         },
         methods:{
@@ -141,25 +141,25 @@
                     return
                 }
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/delete",{external_id: external_id}, {auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
-            },
-            createTicketLevel(reward_id, ticket_type, threshold){
-                if(this.Reward == ''){
-                    return
-                }
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/create",{reward_id: reward_id, ticket_type: ticket_type, threshold: threshold},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }} ).then(response=>this.error = response.data);
-                this.$router.go();
-            },
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response=>this.responsedata = response.data);
+                },
+                createTicketLevel(reward_id, ticket_type, threshold){
+                    if(this.Reward == ''){
+                        return
+                    }
+                    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/create",{reward_id: reward_id, ticket_type: ticket_type, threshold: threshold},{auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                        }} ).then(response=>this.error = response.data);
+                    this.$router.go();
+                },
             changeReward(ticket_level){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/update", {ticket_level_external_id: ticket_level.external_id, change_reward_id: ticket_level.reward.external_id},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.error = response.data);
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.error = response.data);
             }
         }
     }
