@@ -9,6 +9,9 @@
 
         <section-title-component section="List of JEECPOT Rewards"/>
 
+        <button class="waves-effect blue lighten-2 btn add-btn right" @click="createReward()"><i
+                    class="material-icons left">add</i>JEECPOT Reward</button>
+
         <div class="list">
             <div v-if="responsedata.error != null">
                 <blockquote class="create-error">
@@ -19,173 +22,28 @@
                 <table class="striped">
                     <thead>
                         <tr>
-                            <th>Destinatary</th>
+                            <th>ID</th>
                             <th>Reward</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <b>First Student</b>
+                        <tr v-for="jeecpot_reward in this.jeecpot_rewards" :key="jeecpot_reward.id">
+                            <td style="width: 10%;">
+                                <b>{{ jeecpot_reward.id }}</b>
                             </td>
 
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.first_student_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>Second Student</b>
+                            <td style="width: 85%;">
+                                <select name="reward" class="form-control" 
+                                v-model="jeecpot_reward.reward_id" 
+                                @change="updateReward(jeecpot_reward)">
+                                    <option selected disabled value="">Select one reward</option>
+                                    <option v-for="reward in rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
+                                </select>
                             </td>
 
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.second_student_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>Third Student</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.third_student_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>First Squad</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.first_squad_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>Second Squad</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.second_squad_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>Third Squad</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.third_squad_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>King of Job Fair</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.king_job_fair_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>King of Knowledge</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.king_knowledge_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>King of Hacking</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.king_hacking_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>King of Networking</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.king_networking_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <b>CV Platform Raffle</b>
-                            </td>
-
-                            <td>
-                                <form>
-                                    <select name="reward" class="form-control" v-model="responsedata.jeecpot_rewards.cv_platform_raffle_reward_id" @change="updateReward">
-                                        <option selected disabled value="">Select one reward</option>
-                                        <option v-for="reward in responsedata.rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
-                                    </select>
-                                </form>
+                            <td style="width: 5%;">
+                                <button title="Delete Reward" class="waves-effect waves-light btn-floating left" 
+                                    @click="deleteReward(jeecpot_reward)"><i class="material-icons red left">delete</i>Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -208,41 +66,61 @@
         data(){
             return{
                 responsedata: {},
-                role:''
+                role:'',
+                jeecpot_rewards:[],
+                rewards:[],
             }
         },
 
         async mounted(){
             this.role = this.getRole()
-            await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/jeecpot-rewardss",{auth: {
+            await axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/jeecpot_rewards",{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response=>{
-            this.responsedata = response.data;
-            this.responsedata.jeecpot_rewards.first_student_reward_id = null});
+            const data = response.data;
+            this.jeecpot_rewards = data.jeecpot_rewards;
+            this.rewards = data.rewards;        
+        });
         },
 
         methods:{
             ...mapGetters(["getRole"]),
             ...mapGetters(["StateUsername"]),
-            updateReward(){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot-rewards/update",{jeecpot_external_id: this.responsedata.jeecpot_external_id,
-                    first_student_reward_id: this.responsedata.jeecpot_rewards.first_student_reward_id,
-                    second_student_reward_id: this.responsedata.jeecpot_rewards.second_student_reward_id,
-                    third_student_reward_id: this.responsedata.jeecpot_rewards.third_student_reward_id,
-                    first_squad_reward_id: this.responsedata.jeecpot_rewards.first_squad_reward_id,
-                    second_squad_reward_id: this.responsedata.jeecpot_rewards.second_squad_reward_id,
-                    third_squad_reward_id: this.responsedata.jeecpot_rewards.third_squad_reward_id,
-                    king_job_fair_reward_id: this.responsedata.jeecpot_rewards.king_job_fair_reward_id,
-                    king_knowledge_reward_id: this.responsedata.jeecpot_rewards.king_knowledge_reward_id,
-                    king_hacking_reward_id: this.responsedata.jeecpot_rewards.king_hacking_reward_id,
-                    king_networking_reward_id: this.responsedata.jeecpot_rewards.king_networking_reward_id,
-                    cv_platform_raffle_reward_id: this.responsedata.jeecpot_rewards.cv_platform_raffle_reward_id,
-                },{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }} ).then(response=>this.error = response.data);
-            },
+            updateReward(jeecpotReward){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot_rewards/update",
+                    {external_id: jeecpotReward.external_id,
+                     reward_id: jeecpotReward.reward_id,
+                    },{auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }});
+                },
+
+            createReward(){
+                axios.get(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot_rewards/create",
+                    {auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response=>{
+                        const data = response.data;
+                        this.jeecpot_rewards = data.jeecpot_rewards;
+                        this.rewards = data.rewards;        
+                    });
+                },
+
+            deleteReward(jeecpotReward){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/jeecpot_rewards/delete",
+                    {external_id: jeecpotReward.external_id,},
+                    {auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response=>{
+                        const data = response.data;
+                        this.jeecpot_rewards = data.jeecpot_rewards;
+                        this.rewards = data.rewards;        
+                    });
+                },
         }
     }
 </script>
