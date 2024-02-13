@@ -38,10 +38,6 @@
             </div>
 
             <div class="row s7">
-              <div class="input-field col s2 box" :class="{boxname:detectext(location)}">
-                <input id="location" v-model="location" type="text" class="validate" maxlength="100">
-                <label for="location">Location</label>
-              </div>
 
               <div class="input-field col s2 box" :class="{boxname:detectext(day)}">
                 <p>Day</p>
@@ -70,27 +66,6 @@
                 <input id="points" v-model="points" type="number" min="0" class="validate">
                 <label for="points">Points</label>
               </div>
-
-            <div class="row s10">
-              <p>Registration Open:</p>
-              <p class="col s2">
-                <label style="margin-right: 20px;">
-                  <input v-model="registration_open" class="with-gap" name="registration_open" type="radio" value="true" />
-                  <span>Yes</span>
-                </label>
-                <label>
-                  <input v-model="registration_open" class="with-gap" name="registration_open" type="radio" value="false" checked />
-                  <span>No</span>
-                </label>
-              </p>
-
-              <div class="col s6">
-                <div class="input-field box" :class="{boxname:detectext(registration_link)}">
-                  <input id="registration_link" v-model="registration_link" type="url" class="validate">
-                  <label for="registration_link">Registration url</label>
-                </div>
-              </div>
-            </div>
 
 
             <div class="flex-container">
