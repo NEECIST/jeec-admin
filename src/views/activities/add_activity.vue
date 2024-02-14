@@ -91,14 +91,6 @@
               </div>
 
               <div class="input-field flex-object">
-                <p>Choose tags</p>
-                <select v-model="tags_external_id" multiple name="tag" style="height:75px; display: block;">
-                  <option value="" disabled></option>
-                  <option v-for="tag in bigdata.tags" :key="tag.id" :value="tag.external_id">{{ tag.name }}</option>
-                </select>
-              </div>
-
-              <div class="input-field flex-object">
                 <p>Choose speakers</p>
                 <select v-model="speakers_external_id" multiple name="speaker" id="speakers" style="height:75px; display: block;">
                   <option value="" disabled></option>
@@ -161,7 +153,6 @@
               companies:[],
               speakers:[],
               rewards:[],
-              tags:[],
               error:"",
               minData:'', maxDate:'',
               event: {},
