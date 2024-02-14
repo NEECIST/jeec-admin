@@ -59,15 +59,15 @@
                         <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>IST Id</th>
                         <th>Email</th>
                         <th>Linkedin</th>
-                        <th>Level</th>
                         <th>Daily Points</th>
                         <th>Total Points</th>
                         <th>Uploaded CV</th>
                         <th>Squad</th>
                         <th>Remove points</th>
+                        <th>Add OE points</th>
+                        <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,10 +83,6 @@
                             </td>
 
                             <td>
-                                {{ student.ist_id }}
-                            </td>
-
-                            <td>
                                 {{ student.email }}
                             </td>
 
@@ -97,10 +93,6 @@
                                 <div v-else>
                                     <i class="material-icons icon-red">clear</i>
                                 </div>
-                            </td>
-
-                            <td>
-                                {{ student.level }}
                             </td>
 
                             <td>
@@ -130,18 +122,22 @@
                             <td>
                                 <input type="number" min="1" v-model="student.remove_points" style="width:50px"> <button @click="removePoints(student.id,student.remove_points)">Remove</button>
                             </td>
-                            <div>
-                                <td>
-                                    <form onsubmit="return confirm('Are you sure you want to ban this student?');" style="margin: 0;">
-                                        <button title="Ban student" class="waves-effect waves-light btn-floating left" @click="banstudent(student.id)"><i class="material-icons red left">person_remove</i>Ban</button>
-                                    </form>
-                                </td>
-                                <!-- <td>
-                                    <button title="Add Points" data-target="modal1" data-name=""
-                                    class="waves-effect waves-light green btn-floating modal-trigger points-btn left"><i
-                                        class="material-icons left">qr_code</i>Add Points</button>
-                                </td> -->
-                            </div>
+                            <td>
+                                <button v-if="student.OE_points_received == true" disabled title="Add Points" class="waves-effect waves-light green btn-floating modal-trigger points-btn left">
+                                    <i class="material-icons right">add_circle</i>Add Points</button>
+                                <button v-else title="Add Points" class="waves-effect waves-light green btn-floating modal-trigger points-btn left"
+                                    @click="OEpoints(student.id)"><i class="material-icons right">add_circle</i>Add Points</button>
+                            </td>
+                            <td>
+                                <form onsubmit="return confirm('Are you sure you want to ban this student?');" style="margin: 0;">
+                                    <button title="Ban student" class="waves-effect waves-light btn-floating left" @click="banstudent(student.id)"><i class="material-icons red left">person_remove</i>Ban</button>
+                                </form>
+                            </td>
+                            <!-- <td>
+                                <button title="Add Points" data-target="modal1" data-name=""
+                                class="waves-effect waves-light green btn-floating modal-trigger points-btn left"><i
+                                    class="material-icons left">qr_code</i>Add Points</button>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -195,9 +191,9 @@
         mounted(){
             this.role = this.getRole()
             axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/studentss",{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.responsedata = response.data);
         },
 
         computed: {
@@ -235,13 +231,19 @@
                 }}).then(response=>this.responsedata = response.data);
             },
             BanAllStudents(){
-         
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL+"/order66",{auth: {
-                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                }}).then(response=>this.responsedata2 = response.data);
-                this.$router.go()
-        },
+                axios.get(process.env.VUE_APP_JEEC_BRAIN_URL+"/order66",{auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response=>this.responsedata2 = response.data);
+                    this.$router.go()
+            },
+
+            OEpoints(student_id){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/give_OE_points",{student_id: student_id},{auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response=>this.responsedata = response.data);
+            }
         },
         
     }
