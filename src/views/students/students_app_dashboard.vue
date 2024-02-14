@@ -47,10 +47,10 @@
                         class="large material-icons left">account_circle</i>Students</button>
             </router-link>
 
-            <router-link router-link to="/tags" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+            <!-- <router-link router-link to="/tags" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">local_offer</i>Tags</button>
-            </router-link>
+            </router-link> -->
 
             <router-link router-link to="/cvs_dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
@@ -59,7 +59,7 @@
         </div>
 
         <blockquote class="left" style="margin-left: 40px;margin-top: 70px;">
-            <b>Caution!</b> Any change in this system will instantly affect the <b>JEEC Student App</b>!
+            <b>Caution!</b> Any change in this system will instantly affect the <b>JEEC Student </b> <router-link router-link to="/reset-daily-points" v-if="role == 'admin'" class="secret"> <b>App!</b></router-link> <b v-else> App</b>
         </blockquote>
     </div>
 </template>
@@ -109,5 +109,8 @@
     button {
     font-weight: 600;
     transition: all .2s ease-in-out; 
+    }
+    .secret{
+        color:#293c51;
     }
 </style>

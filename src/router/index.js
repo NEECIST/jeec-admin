@@ -25,6 +25,7 @@ import Updateteam from '../views/teams/Updateteam.vue'
 import AdminLogin from '../views/admin_login'
 import cvs_dashboard from '../views/cvs/cvs_dashboard.vue'
 import students_app_dashboard from '../views/students/students_app_dashboard.vue'
+import reset_daily_points from '../views/students/reset_daily_points.vue'
 
 // import levels_dashboard from '../views/levels/levels_dashboard.vue'
 import tags_dashboard from '../views/tags/tags_dashboard.vue'
@@ -199,6 +200,11 @@ const routes = [
     path: '/students-app',
     name: 'students-app-dashboard',
     component: students_app_dashboard, 
+  },
+  {
+    path: '/reset-daily-points',
+    name: 'reset-daily-points',
+    component: reset_daily_points, 
   },
   
   // {
