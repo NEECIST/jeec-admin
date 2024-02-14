@@ -77,7 +77,7 @@
                   <vue-multi-select
                 v-model="responsedata.companies_in_meal"
                 search
-                :btnLabel="btnLabel2"
+                :btnLabel="Companies"
                 :filters="filters"
                 :options="options2"
                 :selectOptions="responsedata.companies"/>

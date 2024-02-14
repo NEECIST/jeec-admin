@@ -77,7 +77,7 @@
           <vue-multi-select
                 v-model="form.companies"
                 search
-                :btnLabel="btnLabel2"
+                :btnLabel="Companies"
                 :filters="filters"
                 :options="options2"
                 :selectOptions="response_data.companies"/>
