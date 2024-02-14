@@ -73,10 +73,7 @@
           <vue-timepicker name="registration_time" v-model="form.registration_time" required></vue-timepicker>
           </div>
       </div>
-
-
-      <div class="row">
-        <div class="input-field col s3">
+          <p>Participating companies:</p>
           <vue-multi-select
                 v-model="form.companies"
                 search
@@ -84,8 +81,7 @@
                 :filters="filters"
                 :options="options2"
                 :selectOptions="response_data.companies"/>
-        </div>
-      </div>
+    
 
       <br>
 

@@ -73,8 +73,7 @@
             </div>
 
             
-            <div class="row">
-                <div class="input-field col s3">
+            <p>Participating companies:</p>
                   <vue-multi-select
                 v-model="responsedata.companies_in_meal"
                 search
@@ -82,8 +81,7 @@
                 :filters="filters"
                 :options="options2"
                 :selectOptions="responsedata.companies"/>
-                </div>
-            </div>
+             
 
             
             <div style="margin-right: 80vw;">
