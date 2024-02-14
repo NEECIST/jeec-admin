@@ -136,6 +136,8 @@ import SectionHeader from '../../components/SectionHeader.vue';
 import fecha from 'fecha';
 import VueTimepicker from 'vue2-timepicker';
 import TopBar from '../../components/TopBar.vue';
+import vueMultiSelect from 'vue-multi-select';
+import 'vue-multi-select/dist/lib/vue-multi-select.css';
 import { mapGetters } from "vuex";
 export default {
   name: 'add-meal',
@@ -143,7 +145,8 @@ export default {
     TopBar,
     SectionHeader,
     VueTimepicker,
-    DatePick
+    DatePick,
+    vueMultiSelect
 },
 data(){
   return{
