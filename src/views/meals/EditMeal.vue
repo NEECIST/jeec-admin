@@ -77,9 +77,9 @@
                   <vue-multi-select
                 v-model="responsedata.companies_in_meal"
                 search
-                :btnLabel="Companies"
+                :btnLabel="btnLabel"
                 :filters="filters"
-                :options="options2"
+                :options="options"
                 :selectOptions="responsedata.companies"/>
              
 
@@ -168,7 +168,21 @@ data(){
       },
       format: 'DD MM YYYY, dddd',
       date: fecha.format(new Date(), 'DD MM YYYY, dddd'),
-      role:''
+      role:'',
+      btnLabel: values => `Select Companies (${values.length})`,
+      filters: [{
+            nameAll: 'Select all',
+            nameNotAll: 'Deselect all',
+            func() {
+              return true;
+            },
+          }],
+          options: {
+          multi: true,
+          groups: false,
+          labelList: 'companies.name',
+          cssSelected: option => (option.selected ? { 'background-color': '#00A36C' } : ''),
+          },
   };
 },
 mounted(){
