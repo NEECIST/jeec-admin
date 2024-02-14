@@ -1,4 +1,5 @@
 <template>
+    
     <div class="cvs-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
@@ -25,7 +26,19 @@
             </form>
         </div>
 
+        <div class="select-container">
+            <select v-model="status">
+                <option disabled value="">Please select one</option>
+                <option value="approved">Approved</option>
+                <option value="waiting">Waiting for review</option>
+                <option value="notSubmitted">Not yet submitted</option>
+                <option value="all">Show all</option>
+            </select>
+        </div>
+
+
         <div class="list">
+            
             <div v-if="responsedata.error != null">
                 <blockquote class="create-error">
                     {{ responsedata.error }}
@@ -147,7 +160,8 @@
                 role:'',
                 remove_points:1,
                 responsedata: {error: '', students: []},
-                responsedata2: ""   
+                responsedata2: "",
+                status: ''   
             }
         },
 
@@ -157,13 +171,29 @@
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response=>{this.responsedata = response.data; console.log(this.responsedata)});
+            this.search = '';
         },
 
         computed: {
             filteredStudents() {
-                return this.responsedata.students.filter((student) => {
-                    return student.username.toLowerCase().includes(this.search.toLowerCase())
-                });
+                if(this.status == "waiting") {
+                    return this.responsedata.students.filter((student) => {
+                        return (student.username.toLowerCase().includes(this.search.toLowerCase()) && !student.approved_cv && student.uploaded_cv)
+                    });
+                } else if(this.status == "approved") {
+                    return this.responsedata.students.filter((student) => {
+                        return (student.username.toLowerCase().includes(this.search.toLowerCase()) && student.approved_cv)
+                    });
+                } else if(this.status == "notSubmitted") {
+                    return this.responsedata.students.filter((student) => {
+                        return (student.username.toLowerCase().includes(this.search.toLowerCase()) && !student.uploaded_cv)
+                    });
+                } else {
+                    return this.responsedata.students.filter((student) => {
+                        return (student.username.toLowerCase().includes(this.search.toLowerCase()))
+                    });
+                }
+                
             }
         },
 
@@ -176,7 +206,7 @@
                 axios({
                     url: process.env.VUE_APP_JEEC_BRAIN_URL + "/get_cv",
                     method: 'POST',
-                    responseType: 'blob', // Important for handling the PDF binary data
+                    responseType: 'blob', 
                     data: {
                         student_username: student_username
                     },
@@ -185,40 +215,35 @@
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }
                 }).then(response => {
-                    // Create a new Blob object using the response data of the server
                     const blob = new Blob([response.data], { type: 'application/pdf' });
                     
-                    // Create an object URL for the Blob object
                     const url = window.URL.createObjectURL(blob);
                     
-                    // Create a new anchor element
                     const a = document.createElement('a');
                     a.href = url;
-                    // a.download = "cv_" + student_username + ".pdf"; // Specify the file name for Review
                     try {
                         a.target = "_blank"
                     } catch(e) {
-                        a.download = "cv_" + student_username + ".pdf"; // Specify the file name for Review
+                        a.download = "cv_" + student_username + ".pdf"; 
                     }
 
-                    document.body.appendChild(a); // Append the anchor to the body
-                    a.click(); // Simulate a click on the anchor
-                    document.body.removeChild(a); // Remove the anchor from the body
-                    window.URL.revokeObjectURL(url); // Clean up the URL object
+                    document.body.appendChild(a);
+                    a.click(); 
+                    document.body.removeChild(a); 
+                    window.URL.revokeObjectURL(url);
                 }).catch(error => {
                     console.error("Error downloading the file: ", error);
                 });
             },
             deleteCV(student_username) {
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/remove_cv", {
-                    student_username: student_username // Make sure this matches the key expected by your Flask route
+                    student_username: student_username 
                 }, {
                     auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
                     password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }
                 }).then(response => {
-                    // Handle the response here, e.g., log it or update UI
                     this.$router.go()
                     console.log("File deletion response:", response.data);
                 }).catch(error => {
@@ -227,14 +252,13 @@
             },
             acceptCV(student_username) {
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/accept_cv", {
-                    student_username: student_username // Make sure this matches the key expected by your Flask route
+                    student_username: student_username 
                 }, {
                     auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
                     password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }
                 }).then(response => {
-                    // Handle the response here, e.g., log it or update UI
                     this.$router.go()
                     console.log("File acception response:", response.data);
                 }).catch(error => {
@@ -296,4 +320,20 @@
     .clear-search:hover {
         color: rgb(172, 172, 172);
     }
+
+    .select-container select {
+        display: inline-block; 
+        background-color: #fff;
+        border: 1px solid black;
+        width: auto;
+        border-radius: 5px;
+        text-align: left;
+    }
+    
+    
+      .button-like-select:hover {
+        background-color: grey; /* Darker background color on hover */
+      }
+      
+      
 </style>
