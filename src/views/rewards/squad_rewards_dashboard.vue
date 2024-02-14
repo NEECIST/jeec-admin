@@ -23,6 +23,7 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Reward</th>
+                                    <th>Winner </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +40,16 @@
                                             <option v-for="reward in rewards" :key="reward.id" :value="reward.id">{{ reward.name }}</option>
                                         </select>
                                     </td>
+                                    <td>
+                                        <div v-if="daily_rewards[date.id].winner_id">
+                                            {{ daily_rewards[date.id].winner_id }}
+                                        </div>
+                                        <div v-else>
+                                            <button type="submit" class="waves-effect red lighten-2 btn-small right logout-btn" @click="DistributeDailyReward(date.name, daily_rewards[date.id])">
+                                                <i class="material-icons left">distribute</i>Distribute</button>
+                                        </div>
+                                        
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -46,6 +57,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="flex-child">
                 <section-title-component section="Weekly Rewards"/>
 
@@ -136,6 +148,27 @@
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }});
                 },
+                DistributeDailyReward(date, squadReward){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/squad_rewards/distribute_daily",
+                    {external_id: squadReward.external_id,
+                     reward_id: squadReward.reward_id,
+                     date: date,
+                     place: null,
+                    },{auth: {
+                        username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                        password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }});
+                    this.role = this.getRole()
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/squad_rewards',{}, {auth: {
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response => {
+                    const data = response.data; // [{}, {}]
+                    this.daily_rewards = data.squad_rewards_daily;
+                    this.weekly_rewards = data.squad_rewards_weekly;
+                    this.rewards = data.rewards
+                    this.dates = data.dates})
+        },
         },
         mounted(){
             this.role = this.getRole()
