@@ -40,12 +40,12 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div v-if="daily_rewards[date.id].winner_id">
-                                            {{ daily_rewards[date.id].winner_id }}
+                                        <div v-if="daily_rewards[date.id].winner_username">
+                                            {{ daily_rewards[date.id].winner_username }}
                                         </div>
                                         <div v-else>
-                                            <button type="submit" class="waves-effect red lighten-2 btn-small right logout-btn" @click="DistributeDailyReward(date.name, daily_rewards[date.id])">
-                                                <i class="material-icons left">distribute</i>Distribute</button>
+                                            <button type="submit" class="waves-effect green lighten-2 btn-small right logout-btn" @click="DistributeDailyReward(date.name, daily_rewards[date.id])">
+                                                <i class="material-icons left"></i>Attribute</button>
                                         </div>
                                         
                                     </td>
@@ -90,12 +90,12 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div v-if="weekly_reward.winner_id">
-                                            {{ weekly_reward.winner_id }}
+                                        <div v-if="weekly_reward.winner_username">
+                                            {{ weekly_reward.winner_username }}
                                         </div>
                                         <div v-else>
-                                            <button type="submit" class="waves-effect red lighten-2 btn-small right logout-btn" @click="DistributeWeeklyReward(weekly_reward.place, weekly_reward)">
-                                                <i class="material-icons left">distribute</i>Distribute</button>
+                                            <button type="submit" class="waves-effect green lighten-2 btn-small right logout-btn" @click="DistributeWeeklyReward(weekly_reward.place, weekly_reward)">
+                                                <i class="material-icons left"></i>Attribute</button>
                                         </div>
                                         
                                     </td>
@@ -166,18 +166,18 @@
                         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }});
-                    this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
-                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                }}).then(response => {
-                    const data = response.data; // [{}, {}]
-                    this.daily_rewards = data.individual_rewards_daily;
-                    this.weekly_rewards = data.individual_rewards_weekly;
-                    this.rewards = data.rewards
-                    this.dates = data.dates
-                })
-                },
+                this.role = this.getRole()
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response => {
+                        const data = response.data; // [{}, {}]
+                        this.daily_rewards = data.individual_rewards_daily;
+                        this.weekly_rewards = data.individual_rewards_weekly;
+                        this.rewards = data.rewards
+                        this.dates = data.dates
+                    })
+            },
             DistributeDailyReward(date, individualReward){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/individual_rewards/distribute_daily",
                     {external_id: individualReward.external_id,
@@ -188,19 +188,18 @@
                         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }});
-                    this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
-                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                }}).then(response => {
-                    const data = response.data; // [{}, {}]
-                    this.daily_rewards = data.individual_rewards_daily;
-                    this.weekly_rewards = data.individual_rewards_weekly;
-                    this.rewards = data.rewards
-                    this.dates = data.dates
-                })
-                    
-                },
+                this.role = this.getRole()
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                    }}).then(response => {
+                        const data = response.data; // [{}, {}]
+                        this.daily_rewards = data.individual_rewards_daily;
+                        this.weekly_rewards = data.individual_rewards_weekly;
+                        this.rewards = data.rewards
+                        this.dates = data.dates
+                    })     
+            },
         },
         
         mounted(){

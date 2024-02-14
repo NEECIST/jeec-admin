@@ -109,12 +109,12 @@
                             </td>
 
                             <td>
-                                <button @click="getCV(student.username)" class="waves-effect blue lighten-2 btn dashboard-btn">Review</button>
+                                <button @click="getCV(student.username, student.isFromTecnico, student.educationLevel)" class="waves-effect blue lighten-2 btn dashboard-btn">Review</button>
                             </td>
 
                             <td>
                                 <div v-if="student.uploaded_cv == true && student.approved_cv == false">
-                                    <button @click="deleteCV(student.username)" class="waves-effect red lighten-2 btn dashboard-btn">Reject</button>
+                                    <button @click="deleteCV(student.username, student.isFromTecnico, student.educationLevel)" class="waves-effect red lighten-2 btn dashboard-btn">Reject</button>
                                 </div>
                                 <div v-else-if="student.approved_cv == false">
                                     <button class="waves-effect grey lighten-2 btn dashboard-btn">Reject</button>
@@ -126,7 +126,7 @@
 
                             <td>
                                 <div v-if="student.uploaded_cv == true && student.approved_cv == false">
-                                    <button @click="acceptCV(student.username)" class="waves-effect green lighten-2 btn dashboard-btn">Approve</button>
+                                    <button @click="acceptCV(student.username, student.isFromTecnico, student.educationLevel)" class="waves-effect green lighten-2 btn dashboard-btn">Approve</button>
                                 </div>
                                 <div v-else-if="student.approved_cv == false">
                                     <button class="waves-effect grey lighten-2 btn dashboard-btn">Approve</button>
@@ -202,13 +202,15 @@
             eraseSearch(){
                 this.search = '';
             },
-            getCV(student_username) {
+            getCV(student_username, tecnico, educationLevel) {
                 axios({
                     url: process.env.VUE_APP_JEEC_BRAIN_URL + "/get_cv",
                     method: 'POST',
                     responseType: 'blob', 
                     data: {
-                        student_username: student_username
+                        student_username: student_username,
+                        tecnico: tecnico,
+                        educationLevel: educationLevel
                     },
                     auth: {
                         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
@@ -235,9 +237,11 @@
                     console.error("Error downloading the file: ", error);
                 });
             },
-            deleteCV(student_username) {
+            deleteCV(student_username, tecnico, educationLevel) {
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/remove_cv", {
-                    student_username: student_username 
+                    student_username: student_username,
+                    tecnico: tecnico,
+                    educationLevel: educationLevel
                 }, {
                     auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
@@ -250,9 +254,11 @@
                     console.error("Error deleting file: ", error);
                 });
             },
-            acceptCV(student_username) {
+            acceptCV(student_username, tecnico, educationLevel) {
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL + "/accept_cv", {
-                    student_username: student_username 
+                    student_username: student_username, 
+                    tecnico: tecnico,
+                    educationLevel: educationLevel
                 }, {
                     auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME,
