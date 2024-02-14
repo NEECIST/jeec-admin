@@ -77,10 +77,13 @@
 
       <div class="row">
         <div class="input-field col s3">
-          <select multiple id="company_select" name="company" v-model="form.companies" style="display:block; min-height:100px">
-            <option disabled value="">Select all participating companies</option>
-            <option v-for="company in response_data.companies" :key="company" :value="company">{{ company }}</option>
-          </select>
+          <vue-multi-select
+                v-model="form.companies"
+                search
+                :btnLabel="btnLabel2"
+                :filters="filters"
+                :options="options2"
+                :selectOptions="response_data.companies"/>
         </div>
       </div>
 
