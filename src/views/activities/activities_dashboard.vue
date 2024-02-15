@@ -94,85 +94,20 @@
         <table v-else class="striped">
           <thead>
             <tr>
-              <th>ID</th>
+              <th></th>
+              <th></th>
+              <th></th>
               <th>Name</th>
               <th>Type</th>
-              <th>Description</th>
               <th>Day</th>
               <th>Starting Time</th>
               <th>Ending Time</th>
-              <th>Location</th>
               <th>Points</th>
-              <th>Quest</th>
-              <th>Registration Open</th>
+              <th>ID</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="activity in bigdata.activities" :key=activity.id>
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.id }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  <b>{{ activity.name }}</b>
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.activity_type.name }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
-                       activity.description.length < 75">
-                  {{ activity.description }} 
-              </td>
-
-              <td v-else-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
-                       activity.description.length >= 75">
-                  {{ activity.description.substring(0,75) }} 
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.day }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.time }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.end_time }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.location }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                  {{ activity.points }}
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                <i v-if="activity.quest == true" class="material-icons icon-green">check</i>
-                <i v-else class="material-icons icon-red">clear</i>
-              </td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
-                <i v-if="activity.registration_open == true" class="material-icons icon-green">check</i>
-                <i v-else class="material-icons icon-red">clear</i>
-              </td>
-
               <td v-if="((a_type==activity.activity_type.name || a_type=='') &&
                        ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))) && activity.day == bigdata.today && 
                        (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships'|| bigdata.role == 'marketing'|| (bigdata.role == 'team' && valid_id(activity.volunteers)))"> 
@@ -192,11 +127,47 @@
                   </router-link>
                 </form>
               </td>
+              
               <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
                        ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
                        (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
                 <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteActivity(activity.external_id)">
                   <i class="material-icons left">close</i>Delete Activity</button>
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  <b>{{ activity.name }}</b>
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.activity_type.name }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.day }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.time }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.end_time }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.points }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.id }}
               </td>
             </tr>
           </tbody>
