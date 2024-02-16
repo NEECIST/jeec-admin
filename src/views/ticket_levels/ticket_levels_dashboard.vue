@@ -61,17 +61,21 @@
                             </td>
 
                             <td>
-                                <form v-if="(responsedata.ticket_levels[responsedata.ticket_levels.length - 1].value == ticket_level.value)">                                                                    <!--retirei cenas do onsubmit-->
+                                                                                                    <!--retirei cenas do onsubmit-->
                                     <button title="Delete ticket level" class="waves-effect waves-light red btn-floating" @click="deleteTicketLevel(ticket_level.external_id)"><i
                                         class="material-icons left">delete</i>Delete</button>
-                                </form>
+                            
                             </td>
                         </tr>                
 
                         <tr>
 
                             <td>
-                                    <input v-model="ticket_type" id="ticket_type">
+                                <select v-model="ticket_type" id="ticket_type" style="display:block">
+                                    <option value="Daily">Daily</option>
+                                    <option value="Final">Final</option>
+                                    </select>
+                                
                             </td>
 
                             <td>
@@ -79,16 +83,16 @@
                             </td>
 
                             <td>
-                                <form>
+                     
                                     <select name="reward" form="create-ticket_level" class="form-control" v-model="Reward" required>
                                         <option selected disabled value="">Select one reward</option>
                                         <option v-for="reward in responsedata.rewards" v-bind:key="reward.id" :value="reward.id">{{ reward.name }}</option>
                                     </select>
-                                </form>
+                           
                             </td>
 
                                 <td>
-                                    <button type="submit" title="Add ticket level" class="waves-effect waves-light btn-floating" @click="createTicketLevel(Reward, ticket_type, threshold)"><i
+                                    <button title="Add ticket level" class="waves-effect waves-light btn-floating" @click="createTicketLevel()"><i
                                         class="material-icons left">add</i>Add</button>
                                 </td>
                         </tr>
@@ -114,7 +118,9 @@
                 level_points: 1,
                 responsedata: {error: null, ticket_levels: [], rewards: []},
                 Reward: '',
-                role:''
+                role:'',
+                ticket_type:'',
+                threshold:'',
             }
         },
         mounted(){
@@ -143,17 +149,22 @@
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/delete",{external_id: external_id}, {auth: {
                     username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                     password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                    }}).then(response=>this.responsedata = response.data);
+                    }}).then(response=>{
+                        this.responsedata = response.data;
+                        this.$router.go();
+                    });
                 },
-                createTicketLevel(reward_id, ticket_type, threshold){
+                createTicketLevel(){
                     if(this.Reward == ''){
                         return
                     }
-                    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/create",{reward_id: reward_id, ticket_type: ticket_type, threshold: threshold},{auth: {
+                    axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/create",{reward_id: this.Reward, ticket_type: this.ticket_type, threshold: this.threshold},{auth: {
                         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-                        }} ).then(response=>this.error = response.data);
-                    this.$router.go();
+                        }} ).then(response=>{
+                            this.error = response.data;
+                            this.$router.go();});
+                    
                 },
             changeReward(ticket_level){
                 axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/ticket_level/update", {ticket_level_external_id: ticket_level.external_id, change_reward_id: ticket_level.reward.external_id},{auth: {
