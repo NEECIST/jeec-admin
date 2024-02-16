@@ -94,9 +94,7 @@
         <table v-else class="striped">
           <thead>
             <tr>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>Read QR</th>
               <th>Name</th>
               <th>Type</th>
               <th>Day</th>
@@ -115,23 +113,10 @@
                   class="waves-effect waves-light green btn-floating modal-trigger code-btn"><i
                     class="material-icons left">qr_code</i>Read Code</button>
               </td>
-              <td v-else>{{''}}</td>
-
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
-                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
-                <form method="get" style="margin: 0;">
-                  <router-link router-link :to="{ name: 'update-activity', params: { activity_id: activity.external_id }}">
-                    <button title="Edit activity" class="waves-effect waves-light btn-floating"><i
-                      class="material-icons left">edit</i>Edit</button>
-                  </router-link>
-                </form>
-              </td>
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
-                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
-                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
-                <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteActivity(activity.external_id)">
-                  <i class="material-icons left">close</i>Delete Activity</button>
+              <td v-else>
+                <button disabled v-on:click="readCode(activity.external_id)" title="Read QR Code" data-target="modal1" :data-name= activity.external_id 
+                  class="waves-effect waves-light green btn-floating modal-trigger code-btn"><i
+                    class="material-icons left">qr_code</i>Read Code</button>
               </td>
 
               <td style="max-width: 100px;" v-if="(a_type==activity.activity_type.name || a_type=='') &&
@@ -167,6 +152,23 @@
               <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
                        ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
                   {{ activity.id }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
+                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
+                <form method="get" style="margin: 0;">
+                  <router-link router-link :to="{ name: 'update-activity', params: { activity_id: activity.external_id }}">
+                    <button title="Edit activity" class="waves-effect waves-light btn-floating"><i
+                      class="material-icons left">edit</i>Edit</button>
+                  </router-link>
+                </form>
+              </td>
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
+                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
+                <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteActivity(activity.external_id)">
+                  <i class="material-icons left">close</i>Delete Activity</button>
               </td>
             </tr>
           </tbody>
@@ -302,19 +304,15 @@
         this.bigdata = response.data
         this.selected_event_id = this.bigdata.event.external_id
 
-        this.buffer = this.bigdata.activities
-        this.bigdata.activities = []
-
-        console.log(this.buffer.length)
-
         if(this.bigdata.role == 'team'){
+          this.buffer = this.bigdata.activities
+          this.bigdata.activities = []
           for(var i = 0; i < this.buffer.length; i++){
             if(this.buffer[i].name != 'Job Fair Monday' && 
                 this.buffer[i].name != 'Job Fair Tuesday' &&
                 this.buffer[i].name != 'Job Fair Wednesday' &&
                 this.buffer[i].name != 'Job Fair Thursday' &&
                 this.buffer[i].name != 'Job Fair Friday'){
-              console.log('kill me now')
               this.bigdata.activities.push(this.buffer[i])
             }
           }
