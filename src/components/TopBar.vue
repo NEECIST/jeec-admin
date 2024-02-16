@@ -35,8 +35,7 @@ export default {
   },
   methods:{
     ...mapActions(["LogOut"]),
-    async logout(e) {
-      e.preventDefault()
+    async logout() {
       try {
           await this.LogOut()
           if (this.isAuthenticated() == ''){

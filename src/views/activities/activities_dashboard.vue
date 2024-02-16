@@ -127,7 +127,6 @@
                   </router-link>
                 </form>
               </td>
-              
               <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
                        ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
                        (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
@@ -135,7 +134,7 @@
                   <i class="material-icons left">close</i>Delete Activity</button>
               </td>
 
-              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+              <td style="max-width: 100px;" v-if="(a_type==activity.activity_type.name || a_type=='') &&
                        ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
                   <b>{{ activity.name }}</b>
               </td>
@@ -291,15 +290,36 @@
           name_search:'',
           number: '', code: '', activities_codes: '', 
           sucess: '', activity_external_id: '', selected_event_id: '',
-          id:-1
+          id:-1,
+          buffer:[]
       }
     },
     mounted() {
       axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activities_vue',{event_id: this.Event_id(), username: this.StateUsername()}, {auth: {
         username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-      }}).then(response => {this.bigdata = response.data
-      this.selected_event_id = this.bigdata.event.external_id})
+      }}).then(response => {
+        this.bigdata = response.data
+        this.selected_event_id = this.bigdata.event.external_id
+
+        this.buffer = this.bigdata.activities
+        this.bigdata.activities = []
+
+        console.log(this.buffer.length)
+
+        if(this.bigdata.role == 'team'){
+          for(var i = 0; i < this.buffer.length; i++){
+            if(this.buffer[i].name != 'Job Fair Monday' && 
+                this.buffer[i].name != 'Job Fair Tuesday' &&
+                this.buffer[i].name != 'Job Fair Wednesday' &&
+                this.buffer[i].name != 'Job Fair Thursday' &&
+                this.buffer[i].name != 'Job Fair Friday'){
+              console.log('kill me now')
+              this.bigdata.activities.push(this.buffer[i])
+            }
+          }
+        }
+      })
       this.id = this.getId()
     }
     
