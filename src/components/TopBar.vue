@@ -8,7 +8,7 @@
     <!-- <form action="{{ url_for('companies_api.company_logout') }}" method="get"> -->
     <router-link router-link to="/">
       <form >
-        <button v-on:click="logout" class="waves-effect red lighten-2 btn-small right logout-btn"><i
+        <button v-on:click="logout()" class="waves-effect red lighten-2 btn-small right logout-btn"><i
                             class="material-icons left">lock</i>Log out</button>
     </form>
     </router-link>
@@ -39,7 +39,7 @@ export default {
       e.preventDefault()
       try {
           await this.LogOut()
-          if (!this.isAuthenticated()){
+          if (this.isAuthenticated() == ''){
               console.log("LogOut success")
               this.$router.push("/")
           }

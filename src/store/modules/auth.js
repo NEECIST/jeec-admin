@@ -11,7 +11,7 @@ const state = {
 };
 
 const getters = {
-    isAuthenticated: state => !!state.username,    
+    isAuthenticated: state => state.username,    
     StateUsername: state => state.username,
     Event_id: state => state.event_id,
     Activity_id: state => state.activity_id,
