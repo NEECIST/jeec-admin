@@ -84,7 +84,7 @@
       <br>
 
       <div class="section-title center-align" style="margin-top:50px;">
-        List of activities
+        List of real activities
       </div>
 
       <div class="list">
@@ -105,7 +105,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="activity in bigdata.activities" :key=activity.id>
+            <tr v-for="activity in real_activities" :key=activity.id>
               <td v-if="((a_type==activity.activity_type.name || a_type=='') &&
                        ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))) && activity.day == bigdata.today && 
                        (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships'|| bigdata.role == 'marketing'|| (bigdata.role == 'team' && valid_id(activity.volunteers)))"> 
@@ -175,11 +175,109 @@
         </table>
       </div>
 
-      <div id="modal1" class="modal" style="height: auto;">
+      <div class="section-title center-align" style="margin-top:50px;">
+        List of Job Fair Activities
+      </div>
+
+      <div class="list">
+        <blockquote v-if="bigdata.error != ''" class="create-error">
+          {{ bigdata.error }}
+        </blockquote>
+        <table v-else class="striped">
+          <thead>
+            <tr>
+              <th>Read QR</th>
+              <th>Name</th>
+              <th>Company Name</th>
+              <th>Type</th>
+              <th>Day</th>
+              <th>Starting Time</th>
+              <th>Ending Time</th>
+              <th>Points</th>
+              <th>ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="activity in job_fair_activities" :key=activity.id>
+              <td v-if="((a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))) && activity.day == bigdata.today && 
+                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships'|| bigdata.role == 'marketing'|| (bigdata.role == 'team' && valid_id(activity.volunteers)))"> 
+                <button v-on:click="readCode(activity.external_id)" title="Read QR Code" data-target="modal1" :data-name= activity.external_id 
+                  class="waves-effect waves-light green btn-floating modal-trigger code-btn"><i
+                    class="material-icons left">qr_code</i>Read Code</button>
+              </td>
+              <td v-else>
+                <button disabled v-on:click="readCode(activity.external_id)" title="Read QR Code" data-target="modal1" :data-name= activity.external_id 
+                  class="waves-effect waves-light green btn-floating modal-trigger code-btn"><i
+                    class="material-icons left">qr_code</i>Read Code</button>
+              </td>
+
+              <td style="max-width: 100px;" v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  <b>{{ activity.name }}</b>
+              </td>
+
+              <td style="max-width: 100px;" v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  <b>{{ activity.job_fair_company.name }}</b>
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.activity_type.name }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.day }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.time }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.end_time }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.points }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim())))">
+                  {{ activity.id }}
+              </td>
+
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
+                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
+                <form method="get" style="margin: 0;">
+                  <router-link router-link :to="{ name: 'update-activity', params: { activity_id: activity.external_id }}">
+                    <button title="Edit activity" class="waves-effect waves-light btn-floating"><i
+                      class="material-icons left">edit</i>Edit</button>
+                  </router-link>
+                </form>
+              </td>
+              <td v-if="(a_type==activity.activity_type.name || a_type=='') &&
+                       ((name_search=='' || activity.name.toLowerCase().includes(name_search.toLowerCase().trim()))) && 
+                       (bigdata.role == 'admin' || bigdata.role == 'webdev' || bigdata.role == 'webdev_tl' || bigdata.role == 'business' || bigdata.role == 'coordination' || bigdata.role == 'partnerships')">
+                <button type="submit" class="waves-effect red lighten-2 btn-floating" @click="deleteActivity(activity.external_id)">
+                  <i class="material-icons left">close</i>Delete Activity</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- <div id="modal1" class="modal" style="height: auto;">
         <div class="modal-content">
           <center style="margin-top: 40px;">
-            <!--<p><b>You can now write the code. Please choose something readable. If the code format is not valid, a random code will be generated.</b></p>
-            <input id="code-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">-->
+            <p><b>You can now write the code. Please choose something readable. If the code format is not valid, a random code will be generated.</b></p>
+            <input id="code-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">
 
             <div style="margin-top: 40px;">
               <button id="code" class="waves-effect red lighten-2 btn-large dashboard-btn"
@@ -192,7 +290,7 @@
             </div>
           </center>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   
@@ -217,7 +315,7 @@
       ...mapMutations(["setEvent_id"]),
       EventSetter(external_id){
           this.setEvent_id(external_id),
-          location.reload()
+          window.location.reload()
       },
       deleteActivity(external_id) {
           axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activity/delete_vue',{activity_external_id: external_id},{auth: {
@@ -293,7 +391,9 @@
           number: '', code: '', activities_codes: '', 
           sucess: '', activity_external_id: '', selected_event_id: '',
           id:-1,
-          buffer:[]
+          buffer:[],
+          real_activities:[],
+          job_fair_activities:[],
       }
     },
     mounted() {
@@ -302,21 +402,9 @@
         password: process.env.VUE_APP_JEEC_WEBSITE_KEY
       }}).then(response => {
         this.bigdata = response.data
+        this.real_activities = this.bigdata.real_activities
+        this.job_fair_activities = this.bigdata.job_fair_activities
         this.selected_event_id = this.bigdata.event.external_id
-
-        if(this.bigdata.role == 'team'){
-          this.buffer = this.bigdata.activities
-          this.bigdata.activities = []
-          for(var i = 0; i < this.buffer.length; i++){
-            if(this.buffer[i].name != 'Job Fair Monday' && 
-                this.buffer[i].name != 'Job Fair Tuesday' &&
-                this.buffer[i].name != 'Job Fair Wednesday' &&
-                this.buffer[i].name != 'Job Fair Thursday' &&
-                this.buffer[i].name != 'Job Fair Friday'){
-              this.bigdata.activities.push(this.buffer[i])
-            }
-          }
-        }
       })
       this.id = this.getId()
     }
