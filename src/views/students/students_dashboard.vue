@@ -59,6 +59,7 @@
                         <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Daily Points</th>
                         <th>Total Points</th>
@@ -73,6 +74,12 @@
                         <tr v-for="student in filteredStudents" v-bind:key="student.id">
                             <td>
                                 {{ student.id }}
+                            </td>
+
+                            <td>
+                                <b>
+                                    {{ student.name }}
+                                </b>
                             </td>
 
                             <td>
