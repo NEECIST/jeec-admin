@@ -52,6 +52,7 @@ import QRCode from '../views/activities/QRCode.vue'
 import AddCompanyUser from '../views/users/AddCompanyUser.vue'
 import AddTeamUser from '../views/users/AddTeamUser.vue'
 import UsersDashboard from '../views/users/UsersDashboard.vue'
+import CompanyUsersDashboard from '../views/users/CompanyUsersDashboard.vue'
 import Quests from '../views/quests/Quests.vue'
 import AddQuest from '../views/quests/AddQuest.vue'
 import UpdateQuest from '../views/quests/UpdateQuest.vue'
@@ -346,6 +347,11 @@ const routes = [
     path: '/usersdashboard',
     name: 'users-dashboard',
     component: UsersDashboard
+  },
+  {
+    path: '/companyusersdashboard',
+    name: 'company-users-dashboard',
+    component: CompanyUsersDashboard
   },
   {
     path: '/addcompanyuser',
