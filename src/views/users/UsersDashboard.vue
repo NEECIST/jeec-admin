@@ -50,9 +50,6 @@
           <th>Username</th>
           <th>Name</th>
           <th>Role</th>
-          <th>Post</th>
-          <th>Email</th>
-          <th>Company</th>
           <th v-if="current_user.role=='admin'">Password</th>
           <th>Food Manager</th>
         </tr>
@@ -71,16 +68,6 @@
 
           <td>
             {{ user.role }}
-          </td>
-
-          <td></td>
-
-          <td>
-            {{ user.email }}
-          </td>
-
-          <td>
-
           </td>
 
           <td v-if="current_user.role=='admin'">
