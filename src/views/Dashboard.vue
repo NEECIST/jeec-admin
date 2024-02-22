@@ -121,7 +121,7 @@
 
                 <router-link router-link to="/companyusersdashboard" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
                     <form method="get">
-                    <button style="font-size: 5px !important" v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                    <button style="font-size: 12px !important" v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">lock</i>Company Users</button>
                     </form>
                 </router-link>
