@@ -95,9 +95,9 @@
 
                           <div v-else-if="company.partnership_tier == 'sponsor_gold'" class="tier-indicator icon-gold"><i class="material-icons">star</i></div>
 
-                          <div v-else-if="company.partnership_tier == 'sponsor_silver'" class="tier-indicator icon-grey"><i class="material-icons">star</i></div>
+                          <div v-else-if="company.partnership_tier == 'sponsor_silver'" class="tier-indicator silver"><i class="material-icons">star</i></div>
 
-                          <div v-else-if="company.partnership_tier == 'sponsor_bronze'" class="tier-indicator icon-brown"><i class="material-icons">star</i></div>
+                          <div v-else-if="company.partnership_tier == 'sponsor_bronze'" class="tier-indicator bronze"><i class="material-icons">star</i></div>
                         
                           <div v-else-if="company.partnership_tier == 'nucleo'" class="tier-indicator icon-black"><i class="material-icons">deployed_code</i></div>
                         
