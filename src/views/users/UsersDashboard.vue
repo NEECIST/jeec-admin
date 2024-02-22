@@ -51,7 +51,6 @@
           <th>Name</th>
           <th>Role</th>
           <th v-if="current_user.role=='admin'">Password</th>
-          <th>Food Manager</th>
         </tr>
       </thead>
       <tbody>
@@ -74,8 +73,6 @@
             {{ user.password }}
           </td>
           <td v-else></td>
-
-          <td></td>
 
           <td v-if="current_user.name!=user.username&&(current_user.role=='admin'||current_user.role=='webdev_tl')&&user.role!='admin'">
               <button title="Delete user" class="waves-effect waves-light btn-floating" @click="deleteUser(user.external_id)"><i
