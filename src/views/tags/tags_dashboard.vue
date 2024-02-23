@@ -6,46 +6,14 @@
         <!-- <navbar-component logo="brain.png"/> -->
         <TopBar :username="this.StateUsername()"/>
 
-        <section-header-component name="Tags Management" description="Create tags for activities" back_page="/students-app/"/>
+        <section-header-component name="" description="JEECPOT" back_page="/students-app/"/>
 
-        <section-title-component section="List of Tags"/>
+        <section-title-component section="Get JEECPOT Winners"/>
 
-        <div class="list">
-            <div  v-if="responsedata.error != null">
-                <blockquote class="create-error">
-                    {{ responsedata.error }}
-                </blockquote>
-            </div>
-            <div v-else>
-                <div class="counter right">
-                    Tags: {{ responsedata.tags.length }}
-                </div>
-                <br><br><br>
-                <form action="" method="post">
-                    <div class="row">
-                        <div class="input-field col s3" style="margin: 0;">
-                            <input v-model="name" id="name" name="name" type="text" class="validate" required>
+        <p v-for="winner in winners" :key="winner">
+            {{ winner }} <br>
+        </p>
 
-                            <label for="name" v-if="name == ''">
-                                Add tag
-                            </label>
-                        </div>
-                        <div class="col s1">
-                            <button title="Add tag" class="waves-effect waves-light btn-floating" @click="newtag"><i
-                                class="material-icons left">add</i>Add</button>
-                        </div>
-                    </div>
-                </form>
-
-                <div style="display: flex; flex-wrap: wrap; margin-bottom: 40px;">
-                    <div v-for="tag in responsedata.tags" :key="tag" class="tag-wrapper">
-                        <p class="tag">{{ tag }}</p>
-                        <button title="Delete tag" class="waves-effect waves-light red btn-floating" @click="deletetag(tag)">
-                        <i class="material-icons left">delete</i>Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </template>
@@ -64,39 +32,21 @@
             return{
                 role:'',
                 name: '',
-                responsedata: {error: '', tags: []} ,
+                winners:[],
             }
         },
 
         mounted(){
             this.role = this.getRole()
-            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/tagss",{auth: {
+            axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/jeecpot_winners",{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
+        }}).then(response=>this.winners = response.data.names);
         },
 
         methods:{
             ...mapGetters(["getRole"]),
             ...mapGetters(["StateUsername"]),
-            newtag(event){
-                event.preventDefault();
-                if(this.name == ''){
-                    return
-                }
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/new-tagg",{tagname: this.name},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
-                this.name = '';
-            },
-
-            deletetag(tag){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/tagsdelete",{tagname: tag},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
-            }
         }
     }
 </script>
