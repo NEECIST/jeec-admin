@@ -2,7 +2,8 @@
     <div class="add-quest" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Quests Management" description="Update quest" back_page="/quests"/>
 
@@ -100,15 +101,16 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
     import { mapGetters } from "vuex";
     import DatePick from 'vue-date-pick';
     import 'vue-date-pick/dist/vueDatePick.css';
     import fecha from 'fecha';
+    import TopBar from '../../components/TopBar.vue';
     export default {
         name: 'update-quest',
         components: {
-            DatePick
+            DatePick,TopBar
             },
 
         data(){
@@ -133,6 +135,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
 
             newquest(event){
 

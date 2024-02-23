@@ -3,7 +3,8 @@
       <head-component/>
         
       <body>
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component :name=bigdata.activity_type.name description="Edit information" back_page="/activities/types"/>
 
@@ -120,11 +121,12 @@
 <script>
     import axios from "axios";
     import { mapGetters } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
 
     export default {
       name: 'update-activity-type',
       components: {
-        
+        TopBar
       },
       props:{
           

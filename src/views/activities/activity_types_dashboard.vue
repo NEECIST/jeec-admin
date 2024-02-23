@@ -3,7 +3,8 @@
       <head-component/>
       
       <body>
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Activity Types Management" :description="'Manage activity types of ' + bigdata.event.name" back_page="/activities"/>
 
@@ -88,10 +89,11 @@
 <script>
     import axios from "axios";
     import { mapGetters, mapMutations } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
     export default {
       name: 'activity-types-dashboard',
       components: {
-        
+        TopBar
       },
       props:{
           

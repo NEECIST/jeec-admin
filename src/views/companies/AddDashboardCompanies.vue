@@ -1,7 +1,7 @@
 <template>  
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Companies Management" description="Add, edit or delete company" back_page="/dashboard"/>
 
@@ -93,7 +93,7 @@
                         
                           <div v-else-if="company.partnership_tier == 'sponsor_platinum'" class="tier-indicator icon-red"><i class="material-icons">star</i></div>
 
-                          <div v-else-if="company.partnership_tier == 'sponsor_gold'" class="tier-indicator gold"><i class="material-icons">star</i></div>
+                          <div v-else-if="company.partnership_tier == 'sponsor_gold'" class="tier-indicator icon-gold"><i class="material-icons">star</i></div>
 
                           <div v-else-if="company.partnership_tier == 'sponsor_silver'" class="tier-indicator silver"><i class="material-icons">star</i></div>
 
@@ -186,6 +186,7 @@
     },
     methods:{
       ...mapGetters(["getRole"]),
+      ...mapGetters(["StateUsername"]),
       clearSearch(){
         this.search_str = ""
       },

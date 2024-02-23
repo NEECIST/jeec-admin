@@ -9,10 +9,10 @@
                     class="material-icons left">lock</i>Log out</button>
             </form>
 
-            <a target="_blank" rel="noopener noreferrer" href="https://jeec.ist" method="get">
+            <!-- <a target="_blank" rel="noopener noreferrer" href="https://jeec.ist" method="get">
                 <button class="waves-effect waves-light btn-small right" style="margin-top: -3px; margin-right: 50px;"><i
                         class="large material-icons left">web</i>Visit website</button>
-            </a>
+            </a> -->
         </div>
     </div>
 </template>
@@ -29,6 +29,11 @@ export default {
   },
   props: {
     logo: String,
+  },
+  data(){
+    return{
+        user:{name:'',role:''},
+    }
   },
   methods: {
     ...mapActions(["LogOut"]),

@@ -11,11 +11,11 @@ const state = {
 };
 
 const getters = {
-    isAuthenticated: state => !!state.username,    
+    isAuthenticated: state => state.username,    
     StateUsername: state => state.username,
     Event_id: state => state.event_id,
     Activity_id: state => state.activity_id,
-    ActivityType_id: state => state.activitytype_id,
+    ActivityType_id: state => state.activity_type_id,
     Auction_id: state => state.auction_id,
     getRole: state => state.role,
     getId: state => state.id

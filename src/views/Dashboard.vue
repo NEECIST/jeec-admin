@@ -3,7 +3,7 @@
         <head-component/>
         
         <body v-if="bigdata.error==''">
-            <div class="navbar-component">
+            <!-- <div class="navbar-component">
                 <div class="nav-bar">
                     <a href=""><img class="jeec-logo-mobile"
                         :src="require('@/assets/' + 'brain.png')"></a>
@@ -20,7 +20,8 @@
                                 class="large material-icons left">web</i>Visit website</button>
                     </a>
                 </div>
-            </div>
+            </div> -->
+            <TopBar :username="this.StateUsername()"/>
 
             <div class="section-header" style="margin-top:100px">
                    <h2>Brain</h2>
@@ -53,12 +54,12 @@
            
                 </router-link>
 
-                <router-link router-link to="/kings" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
+                <!-- <router-link router-link to="/kings" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
         
                     <button class="waves-effect blue lighten-2 btn-large dashboard-btn" ><i
                         class="large material-icons left">emoji_events</i>Get Kings</button>
 
-                </router-link>
+                </router-link> -->
 
                 <router-link router-link to="/companies" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'business' || user.role == 'coordination' || user.role == 'admin'">
                     <form method="get">
@@ -90,12 +91,12 @@
             </div>
 
             <div class="flexbox-btns" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
-                <router-link router-link to="/auctions">
+                <!-- <router-link router-link to="/auctions">
                     <form method="get">
                     <button v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">attach_money</i>Auctions</button>
                     </form>
-                </router-link>
+                </router-link> -->
                 
                 <router-link router-link to="/events" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
                     <form method="get">
@@ -117,6 +118,13 @@
                         class="large material-icons left">lock</i>Users</button>
                     </form>
                 </router-link>
+
+                <router-link router-link to="/companyusersdashboard" v-if="user.role == 'webdev' || user.role == 'webdev_tl' || user.role == 'coordination' || user.role == 'admin'">
+                    <form method="get">
+                    <button style="font-size: 12px !important" v-on:click="EventSetter(bigdata.event.external_id)" class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                        class="large material-icons left">lock</i>Company Users</button>
+                    </form>
+                </router-link>
             </div>
 
             <blockquote style="margin-left: 40px;margin-top: 70px;">
@@ -130,11 +138,12 @@
     import { mapGetters, mapMutations } from "vuex";
     import axios from 'axios'
     import { mapActions } from "vuex";
+    import TopBar from '../components/TopBar.vue';
 
     export default {
       name: 'dashboard-main',
       components: {
-        
+        TopBar
       },
       props:{
           

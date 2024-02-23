@@ -3,7 +3,8 @@
       <head-component/>
         
       <body>
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Activities Management" :description="'Add a new activity to ' + bigdata.event.name" back_page="/activities"/>
 
@@ -37,10 +38,6 @@
             </div>
 
             <div class="row s7">
-              <div class="input-field col s2 box" :class="{boxname:detectext(location)}">
-                <input id="location" v-model="location" type="text" class="validate" maxlength="100">
-                <label for="location">Location</label>
-              </div>
 
               <div class="input-field col s2 box" :class="{boxname:detectext(day)}">
                 <p>Day</p>
@@ -70,27 +67,6 @@
                 <label for="points">Points</label>
               </div>
 
-            <div class="row s10">
-              <p>Registration Open:</p>
-              <p class="col s2">
-                <label style="margin-right: 20px;">
-                  <input v-model="registration_open" class="with-gap" name="registration_open" type="radio" value="true" />
-                  <span>Yes</span>
-                </label>
-                <label>
-                  <input v-model="registration_open" class="with-gap" name="registration_open" type="radio" value="false" checked />
-                  <span>No</span>
-                </label>
-              </p>
-
-              <div class="col s6">
-                <div class="input-field box" :class="{boxname:detectext(registration_link)}">
-                  <input id="registration_link" v-model="registration_link" type="url" class="validate">
-                  <label for="registration_link">Registration url</label>
-                </div>
-              </div>
-            </div>
-
 
             <div class="flex-container">
               <div class="input-field flex-object">
@@ -112,14 +88,6 @@
                 :filters="filters"
                 :options="options"
                 :selectOptions="bigdata.volunteers"/>
-              </div>
-
-              <div class="input-field flex-object">
-                <p>Choose tags</p>
-                <select v-model="tags_external_id" multiple name="tag" style="height:75px; display: block;">
-                  <option value="" disabled></option>
-                  <option v-for="tag in bigdata.tags" :key="tag.id" :value="tag.external_id">{{ tag.name }}</option>
-                </select>
               </div>
 
               <div class="input-field flex-object">
@@ -170,10 +138,11 @@
     import axios from "axios";
     import vueMultiSelect from 'vue-multi-select';
     import 'vue-multi-select/dist/lib/vue-multi-select.css';
+    import TopBar from '../../components/TopBar.vue';
     export default {
       name: 'add-activity',
       components: {
-        DatePick, VueTimepicker,vueMultiSelect
+        DatePick, VueTimepicker,vueMultiSelect,TopBar
       },
       props:{
           
@@ -184,7 +153,6 @@
               companies:[],
               speakers:[],
               rewards:[],
-              tags:[],
               error:"",
               minData:'', maxDate:'',
               event: {},

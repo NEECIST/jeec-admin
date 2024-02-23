@@ -1,7 +1,7 @@
 <template>
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Events Management" description="Add a new event" back_page="/events"/>
 
@@ -406,6 +406,7 @@ data(){
 },
 methods: {
   ...mapGetters(["getRole"]),
+  ...mapGetters(["StateUsername"]),
       detectext(stringvar){
         return stringvar!=''; 
       },

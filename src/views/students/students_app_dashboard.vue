@@ -3,16 +3,24 @@
 
         <head-component/>
 
-        <navbar-component logo="jeec_logo_mobile.svg"/>
+        <!-- <navbar-component logo="jeec_logo_mobile.svg"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Student App Management" description="Manage the JEEC Student App" back_page="/dashboard/"/>
 
         <div class="flexbox-btns" style="margin-top: 100px;">
-            <router-link router-link to="/levels" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+            <!-- <router-link router-link to="/levels" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
             
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
                         class="large material-icons left">bar_chart</i>Levels</button>
             
+            </router-link> -->
+            
+            <router-link router-link to="/ticket_levels" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+
+                <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                        class="large material-icons left">bar_chart</i>Ticket Levels</button>
+
             </router-link>
 
             <router-link router-link to="/quests" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
@@ -41,12 +49,17 @@
 
             <router-link router-link to="/tags" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
                 <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
-                        class="large material-icons left">local_offer</i>Tags</button>
+                        class="large material-icons left">local_offer</i>JEECPOT</button>
+            </router-link>
+
+            <router-link router-link to="/cvs_dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
+                <button class="waves-effect blue lighten-2 btn-large dashboard-btn"><i
+                        class="large material-icons left">local_offer</i>CVs</button>
             </router-link>
         </div>
 
         <blockquote class="left" style="margin-left: 40px;margin-top: 70px;">
-            <b>Caution!</b> Any change in this system will instantly affect the <b>JEEC Student App</b>!
+            <b>Caution!</b> Any change in this system will instantly affect the <b>JEEC Student </b> <router-link router-link to="/reset-daily-points" v-if="role == 'admin'" class="secret"> <b>App!</b></router-link> <b v-else> App</b>
         </blockquote>
     </div>
 </template>
@@ -54,10 +67,11 @@
 <script>
     // import axios from "axios"
     import { mapGetters } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
     export default {
         name: 'student-app-dashboard',
         components: {
-
+            TopBar
             },
 
         data(){
@@ -75,6 +89,7 @@
         },
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
         }
     }
 </script>
@@ -94,5 +109,8 @@
     button {
     font-weight: 600;
     transition: all .2s ease-in-out; 
+    }
+    .secret{
+        color:#293c51;
     }
 </style>

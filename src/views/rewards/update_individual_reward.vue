@@ -2,17 +2,16 @@
     <div class="update-squad-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <!-- <navbar-component logo="brain.png"/> -->
-        <TopBar :username="this.StateUsername()"/>
+        <navbar-component logo="brain.png"/>
 
         <div class="section-header-component">
             <div class="section-header" style="margin-top:100px">
-                <h2>Squad Rewards Management</h2>
-                <p>Update the {{date}} squad reward</p>
+                <h2>Individual Rewards Management</h2>
+                <p>Update the {{date}} Individual reward</p>
             </div>
         </div>
 
-        <router-link router-link to="/rewards/squad">
+        <router-link router-link to="/rewards/individual">
             <button class="waves-effect waves-light btn back-btn left"><i
                 class="material-icons left">arrow_back</i>back</button>
         </router-link>
@@ -55,23 +54,22 @@
         </div>
 
         <form>
-            <button class="waves-effect red darken-2 btn delete-btn left" @click="deleteSquadReward"><i class="material-icons left">clear</i>Delete
+            <button class="waves-effect red darken-2 btn delete-btn left" @click="deleteIndividualreward"><i class="material-icons left">clear</i>Delete
             Reward</button>
 
-            <button type="submit" class="waves-effect blue lighten-2 btn add-btn right" @click="updateSquadReward"><i
+            <button type="submit" class="waves-effect blue lighten-2 btn add-btn right" @click="updateIndividualReward"><i
                 class="material-icons left">save</i>Save Reward</button>
         </form>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
-    import TopBar from '../../components/TopBar.vue';
+    import axios from 'axios'
     import { mapGetters } from "vuex";
     export default {
-        name: 'update-squad-reward',
+        name: 'update-individual-reward',
         components: {
-                TopBar
+
             },
 
         data(){
@@ -90,21 +88,20 @@
 
         methods:{
             ...mapGetters(["getRole"]),
-            ...mapGetters(["StateUsername"]),
-            deleteSquadReward(e) {
+            deleteIndividualreward(e) {
                 e.preventDefault()
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/deletesquadreward_vue',{external_id: this.external_id},{auth: {
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/delete_individual_reward',{external_id: this.external_id},{auth: {
                 username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                 password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                 }}).then(response => {this.error = response.data.error
                 if (this.error == ''){
-                    this.$router.push({name: 'squad-rewards-dashboard'})
+                    this.$router.push({name: 'individual-rewards-dashboard'})
                 }})
             },
 
-            updateSquadReward(e){
+            updateIndividualReward(e){
                 e.preventDefault()
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/squadreward/update", {
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/individual_reward/update", {
                     external_id: this.external_id, date: this.date,
                     reward_id: this.reward.id,
                 },{auth: {
@@ -113,7 +110,7 @@
                 }}).then(response=>{this.error = response.data.error
                 
                 if (this.error == ''){
-                    this.$router.push({name: 'squad-rewards-dashboard'})
+                    this.$router.push({name: 'individual-rewards-dashboard'})
                 }})
             },
 
@@ -122,16 +119,16 @@
 
         mounted(){
             this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/squadrewards_vue',{}, {auth: {
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
                 username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                 password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                 }}).then(response => {
                     const data = response.data; // [{}, {}]
                     this.rewards = data.rewards;
-                    this.squad_rewards = data.squad_rewards;
+                    this.squad_rewards = data.individual_rewards;
                     this.dates = data.dates})
         
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/squadreward/update/get', {external_id: this.$route.params.external_id},{auth: {
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_reward/update/get', {external_id: this.$route.params.external_id},{auth: {
                 username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                 password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                 }}).then(response=>{

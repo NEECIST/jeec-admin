@@ -3,7 +3,8 @@
         <head-component/>
           
         <body>
-          <navbar-component logo="brain.png"/>
+          <!-- <navbar-component logo="brain.png"/> -->
+          <TopBar :username="this.StateUsername()"/>
           <section-header-component name="QR Code Reading" description="Read QR Code of a student for an activity" back_page="/activities"/>
 
           <div  v-if="this.isAuthenticated()">
@@ -65,13 +66,14 @@
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
+import TopBar from '../../components/TopBar.vue';
 import { mapGetters } from "vuex";
 import axios from "axios"
 
 
 export default {
   name: 'activity-full-detail',
-  components: { QrcodeStream },
+  components: { QrcodeStream,TopBar },
 
   data () {
     return {
@@ -135,7 +137,7 @@ export default {
       this.turnCameraOff()
       this.activity_external_id= this.$route.params.activity_external_id
 
-      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_id:  this.activity_external_idistid, student_external_id: this.result},{auth: {
+      axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/activitiesdashboard_vue/activity/activity_external_idistid',{user: this.StateUsername(), activity_external_id:  this.activity_external_id, student_external_id: this.result},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
           password: process.env.VUE_APP_JEEC_WEBSITE_KEY
         }}).then(response =>{ this.SmallData = response.data} )

@@ -1,7 +1,7 @@
 <template>  
   
   <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+    <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader :name="responsedata.company.name" description="Edit Company information" back_page="/companies"/>
   <br>  
@@ -226,6 +226,7 @@ async mounted(){
 },
 methods:{
   ...mapGetters(["getRole"]),
+  ...mapGetters(["StateUsername"]),
   onFileSelected(event){
     this.fileSelected = event.target.files[0].name;
     this.fileToUpload = event.target.files[0];

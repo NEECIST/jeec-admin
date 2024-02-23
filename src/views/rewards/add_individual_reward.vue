@@ -2,10 +2,9 @@
     <div class="add-squad-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <!-- <navbar-component logo="brain.png"/> -->
-        <TopBar :username="this.StateUsername()"/>
+        <navbar-component logo="brain.png"/>
 
-        <section-header-component name="Squad Rewards Management" description="Add a new squad reward" back_page="/rewards/squad"/>
+        <section-header-component name="Individual Rewards Management" description="Add a new Individual reward" back_page="/rewards/individual"/>
 
         <br>
         
@@ -35,21 +34,20 @@
                 </div>
                 
 
-                <button type="submit" class="waves-effect blue lighten-2 btn add-btn right" @click="newsquadreward">
-                    <i class="material-icons left">save</i>Save Squad Reward</button>
+                <button type="submit" class="waves-effect blue lighten-2 btn add-btn right" @click="newIndividualreward">
+                    <i class="material-icons left">save</i>Save Individual Reward</button>
             </form>
         </div>
     </div>
 </template>
 
 <script>
-    import axios from "axios";
-    import TopBar from '../../components/TopBar.vue';
+    import axios from "axios"
     import { mapGetters } from "vuex";
     export default {
-        name: 'add-squad-reward',
+        name: 'add-individual-reward',
         components: {
-                TopBar
+
             },
 
         data(){
@@ -70,11 +68,10 @@
 
         methods: {
             ...mapGetters(["getRole"]),
-            ...mapGetters(["StateUsername"]),
             
-            newsquadreward(e){
+            newIndividualreward(e){
                 e.preventDefault()
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/createsquadreward_vue", {
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/create_individual_reward", {
                     date: this.date,
                     reward_id: this.reward.id,
                     //winner_id: this.student.id
@@ -83,7 +80,7 @@
                     password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                     }}).then(response=>{this.error = response.data.error
                 if (this.error == ''){
-                    this.$router.push({name: 'squad-rewards-dashboard'})
+                    this.$router.push({name: 'individual-rewards-dashboard'})
                 }
                 })
                 
@@ -91,7 +88,7 @@
         },
         mounted(){
             this.role = this.getRole()
-            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/squadrewards_vue',{}, {auth: {
+            axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+'/individual_rewards',{}, {auth: {
                 username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
                 password: process.env.VUE_APP_JEEC_WEBSITE_KEY
                 }}).then(response => {

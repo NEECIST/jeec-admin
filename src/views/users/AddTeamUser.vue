@@ -2,7 +2,7 @@
 
 <div class="add-team-user" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
 
-    <top-bar :username="current_user"/>
+  <TopBar :username="this.StateUsername()"/>
 
         <section-header-component
         name="Management User"
@@ -46,13 +46,14 @@
 
 <script>
 import axios from "axios";
+import TopBar from '../../components/TopBar.vue';
 import CryptoJS from 'crypto-js' 
 import { mapGetters } from "vuex";
 // import axios from "axios"
 export default {
   name: 'add-team-user',
   components: {
-    
+    TopBar
   },
   data(){
     return{
