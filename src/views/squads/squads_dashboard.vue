@@ -2,7 +2,8 @@
     <div class="squads-dashboard" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Squads Management" description="Ban and manage squads" back_page="/students-app/"/>
 
@@ -44,16 +45,22 @@
                 <table class="striped">
                     <thead>
                         <tr>
-                        <th>Name</th>
-                        <th>Cry</th>
-                        <th>Captain Id</th>
-                        <th>Members Id</th>
-                        <th>Daily Points</th>
-                        <th>Total Points</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Cry</th>
+                            <th>Captain Id</th>
+                            <th>Members Id</th>
+                            <th>Daily Points</th>
+                            <th>Total Points</th>
+                            <th v-if="role=='admin'">Ban Squad (Disabled)</th>
+                            <th v-if="role=='admin'">Delete Squad (Disabled)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="squad in filteredSquads" v-bind:key="squad.name">
+                        <tr v-for="squad in filteredSquads" :key="squad.id">
+                            <td>
+                                {{ squad.id }}
+                            </td>
                             <td>
                                 <b>
                                 {{ squad.name }}
@@ -80,12 +87,18 @@
                                 {{ squad.total_points }}
                             </td>
 
-                            <td>
+                            <td v-if="role=='admin'">
                                 <form onsubmit="return confirm('Are you sure you want to ban this squad?');">
-                                    <button title="Ban squad" class="waves-effect waves-light btn-floating" @click="bansquads(squad.name)">
+                                    <button disabled title="Ban squad" class="waves-effect waves-light btn-floating" @click="bansquads(squad.id)">
                                         <i class="material-icons red left">person_remove</i>Ban</button>
                                 </form>
                             </td>
+                            <td v-if="role=='admin'">
+                                <form onsubmit="return confirm('Are you sure you want to delete this squad?');">
+                                    <button disabled title="Delete Squad" class="waves-effect waves-light btn-floating" @click="deleteSquad(squad.id)">
+                                        <i class="material-icons red left">delete</i>Delete</button>
+                                </form>
+                            </td>                      
                         </tr>
                     </tbody>
                 </table>
@@ -95,12 +108,13 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
+    import TopBar from '../../components/TopBar.vue';
     import { mapGetters } from "vuex";
     export default {
         name: 'squads-dashboard',
         components: {
-
+            TopBar
             },
 
         data(){
@@ -122,18 +136,25 @@
         mounted(){
             this.role = this.getRole()
             axios.get(process.env.VUE_APP_JEEC_BRAIN_URL + "/squadss",{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
+                username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+            }}).then(response=>this.responsedata = response.data);
         },
 
         methods: {
             ...mapGetters(["getRole"]),
-            bansquads(name){
-                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/bansquad", {bansquad: name},{auth: {
-          username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
-          password: process.env.VUE_APP_JEEC_WEBSITE_KEY
-        }}).then(response=>this.responsedata = response.data);
+            ...mapGetters(["StateUsername"]),
+            bansquads(squad_id){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/bansquad", {squad_id: squad_id},{auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.responsedata = response.data);
+            },
+            deleteSquad(squad_id){
+                axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/delete_squad", {squad_id: squad_id},{auth: {
+                    username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 
+                    password: process.env.VUE_APP_JEEC_WEBSITE_KEY
+                }}).then(response=>this.responsedata = response.data);
             }
         },
     }

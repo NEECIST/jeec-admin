@@ -23,8 +23,11 @@ import Teamsdashboard from '../views/teams/Teamsdashboard.vue'
 import Updateteammember from '../views/teams/Updateteammember.vue'
 import Updateteam from '../views/teams/Updateteam.vue'
 import AdminLogin from '../views/admin_login'
+import cvs_dashboard from '../views/cvs/cvs_dashboard.vue'
 import students_app_dashboard from '../views/students/students_app_dashboard.vue'
-import levels_dashboard from '../views/levels/levels_dashboard.vue'
+import reset_daily_points from '../views/students/reset_daily_points.vue'
+
+// import levels_dashboard from '../views/levels/levels_dashboard.vue'
 import tags_dashboard from '../views/tags/tags_dashboard.vue'
 import squads_dashboard from '../views/squads/squads_dashboard.vue'
 import banned_students_dashboard from '../views/students/banned_students_dashboard.vue'
@@ -39,22 +42,27 @@ import ActivitiesDashboard from '../views/activities/activities_dashboard.vue'
 import ActivityTypesDashboard from '../views/activities/activity_types_dashboard'
 import AddActivityType from '../views/activities/add_activity_type'
 import AddActivity from '../views/activities/add_activity'
-import AddAuction from '../views/auctions/add_auction'
-import AuctionParticipantsDashboard from '../views/auctions/auction_participants_dashboard'
-import AuctionsDashboard from '../views/auctions/auctions_dashboard'
+// import AddAuction from '../views/auctions/add_auction'
+// import AuctionParticipantsDashboard from '../views/auctions/auction_participants_dashboard'
+// import AuctionsDashboard from '../views/auctions/auctions_dashboard'
 import UpdateActivityType from '../views/activities/update_activity_type'
 import UpdateActivity from '../views/activities/update_activity'
-import UpdateAuction from '../views/auctions/update_auction'
+// import UpdateAuction from '../views/auctions/update_auction'
 import QRCode from '../views/activities/QRCode.vue'
 import AddCompanyUser from '../views/users/AddCompanyUser.vue'
 import AddTeamUser from '../views/users/AddTeamUser.vue'
 import UsersDashboard from '../views/users/UsersDashboard.vue'
+import CompanyUsersDashboard from '../views/users/CompanyUsersDashboard.vue'
 import Quests from '../views/quests/Quests.vue'
 import AddQuest from '../views/quests/AddQuest.vue'
 import UpdateQuest from '../views/quests/UpdateQuest.vue'
 import AddSquadRewards from '../views/rewards/add_squad_reward.vue'
 import DistributeRewards from '../views/activities/distribute_rewards'
-import KingsDashboard from '../views/Kings.vue'
+import ticket_levels_dashboard from '../views/ticket_levels/ticket_levels_dashboard.vue'
+import update_individual_reward from '../views/rewards/update_individual_reward'
+import individual_rewards_dashboard from '../views/rewards/individual_rewards_dashboard'
+import AddIndividualRewards from '../views/rewards/add_individual_reward'
+// import KingsDashboard from '../views/Kings.vue'
 
 Vue.use(VueRouter)
 
@@ -64,21 +72,31 @@ const routes = [
     name: 'add-company',
     component: AddCompany
    },
-   {
-    path: '/kings',
-    name: 'kings-dashboard',
-    component: KingsDashboard
-   },
+  //  {
+  //   path: '/kings',
+  //   name: 'kings-dashboard',
+  //   component: KingsDashboard
+  //  },
    {
     path: '/squad_rewards/add',
     name: 'add-squad-reward',
     component: AddSquadRewards
    },
    {
+    path: '/individual_rewards/add',
+    name: 'add-individual-reward',
+    component: AddIndividualRewards
+   },
+   {
     path: '/companies/add-event',
     name: 'add-event',
     component: AddEvent
    },
+   {
+    path: '/ticket_levels',
+    name: 'ticket_levels-dashboard',
+    component: ticket_levels_dashboard, 
+  },
    {
     path: '/meals/add-meal',
     name: 'add-meal',
@@ -94,6 +112,11 @@ const routes = [
     name: 'edit-company',
     component: EditCompany
    },
+  {
+    path: '/cvs_dashboard',
+    name: 'cvs-dashboard',
+    component: cvs_dashboard, 
+  },
    {
     path: '/events/edit-event/:event_external_id',
     name: 'edit-event',
@@ -179,12 +202,17 @@ const routes = [
     name: 'students-app-dashboard',
     component: students_app_dashboard, 
   },
-  
   {
-    path: '/levels',
-    name: 'levels-dashboard',
-    component: levels_dashboard, 
+    path: '/reset-daily-points',
+    name: 'reset-daily-points',
+    component: reset_daily_points, 
   },
+  
+  // {
+  //   path: '/levels',
+  //   name: 'levels-dashboard',
+  //   component: levels_dashboard, 
+  // },
 
   {
     path: '/tags',
@@ -232,11 +260,22 @@ const routes = [
     name: 'update-squad-reward',
     component: update_squad_reward, 
   },
+  {
+    path: '/rewards/individual/update/:external_id',
+    name: 'update-individual-reward',
+    component: update_individual_reward, 
+  },
+
 
   {
     path: '/rewards/squad',
     name: 'squad-rewards-dashboard',
     component: squad_rewards_dashboard, 
+  },
+  {
+    path: '/rewards/individual',
+    name: 'individual-rewards-dashboard',
+    component: individual_rewards_dashboard, 
   },
 
   {
@@ -274,21 +313,21 @@ const routes = [
     name: 'add-activity',
     component: AddActivity
   },
-  {
-    path: '/auctions/new-auction',
-    name: 'add-auction',
-    component: AddAuction
-  },
-  {
-    path: '/auctions/participants/:auction_id',
-    name: 'auction-participants-dashboard',
-    component: AuctionParticipantsDashboard
-  },
-  {
-    path: '/auctions',
-    name: 'auctions-dashboard',
-    component: AuctionsDashboard
-  },
+  // {
+  //   path: '/auctions/new-auction',
+  //   name: 'add-auction',
+  //   component: AddAuction
+  // },
+  // {
+  //   path: '/auctions/participants/:auction_id',
+  //   name: 'auction-participants-dashboard',
+  //   component: AuctionParticipantsDashboard
+  // },
+  // {
+  //   path: '/auctions',
+  //   name: 'auctions-dashboard',
+  //   component: AuctionsDashboard
+  // },
   {
     path: '/activities/update-type/:activity_type_id',
     name: 'update-activity-type',
@@ -299,15 +338,20 @@ const routes = [
     name: 'update-activity',
     component: UpdateActivity
   },
-  {
-    path: '/auctions/update/:auction_id',
-    name: 'update-auction',
-    component: UpdateAuction
-  },
+  // {
+  //   path: '/auctions/update/:auction_id',
+  //   name: 'update-auction',
+  //   component: UpdateAuction
+  // },
   {
     path: '/usersdashboard',
     name: 'users-dashboard',
     component: UsersDashboard
+  },
+  {
+    path: '/companyusersdashboard',
+    name: 'company-users-dashboard',
+    component: CompanyUsersDashboard
   },
   {
     path: '/addcompanyuser',

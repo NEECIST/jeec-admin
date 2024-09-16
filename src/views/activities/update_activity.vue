@@ -3,7 +3,8 @@
       <head-component/>
         
       <body>
-         <navbar-component logo="brain.png"/>
+         <!-- <navbar-component logo="brain.png"/> -->
+         <TopBar :username="this.StateUsername()"/>
 
         <section-header-component :name="bigdata.activity.activity_type.name" description="Edit information" back_page="/activities"/>
 
@@ -146,14 +147,7 @@
                 </select>
               </div>
             
-              <div class="input-field flex-object">
-                <p>Choose tags</p>
-                <select v-model="bigdata.tags_external_id" multiple style="height:75px; width: 250px; display: block;">
-                  <option value="" disabled></option>
-                  <option v-for="tag in bigdata.tags" :key="tag.id" name="tag" :value="tag.external_id" selected="selected">
-                    {{ tag.name }}</option>
-                </select>
-              </div>
+        
 
               <div class="input-field flex-object">
                 <p>Choose Reward</p>
@@ -185,10 +179,11 @@
     import { mapGetters } from "vuex";
     import vueMultiSelect from 'vue-multi-select';
     import 'vue-multi-select/dist/lib/vue-multi-select.css';
+    import TopBar from '../../components/TopBar.vue';
     export default {
       name: 'update-activity',
       components: {
-        DatePick, VueTimepicker,vueMultiSelect
+        DatePick, VueTimepicker,vueMultiSelect,TopBar
       },
       props:{
           
@@ -202,7 +197,6 @@
               companies:[],
               speakers:[],
               rewards:[],
-              tags:[],
               tags_external_id: [],
               minDate: '',
               maxDate: '',

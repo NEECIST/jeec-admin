@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'partnerships' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+  <TopBar :username="this.StateUsername()"/>
     <section-header-component name="SPEAKERS MANAGEMENT" description="Add, edit or delete speakers" back_page="/dashboard/"/>
     <router-link router-link to="/new-speaker">
       <form >
@@ -132,9 +132,11 @@
 <script>
     import axios from 'axios';
     import {mapGetters} from 'vuex';
+    import TopBar from '../../components/TopBar.vue';
     export default {
         name: 'dashboard-speaker',
         components: {
+          TopBar
       },
       data(){
           return{
@@ -176,7 +178,7 @@
         filteredSpeakers: function(){
           if(this.search){
             return (this.show_speakers.filter((speaker) => {
-            return speaker.name.match(this.search);
+            return speaker.name.toLowerCase().match(this.search.toLowerCase());
             })).filter((speaker) => {
             return speaker.event==this.event_chooser.id;
             });

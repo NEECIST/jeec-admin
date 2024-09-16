@@ -2,7 +2,8 @@
     <div class="update-reward" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <div class="section-header-component">
             <div class="section-header" style="margin-top:100px">
@@ -99,12 +100,13 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
+    import TopBar from '../../components/TopBar.vue';
     import { mapGetters } from "vuex";
     export default {
         name: 'update-reward',
         components: {
-
+                TopBar
             },
 
         data(){
@@ -126,6 +128,7 @@
 
         methods:{
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             selectFile(event){
                 this.fileSelected = event.target.files[0].name;
                 this.fileToUpload = event.target.files[0];

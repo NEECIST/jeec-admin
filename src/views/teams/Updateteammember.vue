@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-       <top-bar logo="brain.png" username=""/>
+      <TopBar :username="this.StateUsername()"/>
        <section-header-component name="ADD A NEW TEAM MEMBER" description="development" back_page=""/>
         
         <router-link router-link :to="{ name: 'teamdashboard-main', params: { externalid : this.$route.params.externalid }}">
@@ -99,10 +99,12 @@
    
    <script>
        import axios from 'axios';
+       import TopBar from '../../components/TopBar.vue';
        import { mapGetters } from "vuex";
        export default {
          name: 'updateteammember-main',
          components: {
+          TopBar
        },
        data(){
          return{
@@ -125,6 +127,7 @@
        },
        methods: {
         ...mapGetters(["getRole"]),
+        ...mapGetters(["StateUsername"]),
          detectext(stringvar){
            return stringvar!=''; 
          },

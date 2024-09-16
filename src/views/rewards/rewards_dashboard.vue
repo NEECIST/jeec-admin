@@ -3,7 +3,8 @@
         <div>
         <head-component/>
 
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Rewards Management" description="Create and manage rewards" back_page="/students-app/"/>
 
@@ -30,6 +31,10 @@
             <router-link router-link to="/rewards/add">
                 <button class="waves-effect blue lighten-2 btn add-btn right"><i
                     class="material-icons left">add</i>Reward</button>
+            </router-link>
+            <router-link router-link to="/rewards/individual">
+                <button class="waves-effect lighten-2 btn add-btn right"><i
+                    class="material-icons left">edit</i>Individual Reward</button>
             </router-link>
             <router-link router-link to="/rewards/squad">
             
@@ -107,12 +112,13 @@
 </template>
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
+    import TopBar from '../../components/TopBar.vue';
     import { mapGetters } from "vuex";
     export default {
         name: 'rewards-dashboard',
         components: {
-
+                TopBar
             },
         
         data(){
@@ -135,6 +141,7 @@
 
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
             eraseSearch(){
                 this.search = '';
             },

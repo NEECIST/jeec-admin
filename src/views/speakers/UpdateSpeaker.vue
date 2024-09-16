@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'partnerships' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+  <TopBar :username="this.StateUsername()"/>
     <section-header-component name="SPEAKER" description="Edit speaker information" back_page="/speakers"/>
       <br>
     <div>
@@ -73,7 +73,7 @@
 
           <div class="row">
             <div class="input-field col s9 box" :class="{boxname:detectext(bio)}">
-              <textarea id="bio" name="bio" class="materialize-textarea" value="bio" v-model="bio" maxlength="300"> speaker.bio </textarea>
+              <textarea id="bio" name="bio" class="materialize-textarea" value="bio" v-model="bio" maxlength="700"> speaker.bio </textarea>
               <label for="bio">Biography</label>
             </div>
           </div>
@@ -166,9 +166,11 @@
 <script>
         import axios from 'axios';
         import {mapGetters} from 'vuex';
+        import TopBar from '../../components/TopBar.vue';
         export default {
           name: 'update-speaker',
           components: {
+            TopBar
         },
         data(){
           return{
@@ -204,6 +206,7 @@
         },
         methods: {
           ...mapGetters(["getRole"]),
+          ...mapGetters(["StateUsername"]),
          detectext(stringvar){
           return stringvar!=''; 
          },

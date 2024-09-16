@@ -1,6 +1,6 @@
 <template>  
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'partnerships' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+    <TopBar :username="this.StateUsername()"/>
     <section-header-component name="SPEAKERS MANAGEMENT" description="Add a new speaker" back_page="/speakers"/>
     <br>
  
@@ -66,7 +66,7 @@
 
         <div class="row">
           <div class="input-field col s9 box" :class="{boxname:detectext(bio)}">
-            <textarea name="bio" id="bio" class="materialize-textarea" maxlength="300" v-model="bio"></textarea>
+            <textarea name="bio" id="bio" class="materialize-textarea" maxlength="700" v-model="bio"></textarea>
             <label for="bio">Biography</label>
           </div>
         </div>
@@ -135,9 +135,11 @@
 <script>
     import axios from 'axios';
     import { mapGetters } from "vuex";
+    import TopBar from '../../components/TopBar.vue';
     export default {
       name: 'addspeaker-main',
       components: {
+        TopBar
     },
     data(){
       return{
@@ -173,6 +175,7 @@
     },
     methods: {
       ...mapGetters(["getRole"]),
+      ...mapGetters(["StateUsername"]),
       checkOutput(output){
         console.log(output)
       },

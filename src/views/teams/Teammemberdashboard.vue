@@ -1,6 +1,6 @@
 <template>
  <div class="dashboard-main" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'">
-    <top-bar logo="brain.png" username=""/>
+    <TopBar :username="this.StateUsername()"/>
     <section-header-component name="DEVELOPMENT" description="Members" back_page="/teams"/>
 
     <div>
@@ -92,10 +92,12 @@
 
 <script>
         import axios from 'axios';
+        import TopBar from '../../components/TopBar.vue';
         import { mapGetters } from "vuex";
         export default {
           name: 'teamdashboard-main',
           components: {
+            TopBar
         },
         data(){
             return{
@@ -114,6 +116,7 @@
         },
         methods: {
             ...mapGetters(["getRole"]),
+            ...mapGetters(["StateUsername"]),
           eraseSearch(){
             this.search = '';
           },

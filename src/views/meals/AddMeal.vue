@@ -1,7 +1,7 @@
 <template>
 
 <div v-if="role == 'webdev' || role == 'webdev_tl' || role == 'business' || role == 'coordination' || role == 'admin'">
-    <TopBar/>
+  <TopBar :username="this.StateUsername()"/>
 
     <SectionHeader name="Meals Management" description="Add a new meal" back_page="/meals"/>
 
@@ -73,16 +73,15 @@
           <vue-timepicker name="registration_time" v-model="form.registration_time" required></vue-timepicker>
           </div>
       </div>
-
-
-      <div class="row">
-        <div class="input-field col s3">
-          <select multiple id="company_select" name="company" v-model="form.companies" style="display:block; min-height:100px">
-            <option disabled value="">Select all participating companies</option>
-            <option v-for="company in response_data.companies" :key="company" :value="company">{{ company }}</option>
-          </select>
-        </div>
-      </div>
+          <p>Participating companies:</p>
+          <vue-multi-select
+                v-model="form.companies"
+                search
+                :btnLabel="btnLabel"
+                :filters="filters"
+                :options="options"
+                :selectOptions="response_data.companies"/>
+    
 
       <br>
 
@@ -137,6 +136,8 @@ import SectionHeader from '../../components/SectionHeader.vue';
 import fecha from 'fecha';
 import VueTimepicker from 'vue2-timepicker';
 import TopBar from '../../components/TopBar.vue';
+import vueMultiSelect from 'vue-multi-select';
+import 'vue-multi-select/dist/lib/vue-multi-select.css';
 import { mapGetters } from "vuex";
 export default {
   name: 'add-meal',
@@ -144,7 +145,8 @@ export default {
     TopBar,
     SectionHeader,
     VueTimepicker,
-    DatePick
+    DatePick,
+    vueMultiSelect
 },
 data(){
   return{
@@ -170,6 +172,20 @@ data(){
           dish_description:"",
         }]
       },
+      btnLabel: values => `Select Companies (${values.length})`,
+      filters: [{
+            nameAll: 'Select all',
+            nameNotAll: 'Deselect all',
+            func() {
+              return true;
+            },
+          }],
+          options: {
+          multi: true,
+          groups: false,
+          labelList: 'companies.name',
+          cssSelected: option => (option.selected ? { 'background-color': '#00A36C' } : ''),
+          },
       error:"",
       format: 'DD MM YYYY, dddd',
       date: fecha.format(new Date(), 'DD MM YYYY, dddd'),
@@ -188,6 +204,7 @@ mounted(){
 },
 methods:{
   ...mapGetters(["getRole"]),
+  ...mapGetters(["StateUsername"]),
   detectext(stringvar){
     return stringvar!=''; 
   },

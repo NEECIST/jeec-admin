@@ -2,7 +2,8 @@
     <div class="quests" v-if="role == 'webdev' || role == 'webdev_tl' || role == 'coordination' || role == 'admin'" :key="merda">
       <head-component/>
         
-        <navbar-component logo="brain.png"/>
+        <!-- <navbar-component logo="brain.png"/> -->
+        <TopBar :username="this.StateUsername()"/>
 
         <section-header-component name="Quests Management" description="Edit or create quests" back_page="/students-app/"/>
 
@@ -69,8 +70,12 @@
 <script>
     import axios from "axios";
     import { mapGetters} from "vuex";
+    import TopBar from '../../components/TopBar.vue';
     export default {
       name: 'quests-dashboard',
+      components:{
+        TopBar
+      },
       data(){
         return{
           role:'',
@@ -89,6 +94,7 @@
       },
       methods:{
         ...mapGetters(["getRole"]),
+        ...mapGetters(["StateUsername"]),
         async deletequest(external_id){
             await axios.post(process.env.VUE_APP_JEEC_BRAIN_URL+"/quest/delete",{external_id:external_id},{auth: {
           username: process.env.VUE_APP_JEEC_WEBSITE_USERNAME, 

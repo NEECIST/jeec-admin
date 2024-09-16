@@ -3,7 +3,8 @@
 
       <head-component/>
 
-      <navbar-component logo="brain.png"/>
+      <!-- <navbar-component logo="brain.png"/> -->
+      <TopBar :username="this.StateUsername()"/>
 
       <section-header-component name="Check student's rewards" description="Check the rewards each student has obtained" back_page="/dashboard/"/>
 
@@ -12,7 +13,7 @@
           <form class="col s12" method="post" @submit="search">
             <div class="row">
               <div class="input-field col s8">
-                <input placeholder="ist1xxxxxx" class="col s12 validate" v-model="search_str" type="text" required>
+                <input placeholder="username" class="col s12 validate" v-model="search_str" type="text" required>
                 
                 <label for="name"></label>
               </div>
@@ -69,11 +70,13 @@
 </template>
 
 <script>
-  import axios from "axios"
+  import axios from "axios";
   import { mapGetters } from "vuex";
+  import TopBar from '../components/TopBar.vue';
   export default {
       name: 'check_rewards',
       components: {
+        TopBar
           },
       data(){
           return{
@@ -88,6 +91,7 @@
         },
   mounted(){
     this.role =  this.getRole()
+    
   },
   methods:{
     ...mapGetters(["isAuthenticated"]),
